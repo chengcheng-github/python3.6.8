@@ -1,0 +1,634 @@
+-- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
+--
+-- Host: localhost    Database: noveldb
+-- ------------------------------------------------------
+-- Server version	5.7.29-0ubuntu0.18.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_permission` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add novel',7,'add_novel'),(26,'Can change novel',7,'change_novel'),(27,'Can delete novel',7,'delete_novel'),(28,'Can view novel',7,'view_novel'),(29,'Can add novel tag',8,'add_noveltag'),(30,'Can change novel tag',8,'change_noveltag'),(31,'Can delete novel tag',8,'delete_noveltag'),(32,'Can view novel tag',8,'view_noveltag'),(33,'Can add num to tag',9,'add_numtotag'),(34,'Can change num to tag',9,'change_numtotag'),(35,'Can delete num to tag',9,'delete_numtotag'),(36,'Can view num to tag',9,'view_numtotag'),(37,'Can add novel message',10,'add_novelmessage'),(38,'Can change novel message',10,'change_novelmessage'),(39,'Can delete novel message',10,'delete_novelmessage'),(40,'Can view novel message',10,'view_novelmessage'),(41,'Can add chapter',11,'add_chapter'),(42,'Can change chapter',11,'change_chapter'),(43,'Can delete chapter',11,'delete_chapter'),(44,'Can view chapter',11,'view_chapter'),(45,'Can add user',12,'add_user'),(46,'Can change user',12,'change_user'),(47,'Can delete user',12,'delete_user'),(48,'Can view user',12,'view_user'),(49,'Can add user to sc',13,'add_usertosc'),(50,'Can change user to sc',13,'change_usertosc'),(51,'Can delete user to sc',13,'delete_usertosc'),(52,'Can view user to sc',13,'view_usertosc'),(53,'Can add novel message',14,'add_novelmessage'),(54,'Can change novel message',14,'change_novelmessage'),(55,'Can delete novel message',14,'delete_novelmessage'),(56,'Can view novel message',14,'view_novelmessage'),(57,'Can add chapter',15,'add_chapter'),(58,'Can change chapter',15,'change_chapter'),(59,'Can delete chapter',15,'delete_chapter'),(60,'Can view chapter',15,'view_chapter'),(61,'Can add novel tag',16,'add_noveltag'),(62,'Can change novel tag',16,'change_noveltag'),(63,'Can delete novel tag',16,'delete_noveltag'),(64,'Can view novel tag',16,'view_noveltag'),(65,'Can add novel',17,'add_novel'),(66,'Can change novel',17,'change_novel'),(67,'Can delete novel',17,'delete_novel'),(68,'Can view novel',17,'view_novel'),(69,'Can add num to tag',18,'add_numtotag'),(70,'Can change num to tag',18,'change_numtotag'),(71,'Can delete num to tag',18,'delete_numtotag'),(72,'Can view num to tag',18,'view_numtotag');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+INSERT INTO `auth_user` VALUES (1,'pbkdf2_sha256$150000$ReOCYOvdhC7A$UXZajyXvTfY5RaLbYIdad81Taq4z5VDx3iKhgbPbltA=','2021-02-25 15:18:18.298479',1,'tedu','','','tedu@163.com',1,1,'2021-02-23 09:31:56.241094');
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_admin_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint(5) unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` VALUES (1,'2021-02-23 09:33:06.060818','1','92675',1,'[{\"added\": {}}]',7,1),(2,'2021-02-23 09:33:26.030292','1','都市娱乐',1,'[{\"added\": {}}]',8,1),(3,'2021-02-23 09:33:33.041896','2','搞笑',1,'[{\"added\": {}}]',8,1),(4,'2021-02-23 09:33:45.574156','3','爽文',1,'[{\"added\": {}}]',8,1),(5,'2021-02-23 09:33:53.327216','1','NumToTag object (1)',1,'[{\"added\": {}}]',9,1),(6,'2021-02-23 09:33:57.105562','2','NumToTag object (2)',1,'[{\"added\": {}}]',9,1),(7,'2021-02-23 09:34:00.503054','3','NumToTag object (3)',1,'[{\"added\": {}}]',9,1),(8,'2021-02-23 09:35:32.609267','1','NovelMessage object (1)',1,'[{\"added\": {}}]',10,1),(9,'2021-02-23 09:35:50.589950','2','51964',1,'[{\"added\": {}}]',7,1),(10,'2021-02-23 09:36:05.712469','4','奇幻玄幻',1,'[{\"added\": {}}]',8,1),(11,'2021-02-23 09:36:28.592608','5','玄幻仙侠',1,'[{\"added\": {}}]',8,1),(12,'2021-02-23 09:36:48.080553','4','NumToTag object (4)',1,'[{\"added\": {}}]',9,1),(13,'2021-02-23 09:36:57.120718','5','NumToTag object (5)',1,'[{\"added\": {}}]',9,1),(14,'2021-02-23 09:37:43.623579','2','NovelMessage object (2)',1,'[{\"added\": {}}]',10,1),(15,'2021-02-23 09:37:57.774553','3','83343',1,'[{\"added\": {}}]',7,1),(16,'2021-02-23 09:38:14.401883','6','历史军事',1,'[{\"added\": {}}]',8,1),(17,'2021-02-23 09:38:25.723348','7','重生',1,'[{\"added\": {}}]',8,1),(18,'2021-02-23 09:38:33.971814','6','NumToTag object (6)',1,'[{\"added\": {}}]',9,1),(19,'2021-02-23 09:38:39.575747','7','NumToTag object (7)',1,'[{\"added\": {}}]',9,1),(20,'2021-02-23 09:39:11.951699','3','NovelMessage object (3)',1,'[{\"added\": {}}]',10,1),(21,'2021-02-23 09:39:26.598450','4','41765',1,'[{\"added\": {}}]',7,1),(22,'2021-02-23 09:39:40.534480','8','生活',1,'[{\"added\": {}}]',8,1),(23,'2021-02-23 09:39:48.760531','8','NumToTag object (8)',1,'[{\"added\": {}}]',9,1),(24,'2021-02-23 09:39:57.524252','9','NumToTag object (9)',1,'[{\"added\": {}}]',9,1),(25,'2021-02-23 09:40:01.359657','10','NumToTag object (10)',1,'[{\"added\": {}}]',9,1),(26,'2021-02-23 09:40:47.700395','4','NovelMessage object (4)',1,'[{\"added\": {}}]',10,1),(27,'2021-02-23 09:41:03.342134','5','15143',1,'[{\"added\": {}}]',7,1),(28,'2021-02-23 09:41:13.904618','9','魔法',1,'[{\"added\": {}}]',8,1),(29,'2021-02-23 09:41:24.284831','11','NumToTag object (11)',1,'[{\"added\": {}}]',9,1),(30,'2021-02-23 09:41:31.539036','12','NumToTag object (12)',1,'[{\"added\": {}}]',9,1),(31,'2021-02-23 09:41:39.615532','13','NumToTag object (13)',1,'[{\"added\": {}}]',9,1),(32,'2021-02-23 09:42:14.993856','5','NovelMessage object (5)',1,'[{\"added\": {}}]',10,1),(33,'2021-02-23 09:42:28.257601','6','25499',1,'[{\"added\": {}}]',7,1),(34,'2021-02-23 09:42:42.000302','14','NumToTag object (14)',1,'[{\"added\": {}}]',9,1),(35,'2021-02-23 09:42:48.237981','15','NumToTag object (15)',1,'[{\"added\": {}}]',9,1),(36,'2021-02-23 09:42:52.336212','16','NumToTag object (16)',1,'[{\"added\": {}}]',9,1),(37,'2021-02-23 09:43:21.537176','6','NovelMessage object (6)',1,'[{\"added\": {}}]',10,1),(38,'2021-02-23 09:43:34.279058','7','12782',1,'[{\"added\": {}}]',7,1),(39,'2021-02-23 09:43:45.930055','10','修真',1,'[{\"added\": {}}]',8,1),(40,'2021-02-23 09:43:57.118020','17','NumToTag object (17)',1,'[{\"added\": {}}]',9,1),(41,'2021-02-23 09:44:04.971190','18','NumToTag object (18)',1,'[{\"added\": {}}]',9,1),(42,'2021-02-23 09:44:44.248041','7','NovelMessage object (7)',1,'[{\"added\": {}}]',10,1),(43,'2021-02-23 09:45:09.778304','8','41132',1,'[{\"added\": {}}]',7,1),(44,'2021-02-23 09:45:23.015036','11','科幻游戏',1,'[{\"added\": {}}]',8,1),(45,'2021-02-23 09:45:30.804083','12','未来',1,'[{\"added\": {}}]',8,1),(46,'2021-02-23 09:45:40.970868','19','NumToTag object (19)',1,'[{\"added\": {}}]',9,1),(47,'2021-02-23 09:45:45.483191','20','NumToTag object (20)',1,'[{\"added\": {}}]',9,1),(48,'2021-02-23 09:46:16.205500','8','NovelMessage object (8)',1,'[{\"added\": {}}]',10,1),(49,'2021-02-23 09:46:42.446234','9','22659',1,'[{\"added\": {}}]',7,1),(50,'2021-02-23 09:46:55.590077','13','古典仙侠',1,'[{\"added\": {}}]',8,1),(51,'2021-02-23 09:47:04.167124','21','NumToTag object (21)',1,'[{\"added\": {}}]',9,1),(52,'2021-02-23 09:47:59.795642','9','NovelMessage object (9)',1,'[{\"added\": {}}]',10,1),(53,'2021-02-23 09:48:16.465965','10','63898',1,'[{\"added\": {}}]',7,1),(54,'2021-02-23 09:48:28.213402','14','争霸',1,'[{\"added\": {}}]',8,1),(55,'2021-02-23 09:48:38.952857','22','NumToTag object (22)',1,'[{\"added\": {}}]',9,1),(56,'2021-02-23 09:48:45.871718','23','NumToTag object (23)',1,'[{\"added\": {}}]',9,1),(57,'2021-02-23 09:48:55.545177','24','NumToTag object (24)',1,'[{\"added\": {}}]',9,1),(58,'2021-02-23 09:49:22.927235','10','NovelMessage object (10)',1,'[{\"added\": {}}]',10,1),(59,'2021-02-23 10:04:09.614380','11','89580',1,'[{\"added\": {}}]',7,1),(60,'2021-02-23 10:04:19.817036','25','NumToTag object (25)',1,'[{\"added\": {}}]',9,1),(61,'2021-02-23 10:04:30.217462','26','NumToTag object (26)',1,'[{\"added\": {}}]',9,1),(62,'2021-02-23 10:05:03.214701','11','NovelMessage object (11)',1,'[{\"added\": {}}]',10,1),(63,'2021-02-23 16:07:45.113267','12','18131',1,'[{\"added\": {}}]',7,1),(64,'2021-02-23 16:07:56.950235','27','NumToTag object (27)',1,'[{\"added\": {}}]',9,1),(65,'2021-02-23 16:08:50.917666','12','NovelMessage object (12)',1,'[{\"added\": {}}]',10,1),(66,'2021-02-23 16:42:54.873452','13','36356',1,'[{\"added\": {}}]',7,1),(67,'2021-02-23 16:43:25.779671','15','武侠仙侠',1,'[{\"added\": {}}]',8,1),(68,'2021-02-23 16:43:44.923376','28','NumToTag object (28)',1,'[{\"added\": {}}]',9,1),(69,'2021-02-23 16:43:59.047559','29','NumToTag object (29)',1,'[{\"added\": {}}]',9,1),(70,'2021-02-23 16:44:10.132097','30','NumToTag object (30)',1,'[{\"added\": {}}]',9,1),(71,'2021-02-23 16:44:42.119834','13','NovelMessage object (13)',1,'[{\"added\": {}}]',10,1),(72,'2021-02-23 16:45:03.362589','14','60347',1,'[{\"added\": {}}]',7,1),(73,'2021-02-23 16:45:14.503427','31','NumToTag object (31)',1,'[{\"added\": {}}]',9,1),(74,'2021-02-23 16:45:22.400098','32','NumToTag object (32)',1,'[{\"added\": {}}]',9,1),(75,'2021-02-23 16:46:01.954818','14','NovelMessage object (14)',1,'[{\"added\": {}}]',10,1),(76,'2021-02-23 16:46:20.035799','15','77834',1,'[{\"added\": {}}]',7,1),(77,'2021-02-23 16:46:34.578329','33','NumToTag object (33)',1,'[{\"added\": {}}]',9,1),(78,'2021-02-23 16:46:43.428685','34','NumToTag object (34)',1,'[{\"added\": {}}]',9,1),(79,'2021-02-23 16:46:49.172134','35','NumToTag object (35)',1,'[{\"added\": {}}]',9,1),(80,'2021-02-23 16:47:37.037108','15','NovelMessage object (15)',1,'[{\"added\": {}}]',10,1),(81,'2021-02-23 16:47:47.002058','7','NovelMessage object (7)',2,'[{\"changed\": {\"fields\": [\"serialize\"]}}]',10,1),(82,'2021-02-23 16:47:55.193729','4','NovelMessage object (4)',2,'[{\"changed\": {\"fields\": [\"serialize\"]}}]',10,1),(83,'2021-02-23 16:48:01.876525','2','NovelMessage object (2)',2,'[{\"changed\": {\"fields\": [\"serialize\", \"vip_type\"]}}]',10,1),(84,'2021-02-23 16:48:07.639980','5','NovelMessage object (5)',2,'[{\"changed\": {\"fields\": [\"serialize\"]}}]',10,1),(85,'2021-02-23 16:49:27.084670','14','NovelMessage object (14)',2,'[{\"changed\": {\"fields\": [\"vip_type\"]}}]',10,1),(86,'2021-02-23 16:49:32.431546','2','NovelMessage object (2)',2,'[{\"changed\": {\"fields\": [\"vip_type\"]}}]',10,1),(87,'2021-02-23 16:49:36.383442','15','NovelMessage object (15)',2,'[{\"changed\": {\"fields\": [\"vip_type\"]}}]',10,1),(88,'2021-02-23 17:12:31.148502','15','77834',3,'',7,1),(89,'2021-02-24 10:05:14.021438','15','80271',1,'[{\"added\": {}}]',7,1),(90,'2021-02-24 10:06:43.777718','33','NumToTag object (33)',1,'[{\"added\": {}}]',9,1),(91,'2021-02-24 10:08:33.634423','15','NovelMessage object (15)',1,'[{\"added\": {}}]',10,1),(92,'2021-02-24 13:55:39.887007','1','User object (1)',1,'[{\"added\": {}}]',12,1),(93,'2021-02-24 14:01:02.580489','2','456@163.com',1,'[{\"added\": {}}]',12,1),(94,'2021-02-24 14:01:12.903251','1','UserToSc object (1)',1,'[{\"added\": {}}]',13,1),(95,'2021-02-24 14:01:18.766521','2','UserToSc object (2)',1,'[{\"added\": {}}]',13,1),(96,'2021-02-24 14:01:28.408308','3','UserToSc object (3)',1,'[{\"added\": {}}]',13,1),(97,'2021-02-24 14:02:55.173857','4','UserToSc object (4)',1,'[{\"added\": {}}]',13,1),(98,'2021-02-24 14:05:05.920410','4','UserToSc object (4)',3,'',13,1),(99,'2021-02-24 14:13:35.011193','2','456@163.com',3,'',12,1),(100,'2021-02-24 14:13:35.132010','1','123@163.com',3,'',12,1),(101,'2021-02-24 14:16:34.530272','3','123@163.com',1,'[{\"added\": {}}]',12,1),(102,'2021-02-24 14:16:44.431780','4','456@163.com',1,'[{\"added\": {}}]',12,1),(103,'2021-02-24 14:16:57.035460','5','789@163.com',1,'[{\"added\": {}}]',12,1),(104,'2021-02-24 14:17:05.476470','5','UserToSc object (5)',1,'[{\"added\": {}}]',13,1),(105,'2021-02-24 14:17:08.708084','6','UserToSc object (6)',1,'[{\"added\": {}}]',13,1),(106,'2021-02-24 14:17:13.386731','7','UserToSc object (7)',1,'[{\"added\": {}}]',13,1),(107,'2021-02-24 14:17:16.465813','8','UserToSc object (8)',1,'[{\"added\": {}}]',13,1),(108,'2021-02-24 14:17:20.501818','9','UserToSc object (9)',1,'[{\"added\": {}}]',13,1),(109,'2021-02-24 14:17:24.059915','10','UserToSc object (10)',1,'[{\"added\": {}}]',13,1),(110,'2021-02-24 14:17:27.586414','11','UserToSc object (11)',1,'[{\"added\": {}}]',13,1),(111,'2021-02-24 14:17:31.465449','12','UserToSc object (12)',1,'[{\"added\": {}}]',13,1),(112,'2021-02-25 10:50:26.431715','1','Chapter object (1)',1,'[{\"added\": {}}]',11,1),(113,'2021-02-25 10:51:13.648300','2','Chapter object (2)',1,'[{\"added\": {}}]',11,1),(114,'2021-02-25 11:55:57.529618','3','Chapter object (3)',1,'[{\"added\": {}}]',11,1),(115,'2021-02-25 11:56:26.180689','4','Chapter object (4)',1,'[{\"added\": {}}]',11,1),(116,'2021-02-25 11:57:06.937634','5','Chapter object (5)',1,'[{\"added\": {}}]',11,1),(117,'2021-02-25 11:57:35.304989','6','Chapter object (6)',1,'[{\"added\": {}}]',11,1),(118,'2021-02-25 11:58:12.320548','7','Chapter object (7)',1,'[{\"added\": {}}]',11,1),(119,'2021-02-25 11:58:57.361865','8','Chapter object (8)',1,'[{\"added\": {}}]',11,1),(120,'2021-02-25 11:59:16.253145','7','Chapter object (7)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(121,'2021-02-25 12:00:08.086673','9','Chapter object (9)',1,'[{\"added\": {}}]',11,1),(122,'2021-02-25 12:00:55.219645','10','Chapter object (10)',1,'[{\"added\": {}}]',11,1),(123,'2021-02-25 12:02:58.042643','11','Chapter object (11)',1,'[{\"added\": {}}]',11,1),(124,'2021-02-25 12:04:21.363998','12','Chapter object (12)',1,'[{\"added\": {}}]',11,1),(125,'2021-02-25 12:07:46.536658','13','Chapter object (13)',1,'[{\"added\": {}}]',11,1),(126,'2021-02-25 12:08:14.721972','14','Chapter object (14)',1,'[{\"added\": {}}]',11,1),(127,'2021-02-25 12:09:12.043632','15','Chapter object (15)',1,'[{\"added\": {}}]',11,1),(128,'2021-02-25 12:09:43.674559','16','Chapter object (16)',1,'[{\"added\": {}}]',11,1),(129,'2021-02-25 12:11:01.104769','17','Chapter object (17)',1,'[{\"added\": {}}]',11,1),(130,'2021-02-25 12:11:24.942348','18','Chapter object (18)',1,'[{\"added\": {}}]',11,1),(131,'2021-02-25 12:53:32.976139','19','Chapter object (19)',1,'[{\"added\": {}}]',11,1),(132,'2021-02-25 12:54:08.224438','20','Chapter object (20)',1,'[{\"added\": {}}]',11,1),(133,'2021-02-25 12:54:50.742456','21','Chapter object (21)',1,'[{\"added\": {}}]',11,1),(134,'2021-02-25 12:55:36.472599','22','Chapter object (22)',1,'[{\"added\": {}}]',11,1),(135,'2021-02-25 12:56:31.940953','23','Chapter object (23)',1,'[{\"added\": {}}]',11,1),(136,'2021-02-25 12:57:21.696167','24','Chapter object (24)',1,'[{\"added\": {}}]',11,1),(137,'2021-02-25 12:58:17.455784','25','Chapter object (25)',1,'[{\"added\": {}}]',11,1),(138,'2021-02-25 12:59:06.090097','26','Chapter object (26)',1,'[{\"added\": {}}]',11,1),(139,'2021-02-25 13:01:35.343956','27','Chapter object (27)',1,'[{\"added\": {}}]',11,1),(140,'2021-02-25 13:02:12.509568','28','Chapter object (28)',1,'[{\"added\": {}}]',11,1),(141,'2021-02-25 15:18:44.201325','27','Chapter object (27)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(142,'2021-02-25 15:18:51.818172','26','Chapter object (26)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(143,'2021-02-25 15:19:01.425075','25','Chapter object (25)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(144,'2021-02-25 15:19:17.965713','25','Chapter object (25)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(145,'2021-02-25 15:19:30.169999','24','Chapter object (24)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(146,'2021-02-25 15:19:41.456303','23','Chapter object (23)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(147,'2021-02-25 15:19:50.148784','22','Chapter object (22)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1),(148,'2021-02-25 15:19:57.985788','21','Chapter object (21)',2,'[{\"changed\": {\"fields\": [\"chapter\"]}}]',11,1);
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_content_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(11,'ranks','chapter'),(7,'ranks','novel'),(10,'ranks','novelmessage'),(8,'ranks','noveltag'),(9,'ranks','numtotag'),(12,'ranks','user'),(13,'ranks','usertosc'),(6,'sessions','session'),(15,'topic','chapter'),(17,'topic','novel'),(14,'topic','novelmessage'),(16,'topic','noveltag'),(18,'topic','numtotag');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_migrations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2021-02-23 09:28:48.569671'),(2,'auth','0001_initial','2021-02-23 09:28:50.518791'),(3,'admin','0001_initial','2021-02-23 09:28:56.478598'),(4,'admin','0002_logentry_remove_auto_add','2021-02-23 09:28:57.921154'),(5,'admin','0003_logentry_add_action_flag_choices','2021-02-23 09:28:58.010449'),(6,'contenttypes','0002_remove_content_type_name','2021-02-23 09:28:59.071187'),(7,'auth','0002_alter_permission_name_max_length','2021-02-23 09:28:59.748151'),(8,'auth','0003_alter_user_email_max_length','2021-02-23 09:29:00.591044'),(9,'auth','0004_alter_user_username_opts','2021-02-23 09:29:00.642303'),(10,'auth','0005_alter_user_last_login_null','2021-02-23 09:29:01.234225'),(11,'auth','0006_require_contenttypes_0002','2021-02-23 09:29:01.267554'),(12,'auth','0007_alter_validators_add_error_messages','2021-02-23 09:29:01.312121'),(13,'auth','0008_alter_user_username_max_length','2021-02-23 09:29:01.977309'),(14,'auth','0009_alter_user_last_name_max_length','2021-02-23 09:29:02.738252'),(15,'auth','0010_alter_group_name_max_length','2021-02-23 09:29:03.489632'),(16,'auth','0011_update_proxy_permissions','2021-02-23 09:29:03.531584'),(17,'ranks','0001_initial','2021-02-23 09:29:04.829367'),(18,'sessions','0001_initial','2021-02-23 09:29:07.353476'),(19,'ranks','0002_user','2021-02-24 13:34:48.299537'),(20,'ranks','0003_auto_20210224_1334','2021-02-24 13:34:48.870438'),(21,'ranks','0004_auto_20210224_1400','2021-02-24 14:00:29.127278'),(22,'ranks','0005_user_password','2021-02-24 14:16:15.266759'),(23,'topic','0001_initial','2021-02-25 10:29:19.809976');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('6j5co5wsa1kqmqtbqbjt3dy2d3d3qs7n','Mzg5MTM3ZTAyZWUyZTljNDI1YTM2MmM1Yzg3ZTRjYmY2YmY2ZjZlNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlM2I1MjI4YTc2MDhlNGE5MzQ2M2JiMDU3MmQ2OTJmNTE0YzRkNzUwIn0=','2021-03-11 15:18:18.333128'),('blcjpafvp61urd5ssbkixsv7jvgzq82q','Mzg5MTM3ZTAyZWUyZTljNDI1YTM2MmM1Yzg3ZTRjYmY2YmY2ZjZlNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJlM2I1MjI4YTc2MDhlNGE5MzQ2M2JiMDU3MmQ2OTJmNTE0YzRkNzUwIn0=','2021-03-09 09:32:16.246930');
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_chapter`
+--
+
+DROP TABLE IF EXISTS `ranks_chapter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_chapter` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `chapter` varchar(100) NOT NULL,
+  `content` longtext NOT NULL,
+  `topic_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ranks_chapter_topic_id_d68a41c7_fk_ranks_novel_id` (`topic_id`),
+  CONSTRAINT `ranks_chapter_topic_id_d68a41c7_fk_ranks_novel_id` FOREIGN KEY (`topic_id`) REFERENCES `ranks_novel` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_chapter`
+--
+
+LOCK TABLES `ranks_chapter` WRITE;
+/*!40000 ALTER TABLE `ranks_chapter` DISABLE KEYS */;
+INSERT INTO `ranks_chapter` VALUES (1,'第一章  天生反骨？','大洪皇都，宫阙节次鳞比，一座座如同鱼鳞般蔓延着，一眼望不到边。尤其是皇宫，每时每刻都在绽放出灿灿金光，龙气氤氲，非常不凡。\r\n\r\n    “国师来了，姜小白，一旦鉴定出你是天生反骨，就算你父亲是金胆神候也保不住你！”冷漠的声音在姜小白耳边响起。\r\n\r\n    姜小白低垂着眼帘，捏紧双拳。\r\n\r\n    他不过十七八岁的模样，弱不禁风，非常的清秀，身穿囚衣，脚上有寒铁打造的铁链。\r\n\r\n    这是重犯才有的待遇。\r\n\r\n    “想不到我有一天也会被安排到大理寺受审。”姜小白抬起头，耳骨边凸起，鼓鼓的，第一眼看去让人心中有些突兀感。\r\n\r\n    这就是他们口中所说的反骨！\r\n\r\n    “是奇骨还是反骨，一会儿就知道了。”\r\n\r\n    大殿上，已经聚集了不少人。这些人，都是大洪皇朝的中流砥柱。\r\n\r\n    或是文官，监测天下。或是神将，征战四方。\r\n\r\n    “小白哥哥，不论是反骨还是奇骨，我都会向父皇求情的。”姜小白的旁边，一个十六七岁，身材窈窕的女孩忍不住跑到姜小白的身前，抱着他的双臂，泪眼婆娑。\r\n\r\n    姜小白空洞的眼眸中出现了一抹神采。\r\n\r\n    哒哒哒.\r\n\r\n    沉稳的脚步声从空旷的大殿上响起。一个身穿蟒袍，头戴乌纱帽的中年男子迅速走来。\r\n\r\n    这就是大洪皇朝的大洪国师叶绅，也是大理寺的正卿，掌管刑罚。他旁边还跟随着一名少年，那是国师的小儿子，叶长空。\r\n\r\n    姜小白没有去看叶绅，而是看向了叶长空。\r\n\r\n    二人目光碰撞在一起，一股令文官惊悚，武官震撼的气息流转。噼啪一声，大殿上响起了惊雷声，叶长空忍不住退后了一步，嘴角溢出了一缕鲜血。\r\n\r\n    他眼眸瞬间的冰冷下来，杀机迸发。\r\n\r\n    “大洪双子王，不过如此。”姜小白笑了起来。\r\n\r\n    “一个阶下囚，也敢如此放肆吗？”大洪国师面色冷漠，皱着眉头。\r\n\r\n    不少武官看向姜小白的眼神，皆是充满了震惊。\r\n\r\n    不愧是金胆神候姜居安的儿子，十八岁就已经迈入到了归墟九变的第六变。\r\n\r\n    而大洪皇朝最强大的人，洪武大帝，也不过是裂变境的高手而已。若给他时间，三五年后，又是一个金胆神候横空出世！\r\n\r\n    满朝文武百官，有忌惮的，有欣喜的，也有震撼的，目光注视在了姜小白的身上。他们都明白，今日这大理寺正殿中所站的一百零八个人，除了国师，恐怕没有一人会是姜小白的对手。他若是发疯，谁都拦不住！\r\n\r\n    “国师，我父亲亲口所说，我脑后，是奇骨，不是反骨。”姜小白龇着一口白牙，说道。\r\n\r\n    “是反骨还是奇骨，需要鉴定。”国师面无表情的说道。\r\n\r\n    而在姜小白旁边的出云公主则是紧张的看着姜小白，眉宇间尽都是忧色。\r\n\r\n    姜小白安慰道：“别担心，我要走，他们拦不住我，我只是咽不下这口气。”\r\n\r\n    姜小白心中也是叹息着，六年了，他从地球穿越而来，已经六年了。\r\n\r\n    六年间，他早就已经习惯了这个角色。\r\n\r\n    “难道反骨一定会造反吗？”想到如此，姜小白有些愤愤不平。\r\n\r\n    国师随后走上前来，手中出现了一卷古书。\r\n\r\n    其中一页会有一幅脑后骨骼图，标注了密密麻麻的字体。\r\n\r\n    国师一边对照着古书，一边摸着反骨线条的走向。\r\n\r\n    越摸国师越是心惊，这种骨骼走向，以他的见多识广，也是第一次见。\r\n\r\n    “不是反骨……”国师心中一寒，但依旧面无表情。\r\n\r\n    大洪皇朝的历史上，曾经出现过两个反骨。\r\n\r\n    一个是一百年前的太子，也是当今圣上的兄长。被坚定出了反骨，于当夜发动政变，屠戮了无数御林军。但最后还是被古皇诛杀，另外一个是三十年前的宰相魏延，天生反骨，密谋造反，也是被诛杀。\r\n\r\n    反骨必定会造反，这在十洲乃是铁律！\r\n\r\n    这两个反骨，国师都摸过，很确定，与姜小白的不同。\r\n\r\n    姜小白的骨，比他们的要奇特，骨内更是充满了一股浩然正气。\r\n\r\n    右手覆盖在其上，他甚至感觉自己置身于盛世之中，他震撼到了无以复加的地步。这天下间，真的有奇骨存在！\r\n\r\n    “国师，怎么样了？”金胆神候府一个老者小心翼翼的问道，他是姜小白的三爷，位高权重。\r\n\r\n    “国师，是反骨吗？”出云公主小心翼翼的，柔柔弱弱的问道。\r\n\r\n    只有叶长空见到了国师双手有着微不可查的颤抖。他顿时心中有数，心中一沉，低下了眸子，当中寒光爆闪。\r\n\r\n    文武百官，所有人的目光都注视在了国师的身上。\r\n\r\n    姜小白早就知晓脑后的骨是什么东西，有些轻松，悠悠的看着国师：“国师，宣布吧。”\r\n... -->>',1),(2,'第二章  反骨逆转','阴谋，这是一个阴谋……\r\n\r\n    镇疆候猛然反应了过来，因为他知晓，姜小白的最大弱点——道心！想要打败姜小白，必须要攻破他的道心！\r\n\r\n    而在这大殿中，也只有一人能攻破姜小白的道心，那就是出云！\r\n\r\n    出云公主再也没有了往日柔柔弱弱的模样，有的只是那凌厉的双眸。\r\n\r\n    “姜小白，你是反骨，你当真以为我爱你？”出云看着姜小白，眼眸中出现了一缕笑意。\r\n\r\n    姜小白只感觉心脏都快要爆炸了，有什么东西碎裂了一般。\r\n\r\n    他身躯一震，嘴角流下了一缕嫣红的鲜血。但是他的眸子还是死死的盯着出云：“你骗我的对不对？”\r\n\r\n    出云不屑的笑了：“我骗你什么……我压根就不爱你。”\r\n\r\n    “你只是反骨，而我是堂堂大洪皇朝的公主，你以为你的父亲是姜居安，我就能高看你一等吗？”出云已经逼近了姜小白，几乎快要贴着他的胸膛。\r\n\r\n    当她听到姜小白那咚咚，咚咚，几乎超出常人百倍的心跳声，眼眸中出现了一缕阴谋得逞的笑意。\r\n\r\n    她对着姜小白嫣然一笑，随后化为了一道身影，来到了叶长空的身前，温柔的抱着叶长空：“长空，辛苦了。”\r\n\r\n    叶长空抬起头，扫了一眼姜小白，温柔的抚摸着出云公主的脸庞。\r\n\r\n    看到这一幕，姜小白只感觉自己像是从天堂坠入到了地狱中，身躯瑟瑟发抖。\r\n\r\n    镇疆候秦川站了出来：“小白，他们想攻破你的道心，千万不要上当！”\r\n\r\n    姜小白脑袋晕沉沉的，双眸空洞无光：“我知道……”\r\n\r\n    出云见时机差不多了，嘻嘻一笑：“小白哥哥，你看看我。”\r\n\r\n    姜小白看着出云，只见后者贴在了叶长空的身上，双唇覆盖在了叶长空的唇瓣上。二人当着文武百官的面，旁若无人的拥吻起来。\r\n\r\n    噗！\r\n\r\n    姜小白噗的一声，仰天吐出了一口腥红的血液，那是心头血！\r\n\r\n    “啊！”姜小白气势如同汪洋一般，席卷大理寺正殿，整个大殿都是在颤抖着。但随后，他所有的气势都如同潮水一般退去。\r\n\r\n    他低下头，呆呆的看着自己的胸膛。那里有一根七彩神钉，扎入到了他的胸膛中，出手之人……正是国师！\r\n\r\n    国师连连出手，七根神钉点在姜小白各处大穴，崩碎了他的丹田，将他的归墟六漩涡，全部点碎！\r\n\r\n    姜小白身躯剧震，不断的咳血着。赤红的双眸盯着出云，而出云，还是在与叶长空拥吻着。\r\n\r\n    国师身形如同鬼魅，手中出现了一尊玉玺。这玉器发光，充满了爆发力。而后，国师在所有人震惊的目光中，抡起了玉玺，轰杀在了姜小白的后脑勺上。\r\n\r\n    咔擦一声，所有人都听到了骨裂声！\r\n\r\n    奇骨，被击碎了！\r\n\r\n    姜小白只感觉黑暗如同潮水一般用来，难以想象的剧痛升起。他不断的咳血，仰面倒在了地上，瞳孔渐渐的扩散。\r\n\r\n    国师做完这一切，擦了擦手上的鲜血：“拖下去，斩了。”\r\n\r\n    “谁敢！”秦川目眦欲裂，走上前去，看着仰面倒在地上的姜小白。\r\n\r\n    “秦川，你要造反吗？”国师冷漠的问道。\r\n\r\n    秦川摘下了自己的盔甲：“他的父亲姜居安这二十年来，对抗犬戎巨人，战功赫赫。他的母亲，一介女流之辈，也是战死。他的叔父，姜有伦，函谷关一战，沦为了废人，以一人之力守住了函谷关，救了上百万人的性命。现在……就因为他脑后的骨，就说他是反贼？”\r\n\r\n    “我秦川不服！”\r\n\r\n    “我手中的百万雄兵不服！”\r\n\r\n    “他父亲的银魅骑士团不服！”\r\n\r\n    秦川为了保住姜小白，不惜用上了威胁。秦川手握百万雄兵，而姜居安手中有一支银魅骑士团，只听从姜家的调遣，这才是当今圣上觉得最有威胁的力量。尤其是银魅骑士团，古皇都难以调动，也无法安抚。\r\n\r\n    “你威胁我？”国师眸子冷漠到了极致，如同寒冰，永不腐朽。\r\n\r\n    秦川如同雄狮：“你可以这么理解。”\r\n\r\n    国师低着头，看了一眼姜小白，他一眼就看了出来，姜小白已经废了。他忽然笑了起来：“好吧，我就不杀他了。”\r\n\r\n    说罢，他居然直接走出了大殿。\r\n\r\n    他的目的已经达成了，按照圣上的意思，姜居安只是失踪在了栖魔渊，不一定死了。只要废了姜小白就可以，废掉的姜小白，比不废的更加有用。\r\n\r\n    大殿上的众人随后走了个七七八八，叶长空走到姜小白的身前，俯视着他：“姜小白，你还是输了，你已经是个废人了，还拿什么与我斗？”\r\n\r\n    出云咯咯娇笑，对姜小白抛了个媚眼：“小白哥哥，我走了。”\r\n\r\n    而后当着姜小白的面，二人相拥开始走远。\r\n\r\n    ……\r\n\r\n    金胆神候府，一个御医走上前来，叹息一声：“彻底的废了，七... -->>',1),(3,'第一章 穿越异世','苍穹大陆天星国，逝水宗绿竹峰上！\r\n\r\n    “师傅，快看，小师弟快要醒了。”一个年纪在二十出头，身形好动的青年说道，言语中充满了兴奋与激动。\r\n\r\n    这位好动青年身旁还站着一位比他年龄稍大的沉稳男子，两人均站在床前，目不转睛看着床上的一老一少。\r\n\r\n    床上坐着一位面容有些滑稽的光头老人，老人双手贴着一个少年的后背，似乎正在为其疗伤。这位少年十五六岁，面容清秀，只是过于憔悴，充满着病态。\r\n\r\n    就见道道玄青色的气流从光头老人手中喷薄而出，每道都充满着强大的能量，随即进入少年的体内。宛如流淌的清泉，滋润着少年枯竭的身体。少年全身都被神秘的气息所充斥着。\r\n\r\n \r\n\r\n\r\n    半个时辰后，光头老人满头大汗，豆大的汗珠不断滚落。显然是消耗过多玄力所导致，不过少年也是略有起色。此时气息均匀地躺在床上，仿佛随时都能醒来。\r\n\r\n    “师弟，不要扰乱师傅的心神，这毛手毛脚的习惯我说你多少次了，你还不知道悔改。”这位沉稳男子轻声呵斥道。\r\n\r\n    这为沉稳男子名叫武刚。呵斥的正是之前好动的青年凌云。而坐在床上的光头老者与病态少年分别是师傅玄空与小师弟秦叶。\r\n\r\n    “大师兄我知错了，我这不是看到小师弟好转特别高兴嘛，求求师兄饶了我吧！”凌云立刻就开始讨饶道，语气中充满着顽劣。\r\n\r\n    “好了，你们不必担忧了，秦叶已经暂无大碍。他体内的邪气我已经暂时压制下去了，这次也不知怎么了，来的如此的突然。”光头老者将秦叶轻轻放入床上，用衣袖擦了擦额头上的汗珠，下床转身对这两位徒儿说道，不过声音中充满了疲惫。\r\n\r\n    这位光头老者身穿青色道袍，在道袍的心口处绘有一根绿色的青竹。这正是逝水宗绿竹峰的首座，玄空。而心口处的绿竹则是作为绿竹峰首座的标志。\r\n\r\n    凌云听完师傅的话面露喜色，可是武刚仍然愁眉紧缩，丝毫没有开心的样子。忍不住开口道“师傅，小师弟的邪气每次来得是越来越重了。而且来势越来越迅猛，若是下次再这样，恐怕……”\r\n\r\n    后面的话武刚没说，但剩下的半句都能猜出来。就是下次再要复发恐怕就算师傅也无力回天了。\r\n\r\n    光头师傅玄空摆了摆手，目光凝视着秦叶憔悴的面容。语气悠长地说道“无妨，这次是最后一次。东西基本都已经齐了！”\r\n\r\n    “师傅，难道说已经……”武刚与凌云齐声道，似乎都猜到了什么，声音也失去了控制。\r\n\r\n    正在玄空想要往下说什么，床上的少年身体却动了动，紧接着慢慢睁开了眼睛。\r\n\r\n    这是哪里啊，我不是已经死了吗？刚刚苏醒的秦叶见自己正躺在一个陌生的床上，眼前一个光头老者，还有两个青年男子盯着自己，样子似乎十分怪异。莫不是玻璃吧，秦叶陡然打了一个冷颤。\r\n\r\n    “徒儿醒了就好，醒了就好。”玄空滑稽的脸上露出了一丝慈祥，轻轻摸了摸秦叶的头说道。\r\n\r\n    “小师弟，你可算醒过来了，担心死我们了。凌云激动地说道。\r\n\r\n    还好，还好，不是玻璃，是师傅与师兄。秦叶略微的送了一口气，自己的清白总算可以保全了。\r\n\r\n    “哎呦，我的头好晕！”刚刚苏醒的秦叶突然说了一声头晕，之后头一歪，似乎昏迷过去了。\r\n\r\n    “师傅，你快看看小师弟，他怎么了？”凌云看到秦叶突然昏倒，忙大惊失色地呼唤着师傅。武刚的脸色也露出焦急之色。\r\n\r\n    玄空也被秦叶突然的情况吓了一跳，忙用玄气探进秦叶体内，检查着秦叶的身体状况。发现秦叶的身体状况良好，这才放下心来。\r\n\r\n    “放心吧，秦叶并无大碍，只是有些有头晕，天色也不早了，我们先出去吧，让他好好休息休息。”说罢玄空将秦叶的被子盖了盖，拉着武刚与凌云退了出去。\r\n\r\n    当门关上的一瞬间躺在床上的秦叶突然睁开了双眼，在床上坐了起来。“多亏我机灵，装作昏迷。不然待会肯定得露馅。如果他们知道他的徒弟、师弟此刻已经换了另一个人，定然宰了我不可。我目前可没有这具身体的记忆，所以得想个办法赶紧逃走，毕竟命最重要。”\r\n\r\n    正当秦叶刚要起身逃离时，突然一阵觉得一阵天旋地转，一股记忆爆炸... -->>',2),(4,'第二章 惩治刁奴','推开房门的一刹那，新世界的大门也随之而来敞开。\r\n\r\n    秦叶走出房门，见自己所住的院落也及其广阔，周围花草树木，楼台亭阁一应俱全，也是一处风景秀丽之地。此时三位黄衣侍从在伺候花草。\r\n\r\n    住的似乎也不错，比起前世的出租房强多了，至少不会有人收费，秦叶感叹道。\r\n\r\n    正当这时，就见到一位身穿黄衣，嘴里还叼着草根的侍从大摇大摆地朝着秦叶走来。侍从手里拿着竹篮，里面的饭菜依稀可见。\r\n\r\n    只是饭菜少了大半，显然是被人已经吃过了。与其说是一份饭菜倒不如说是残羹剩饭。这侍从是伺候秦叶饮食的葛硬。听着名字就知道让人感到讨厌！\r\n\r\n    秦叶见到剩饭剩菜后不禁一怒，心道我还没找你你就找上门来了，今个我们就好好算算。在他心中已经有了打算，今日就要把十几年的账给清算了。\r\n\r\n    葛硬走到秦叶近前，冷哼了一声，将竹篮放到门口的石阶上，正眼连看都没秦叶一眼。嚼了两下草根后吐到了秦叶身边，口中同时轻啐道：“想不到你这废物命还挺大，昨天居然特码没死，又被救了回来，老子还得整日送餐，特码的，真是的。”\r\n\r\n    看着葛硬的过分的行为与娴熟的动作，这种事情定然是没少做，已经成为了一种习惯。说是给主人送饭，实际上倒好像是给下人送饭一样，异常的嚣张。竟然被伺候的奴才这样欺凌，而且一欺负就是整整十多年，秦叶怒火中烧。\r\n\r\n    “站住！狗奴才，我让你走了吗？”正当葛硬要离开时，秦叶大呵一声。瘦弱的身材、苍白的面庞显得十分柔弱，但眉角间流露出的犀利与不屈却令人刮目相看。\r\n\r\n    被秦叶这嗓子一喊，葛硬突然身子一颤，竟被镇住了，毕竟当惯了奴才，被呵斥是经常的事情。但转过头来看见是秦叶这个废物，立刻放下心来。同时眼里涌起一抹凶光。心道，我居然被这废物呵斥了，传出去我可怎么混，一定要好好教训教训他。\r\n\r\n    葛硬恶狠狠地道：“三公子，还有什么事吗？莫非身体刚刚好，皮又痒痒了吗？”\r\n\r\n    由于秦叶上面还有两位师兄，所以在绿竹峰排行老三，侍从们平时都称秦叶为三公子。\r\n\r\n    “葛硬，你好大的胆，未经我允许竟然敢偷吃主子的东西，还与我耀武扬威，真当活腻了不成？”秦叶语气不善地说道。说罢端起地上的竹篮，连带着里面的饭菜一道扔了过去，重重地砸在了葛硬的额头之上。\r\n\r\n    随着竹篮的落下，里面的饭菜也一同盖了下来。葛硬的鼻血霎时间就留了下来。整个人看上去，就像是一道菜，西红柿盖浇饭。\r\n\r\n    由于距离近，再加上葛硬从未想过这个整日被人欺凌，软弱无能的废物竟然敢出手打自己，一时间竟中了招。\r\n\r\n    经过这一闹腾，秦叶院子里剩余的三位侍从也都放下了手中的花草，闻声赶了过来。看着葛硬一头饭菜，而且鼻血直流，先是一脸诧异地看着在场的两个人，接着就是发出一阵哄笑，面露嘲讽之色。\r\n\r\n    “葛硬居然被三公子打的鼻血直流，这可真是最好笑的事情。”\r\n\r\n    “是啊，是啊，葛硬平时跟我们耀武扬威，整天说三公子吃他剩下的饭菜，而且对他是又惊又怕，今个怎么被打了。”\r\n\r\n    “平日里他还吹……”\r\n\r\n    三位侍从对着葛硬一阵嘲讽，丝毫没有发现眼前的三公子已经发生了一些巨大的变化，不再是昨日那样任意被他们欺凌的三公子了。\r\n\r\n    葛硬被他们一阵嘲讽顿时感觉... -->>',2),(5,'第1章 潮汐诀','迷糊间，方毅只觉得全身酸痛无比。\r\n\r\n    “耶！自己还活着？”\r\n\r\n    回想起昏迷前的一幕，一辆汽车飞驰而来，如此猛烈的撞击，自己竟然还没死，还能感觉到痛。\r\n\r\n    “可千万别落个半身不遂。”\r\n\r\n    如此想着，方毅便努力的睁开了双眼。\r\n\r\n    这是一间简陋的厢房，只要两张木板床，而自己正躺在其中一张之上。\r\n\r\n    “这是哪？”\r\n\r\n    方毅微微一惊，疑惑的皱起了眉头。\r\n\r\n    脑海中，一些杂乱的信息蜂蛹而至，那是属于另一个方毅的记忆。\r\n\r\n    消化完这些信息之后，方毅终于意识到，自己穿越了。\r\n\r\n    如今自己的身份，是太玄宗青云峰一名外门弟子，实力只有灵海境一重，在整个太玄宗可以说是垫底的存在。\r\n\r\n    原本以他的天赋，根本进不了太玄宗。\r\n\r\n    这一切都要感谢他的父亲，不顾家族长老的反对，排除万难，好不容易才为他争取到一个名额。\r\n\r\n    可是谁又能想到，仅仅进入太玄宗三个月，他就几乎丢了性命。\r\n\r\n    不，应该说已经丢了性命。\r\n\r\n    原来几天前，方毅和往常一样进山寻找灵药，好不容易采到一株二品灵药凝血草，却不想被同为外门弟子的许少杰盯上，直接出手抢夺。\r\n\r\n    方毅如何能答应，当即便和对方争执起来。\r\n\r\n    然而，许少杰早已经是灵海三重的武者，且出手狠毒，摆明了想要方毅的命。\r\n\r\n    结果可想而知。\r\n\r\n    “放心吧！既然我占住了你的身体，就会继承你的一切，包括仇恨。”\r\n\r\n    感受着另一个记忆中的不甘，方毅坚定道。\r\n\r\n    努力的坐起身后。\r\n\r\n    方毅开始检查起自己的身体状况，除了全身有些酸痛之外，倒也没有太大的问题。\r\n\r\n    灵海中，一丝灵气缓缓流淌着。\r\n\r\n    虽然融合了两世记忆，但感受到这丝灵气，方毅仍然感到无比惊讶和兴奋。\r\n\r\n    哪怕那丝灵气看上去极为虚弱，仿佛随时都会消散。\r\n\r\n    但他知道，随着自己的修炼，这丝灵气会越来越强大。\r\n\r\n    在这样强者为尊的世界里，弱小的武者只能任人欺凌，就像原来的方毅那样。\r\n\r\n    要想受人尊敬，唯有努力修炼，提升自己的实力。\r\n\r\n    方毅如何不明白这个道理，当即搜寻记忆。\r\n\r\n    “潮汐诀！”\r\n\r\n    记忆中，这是太玄宗的基础法诀，每个刚入门的弟子都必须修炼。\r\n\r\n    据说潮汐诀共分十二重，不过整个太玄宗还没有听说过有谁能够把这门法诀修炼到十二重，最厉害的也仅仅达到了十重，那便是太玄宗一代天骄之女姬无仙。\r\n\r\n    传闻姬无仙天资卓越，冷艳无双，不过方毅却从未见过。\r\n\r\n    在他进入太玄宗前，对方便已经晋升为内门弟子，据说更是被掌门收为了亲传弟子。\r\n\r\n    在太玄宗，内门和外门就是两个世界。\r\n\r\n    方毅微微闭上双眼，按记忆中方式开始修炼起来。\r\n\r\n    慢慢的，灵海中的灵气缓缓旋转起来，形成一个小小的漩涡，慢慢吸收着天地灵气。\r\n\r\n... -->>',3),(6,'第2章 海上生明月','清晨，一缕阳光投射进屋内。\r\n\r\n    整个晚上，方毅都沉迷在修炼之中。\r\n\r\n    通过整晚的修炼和观察，方毅发现了一些奇妙之处。\r\n\r\n    灵气漩涡的速度缓下来之后，隔了一段时间，又再次快了起来，如此反复，但相隔的时间却不尽相同。\r\n\r\n    方毅当即把这些时间记录下来，想从中找到一些规律。\r\n\r\n    因为他怀疑，这很可能就是这个世界的潮汐时间。\r\n\r\n    如果自己的推测是对的话，那么只要掌握了这个世界的潮汐时间表，修炼潮汐诀，必定事半功倍。\r\n\r\n    舒展了一下身体，方毅便下了床。\r\n\r\n    经过一个晚上的休息，他的伤势已经没有大碍。\r\n\r\n    今天他还要去杂务处领取任务。\r\n\r\n    太玄宗弟子众多，所有日常事务都是由杂务处分派给下面的弟子，不过只要实力达到灵海六重，便会免除杂务。\r\n\r\n    这也是宗门激励弟子的一种手段。\r\n\r\n    出了门，方毅直接去了杂务处。\r\n\r\n    今天他的任务是打扫传承室。\r\n\r\n    对于传承室，方毅并不陌生，他曾经打扫过几次。\r\n\r\n    而且，他还知道，潮汐诀的最后三重口诀便是在传承室中。\r\n\r\n    潮汐诀前九重口诀，都是有文字记载的，但最后三重却只是三副石刻壁画，没有任何文字，完全靠自己领悟。\r\n\r\n    来到传承室，方毅便开始打扫起来。\r\n\r\n    原本以他的修为，根本没有资格进入这里，不过打扫卫生，自当别论。\r\n\r\n    很快，方毅便打扫的差不多了。\r\n\r\n    来到壁画前，三三两两的人正全神贯注的观看着壁画。\r\n\r\n    方毅也好奇的打量起来。\r\n\r\n    只见第一副壁画是一望无尽的大海，汹涌的海浪席卷而来，仿佛要把方毅吞没其中。\r\n\r\n    这正是一副潮汐时的画面。\r\n\r\n    看来自己的猜想没错，潮汐诀果然和潮汐息息相关。\r\n\r\n    只不过方毅也看不出其中有什么特殊之处，这或许和自己实力太弱有关。\r\n\r\n    第二副图案是一片夜空，一轮明月高高挂起，不过那月亮看着要比实际上大的多。\r\n\r\n    这一副图案让方毅微微有些意外，难道这副画是要告诉别人，潮汐诀和月亮有关？\r\n\r\n    虽然方毅知道，潮汐是因为月亮引力的关系，这在地球算是常识，但没想到在这个没有任何科技文明的世界里，也有人知道这点。\r\n\r\n    看完两幅画，方毅一无所获，不由看向最后一副。\r\n\r\n    然而，这最后一副画，却是空荡荡的，什么也没有，这根本就不能算是画。\r\n\r\n    方毅不由怔了，这是什么意思呢？\r\n\r\n    前面两幅画，虽然他没有领悟到什么，但是其中的意思，他都再清楚不过，甚至可以说，这个世界没人比他跟清楚。\r\n\r\n    哪怕这壁画的主人，恐怕也仅仅是知道月亮和潮汐有关，至于究竟是什么关系，估计也不清楚。\r\n\r\n    星球引力这种东西，这个世界的人根本就没有任何概念。\r\n\r\n    那这最后一副画究竟是什么意思呢？\r\n\r\n    方毅带着疑惑的神情，再次看向前两幅壁画。\r\n\r\n    那汹涌澎湃的海浪，还有那大大的明月。\r\n\r\n    是了，月亮越大，潮汐就会越汹涌，如果把自己的灵海比作大海，那明月在哪？\r\n\r\n &nb... -->>',3),(7,'第一章 开眼，第三竖瞳！','夜色如墨，漆黑的夜空中，乌云密布。远处有着沉闷的雷声滚过，似乎是有暴雨，即将倾盆而下。\r\n\r\n    在一条山间的小道上，一名身材欣长的少年，手中握着一根木棍，“笃笃笃”地在地上敲击着，缓慢的向前行进。\r\n\r\n    这个少年，面如冠玉，生得十分英俊，一双黑宝石一般的大眼睛，炯炯有神。\r\n\r\n    可惜，却是个盲人。\r\n\r\n    终于，他在一片小树林中停了下来，前面有一个身穿淡蓝色衣裙的少女，身材婀娜，姿容秀美。\r\n\r\n    “峰哥哥，你来啦！”\r\n\r\n    看到盲眼少年走来，那蓝衣少女连忙迎了上去，扶住他的胳膊。\r\n\r\n    那盲眼的少年，名为凌峰，是一个没落医道世家的传人。\r\n\r\n    很小的时候，凌峰就跟随着唯一的爷爷四处游方行医。\r\n\r\n    一年前，凌峰随着爷爷来到了开阳城，听闻开阳城城主府的小姐苏琳天生患有三阴绝脉，无人能医。\r\n\r\n    此病乃是绝症，若是过了十八岁还无法根治，那么城主之女，就只有香消玉殒一途了。\r\n\r\n    而凌峰医术天赋极高，自幼就精通医理，习得家传医经《太玄针灸术》，一手医术，堪称超凡入圣。\r\n\r\n    凌峰的爷爷凌坤看到城主张榜发出的高额悬赏金，大为心动，便让凌峰揭榜，入城主府，替苏琳治病。\r\n\r\n    第一次施针之后，那苏琳小姐的病情果然缓解了许多。\r\n\r\n    于是乎，在城主百般请求下，凌峰和爷爷留在了城主府，替苏琳彻底根除三阴绝脉。\r\n\r\n    三个月前，凌峰给苏琳施针之时，不慎遭到阴气反噬，引发了眼疾，变成了一个盲人。\r\n\r\n    为了让安抚凌峰，让他继续替女儿全力治疗，城主许下承诺，只要凌峰可以根治苏琳的三阴绝脉，就把苏琳嫁给他为妻！\r\n\r\n    苏琳也表示凌峰是为她而瞎的，她愿意用一生一世来还这份恩情，照顾他一辈子。\r\n\r\n    那苏琳正是二八佳人，温柔似水，凌峰早就对她暗生情愫，再加上已经眼盲，能够娶到苏琳这样的美人，哪里还有不同意的道理。\r\n\r\n    这三个月以来，经过凌峰尽心竭力的治疗，苏琳的身体越来越好，只需经过今晚的治疗，她的三阴绝脉就可以彻底根治了。\r\n\r\n \r\n\r\n\r\n    “来，琳儿，你坐好，今日我再替你最后施针一次，你的三阴之气就会被彻底拔除，以后月圆之夜，也不会再受到阴气反噬的痛楚了。”\r\n\r\n    “谢谢峰哥哥！我扶你坐下。”\r\n\r\n    苏琳那秀丽的俏脸上露出一丝甜美的笑容，扶着凌峰在一棵大树底下坐下，然后盘膝坐在了他的面前。\r\n\r\n    凌峰在苏琳的搀扶下，缓缓坐好，从怀中取出一包金针，柔声道：“琳儿，冒犯了。”\r\n\r\n    说完，他抬手向前在苏琳身上摸索起来，虽然他已经眼盲，可是苏琳的模样已经烙印在了他的心中，他很轻易的就找准了穴位，用金针轻轻刺窍穴，开始排除三阴之气。\r\n\r\n    那三阴之气，顺着金针，难免就会有一丝传入到凌峰的体内。这也是为什么之前他被阴气反噬，弄瞎了双眼的原因。\r\n\r\n    此刻，苏琳的气色越发的红润，但是凌峰却全身青筋暴起，额头上冷汗直冒，承受着阴气侵蚀的巨大痛苦。\r\n\r\n    半刻钟后，凌峰缓缓收回了金针，苏琳的三阴绝脉，终于根治了。\r\n\r\n    凌峰擦了擦额头上的汗水，脸色苍白，虚弱的说道：“好了琳儿，你可以起来了。”\r\n\r\n    苏琳变得神采奕奕起来，睁开眸子看着凌峰，沉声道：“我的三阴绝脉，真的已经完全根治了吗？”\r\n\r\n    “嗯，彻底根治了。”凌峰微微笑道：“休息一段时间，你就可以变成一个健健康康，漂漂亮亮的新娘子了。”\r\n\r\n    “谢谢。”苏琳的声音，变得有些冷漠，再也不像之前那样，一口一个“峰哥哥”的了。\r\n\r\n    “跟我还客气什么，我们回府吧，我明天就跟城主大人提亲去！”\r\n\r\n    凌峰温柔地笑了起来，抬手想要去抚摸苏琳的脸颊。\r\n\r\n    平时，苏琳都会主动凑过来让他抚摸的，可是这一次，没有！\r\n\r\n    凌峰心中一紧，生出一丝不好的预感，皱了皱眉头，“琳儿，你怎么了？”\r\n\r\n    苏琳没有回答，只是回头看了看，发现茂密的树林之中，忽然出现了一根根火把，一阵脚步声朝着这边靠近过来。\r\n\r\n    她猛地扯开自己肩膀上的衣衫，往凌峰怀中一钻，便大喊起来，“凌峰，你这个禽兽，你居然想要轻薄我！快来人啊，救命啊！”\r\n\r\n    凌峰的表情一滞，一脸错愕道：“琳儿，你在说什么？你这是什么意思？”\r\n\r\n    这时候，就见一名英俊的少年领着一个中年男子，在一群下人的簇拥之下，快步走上前来。\r\n\r\n    “凌峰，你这个畜生！你在干什么！”\r\n\r\n    那中年男子暴喝一声，一个箭步冲上前去，一手把苏琳拽起，反手一个巴掌，狠狠抽了出去，将凌峰抽翻在地。\r\n\r\n    原来，这个中年男子，正是开阳城的城主，苏琳的父亲苏世雄。\r\n\r\n    苏琳哭哭啼啼的缩进苏世雄怀中，啜泣道：“爹，凌峰他……他不是人！”>',4),(8,'第二章 极限杀戮，天子之眼！','哗啦啦！\r\n\r\n    暴雨倾盆而下，打在凌峰的身上。\r\n\r\n    在他的脚下，一具具尸体，血肉横飞，在雨水的冲刷之下，方圆数十米的范围，皆是被血水染红！\r\n\r\n    凌峰看着自己的双手，上面沾满了血水和肉末，他额头上的竖瞳，渐渐闭合，留下了一道暗红色的血线。\r\n\r\n    “我不仅没有死，而且还看得见了！”\r\n\r\n    凌峰心中掀起一阵惊涛骇浪，金针刺入百会穴，他已经抱了必死之心，可是想不到自己居然会狂性大发，而且杀了这么多人。\r\n\r\n    “既然上天不让我死，那便是要你死！”凌峰眸中燃烧起熊熊的怒火，“贱人，你的死期到了！”\r\n\r\n    凌峰将头顶上的金针拔出，一阵虚弱感袭上心头，额头上的竖瞳也彻底消失。\r\n\r\n    唯一不变的是，他的眼睛，已经恢复了。眼前的一切，清晰可见。\r\n\r\n    他没有兴趣知道自己为什么会突然开启那诡异的竖瞳，内心充斥的怒火，已经将他变成了一头愤怒的野兽。\r\n\r\n    苏琳父女那阴险丑恶的嘴脸，令人作呕！\r\n\r\n    “爷爷还在苏家！”\r\n\r\n    凌峰捏了捏拳头，之前被打断的骨头似乎全部都愈合了，虽然浑身上下都剧痛无比，但已经不影响行走了。\r\n\r\n    凌峰向着山下狂奔，他要杀了苏琳那个贱人，然后再带上爷爷，从此远离开阳城，再也不回来了！\r\n\r\n    ……\r\n\r\n    城主府的门口。\r\n\r\n    几名下人将一些乱七八糟的包袱，药箱，狠狠地丢出了大门，被门外的滂沱大雨浸湿。\r\n\r\n    “死老头子，滚吧，以后休想再我们城主府蹭吃蹭喝了！”\r\n\r\n    其中一个壮汉，狠狠地将一名头发花白的老者推进了雨帘之中。\r\n\r\n    “你们这些狗奴才，好大的胆子，我可是城主女婿的爷爷，你们竟敢这样对我！哎呀，湿了，我的药箱都湿了啊！”\r\n\r\n    那老者一边捡起地上的药箱，一边大吼大叫起来。\r\n\r\n    “哈哈哈……城主的女婿？别做梦了，就那臭瞎子，此刻怕是已经做了阎王爷的女婿了！”\r\n\r\n    一名名奴才皆是哈哈大笑起来。\r\n\r\n    另外一个中年发福的男子，乃是城主府的管家，从怀里掏出一袋银两，冷声道：“你孙子欲要轻薄我们家小姐，已经受到了应有的惩罚，念在你们治好了小姐的份上，这是城主大人恩赐给你的诊金，拿着钱滚吧！”\r\n\r\n    “什么？”凌坤脑中顿时一片空白，“你们说什么，峰儿……我孙子峰儿，他……他怎么了？”\r\n\r\n    “嘿嘿，现在赶去后山，说不定还可以见到最后一面。”管家冷笑了起来，“这就是癞蛤蟆想吃天鹅肉的代价！”\r\n\r\n    “你们！”凌坤指着那管家，手指剧烈颤抖起来，“你们……峰儿为了给你们小姐治疗三阴绝脉，连眼睛都瞎了，你们居然这样对他，你们会遭到报应的！”\r\n\r\n    “报应？”中年管家操起一根铁棍，恶狠狠道：“死老头，你要是再不滚，老子现在就送你去见阎王！”\r\n\r\n    说着，管家抓着铁棍重重一挥，发出“嗡嗡”地闷响声。\r\n\r\n    “你们赔我孙子的命来！”凌坤嚎啕大哭，向着那管家扑了过去，“你们小姐呢，我要见她！我要看看，她的心是不是黑的，我家峰儿如此真心待她，如此真心待她啊！”\r\n\r\n    “老东西，我看你是找死！”\r\n\r\n    中年管家一脸嫌弃的看着凌坤，铁棍直接在凌坤的脑袋上砸去，“你去死吧！”\r\n\r\n    噼啪！\r\n\r\n    一声惊雷炸响！\r\n\r\n    暴雨如泼，整个城主府，整个开阳城，仿佛要被这场大雨彻底淹没。\r\n\r\n    “爷爷！”\r\n\r\n    凌峰赶到城主府之时，就目睹了爷爷被那中年管家用铁棍打翻在地的一幕。\r\n\r\n    怒火，再一次蔓延凌峰的全身，他不顾一切，把所有的金针，全部刺入了自己的头顶！\r\n\r\n    嗡！\r\n\r\n    脑海一颤，额头的竖瞳，再次睁开，散发出修罗一般恐怖的气息！\r\n\r\n    “你们，都要死！”\r\n\r\n    凌峰目眦欲裂，一双眼睛仿佛是血泉一般，闪烁着诡异的红光。\r\n\r\n    唰！\r\n\r\n    凌峰的身影，就像是一头迅捷的猎豹... -->>',4),(9,'第一章 废柴杨帆','杨帆睁开眼，看到竟然有汽车在天上飞，而且还不止一辆。\r\n\r\n    轨迹看上去乱七八糟，或滑翔，或俯冲，有的甚至还在走8字，飞驰电掣却又各行其道，快若闪电却又无一处失控碰撞。\r\n\r\n    “尼玛，看来是真的醉了，都开始做梦了，连汽车都开始在天上飞了。”\r\n\r\n    “嗯，做梦了好啊，做梦了说明我终于能够睡着了！”\r\n\r\n    杨帆一翻身，换个姿势继续睡，连着失眠了五天五夜之后，他从来都没有感觉到原来睡觉竟是这么幸福的一件事情。\r\n\r\n    好香，好甜，好过瘾！\r\n\r\n    所以说，酒啊，真是好东西，他应该早点就想到用这种方法来助眠的，哪怕喝死了，吐死了，也值了。\r\n\r\n    “你翻了个身，肌体协调度有所提升，体能恢复+1。”\r\n\r\n    恍惚间，耳边传来一句轻柔但却略显机械的陌生女音，杨帆皱了皱眉，嘴里含糊不清地回了一句：“别闹！睡觉呢！”\r\n\r\n    周围瞬间便安静了下来，杨帆巴唧了两下嘴，嘴角开始流起了口水，睡得很香。\r\n\r\n    一个小时后，陌生的声音再次响起。\r\n\r\n    “你连续睡眠一个小时，精神力有所恢复，体能恢复+1。”\r\n\r\n    “你连续日晒一个小时，防辐射能力得到加强，光合作用+1，灵能+1。”\r\n\r\n    “你连续呼吸瘴气一个小时，肺活量有所增加，毒抗+1。”\r\n\r\n    呼呼呼！\r\n\r\n    杨帆睡得死沉，完全忽略了耳边时不时传来的絮叨声。\r\n\r\n    他实在是太累了，五天五夜的失眠经历，把他折磨得几度想要跳楼解脱，现在好不容易借着酒意睡着了，他就想这么一直睡下去，最好永远都不要醒来。\r\n\r\n    就算是死，他要也死在床上。\r\n\r\n    “杨帆！杨帆！你没事儿吧？醒醒！快醒醒！”\r\n\r\n    “不像是中毒了，这家伙不会是睡着了吧，你听这呼噜声。”\r\n\r\n    “长点脑子好不好？杨帆是废物不假，可又不是缺心眼儿，现在可是在模拟考试，又身处野外，他连防辐射的外套都没穿，在这里睡觉，找死么。”\r\n\r\n    “看他后脑勺上的伤痕，明显是被人击晕后扔到这里来的，谁跟他有这么大的仇，把人打晕了不算，还剥了他的防护服，这不是想要了杨帆的命么？”\r\n\r\n \r\n\r\n\r\n    一群身穿着统一样式防护服的年轻人围在杨帆身边叽叽喳喳，品头论足，却没有一人愿意对他伸出援手，甚至连替他向监考老师发送求救的信号都懒得去做。\r\n\r\n    “行了行了，一个废物而已，死了更好，大家还是继续考核吧，别因为一个废物而影响了大家的成绩！”\r\n\r\n    很快，人群散去，杨帆的身边又恢复了安静。\r\n\r\n    呼呼呼！\r\n\r\n    杨帆再度翻了个身，睡得更香了，口水流了一地，可是他却分毫未觉。\r\n\r\n    “你翻了个身，肌体协调度有所提升，体能恢复+1。”\r\n\r\n    千米高的空中，白云深处，云棱Ⅰ型飞艇滞空悬浮，中心区域的监控大厅，高三年级二十九班的班主任黄钟拧眉看着熟睡中的杨帆。\r\n\r\n    呼吸均匀，心跳每分钟65次，气血强度86，生命体征一切正常。\r\n\r\n    看上去似乎没有什么问题，可是谁能解释一下，... -->>',5),(10,'第二章 梦境成真！','杨帆做了一个梦。\r\n\r\n    他梦见他在一个类似于末世的高武世界又重新活了一世，就像是在看电影一样，从记事，到长大成人，一点一滴全都浮现在脑海。\r\n\r\n    不得不说，这一世，他很幸福。\r\n\r\n    因为他从小就身子健康，发育良好，能吃能睡，而且家世也很不错，父母都是武者，家里不缺钱，妥妥的一个二世祖模板。\r\n\r\n    唯一的缺撼就是武道天赋只有凡铁一级，练武练了十几年却仍是二级武徒，走到哪都被人指指点点说成是废物。\r\n\r\n    为此，他变得有些自卑，内向，不喜与人交流，每天上课的时候最喜欢做的事情就是趴在书桌上睡觉。\r\n\r\n    别人学习的时候，他在睡觉。\r\n\r\n    别人练武的时候，他在睡觉。\r\n\r\n    别人睡觉的时候，他还在睡觉。\r\n\r\n    懒得跟猪一样……真幸福啊！\r\n\r\n    拥有上帝视角的杨帆在心里由衷地感叹，能够每天这么畅游在睡梦之中，绝对是这个世界上最幸福的一件事情。\r\n\r\n    什么武道天赋，什么修练废柴，哪有睡觉来得舒服？\r\n\r\n    “你做了一个美梦，精神力得到极大提升，灵魂强度+2。”\r\n\r\n    “别闹！”\r\n\r\n    杨帆正在梦中熟睡，迷糊间听到耳边似乎有些吵闹，极度不满地挥了挥手，睡觉的时候他最烦有人在耳边喧嚣。\r\n\r\n    “杨帆，你快醒醒！”\r\n\r\n    有人在使劲摇晃杨帆的胳膊，仿佛是个女声：“你不想活了吗，这里可是禁区，随时都会有妖兽入没，快点醒醒！”\r\n\r\n    杨帆极不耐烦地用力将人甩开：“别闹，让我再睡会儿！”\r\n\r\n    花月：“……”\r\n\r\n    “算了花月，他愿意在这里作死那就让他去死好了，咱们还是快去猎杀透骨兽吧，再晚的话考核时间就要过了！”\r\n\r\n    夏梓萱不耐烦地在旁边劝说，同时厌恶地看着杨帆，一个废柴罢了，不值得她们如此费心。\r\n\r\n    花月摇头，于心不忍道：“毕竟是同学，怎么能看着他就这么轻易地葬身野外？”\r\n\r\n    说着，花月还想要继续上前唤醒杨帆，却被夏梓萱给伸手拦住：“拜托了我的大小姐，现在可是在模拟考核，天上有监控，地上有监察老师，他就算是想死又哪有那么容易？”\r\n\r\n    “如果他真的有生命危险，不用你吭声，自然会有人过来将他引渡回去，你就别再操这份闲心了。”\r\n\r\n    “反正就是一个废柴，躲在这里睡觉对他来说反倒是一件好事，难道你还真指望着他能去杀掉一只透骨兽，那才是在找死好不好？”\r\n\r\n    这已经不是第一次了，每次模拟考核杨帆不都是在躺着通过，只是这一次的考核地点设在了野外，多了些许凶险罢了。\r\n\r\n \r\n\r\n\r\n    花月蹙着眉头，脸上仍泛着担忧：“可是就这么露天躺在野外，他身上连件防护服都没有，不说辐射与瘴气，就算是被毒虫或是野兽给咬伤了，多半也会凶多吉少……”\r\n\r\n    “行了行了，我的大小姐，知道你心善，哪怕是只兔子是条小狗受了委屈你都会心疼，但是现在是模拟考核，考核的成绩直接关系到接下来一个月的修炼资源，咱们就别再这耽搁了好不好？”\r\n\r\n    “最多，咱们猎杀完透骨兽后再回来看看，如果他还没有被监察老师带走的话，咱们就替他通知黄老师，走啦走啦！”\r\n\r\n    不管花月愿不愿意，夏梓萱直接拉着她的胳膊强行将她拽离，再在这里磨蹭下去，她们的成绩可真的要垫底了。\r\n\r\n    两个人渐行渐远，很快就没了声息。\r\n\r\n    杨帆在睡梦中仿佛听到了花月这个名字，脸上的笑容一片柔软，花月是他梦中这一世的女神，一个善良得像是仙女一样的姑娘。\r\n\r\n    平时上课不睡觉的时候，他最喜欢做的事情就是一直盯着花月的背影偷看，每次看到她，杨帆的心中就会生起一片亮光，花月的笑容与身影，就像是清晨的朝阳，普照着他的心田。\r\n\r\n    “花月……”\r\n\r\n    含糊不清地叫了一声花月的名字，杨帆的嘴角露出了甜甜的微笑。\r\n\r\n    暗恋一个人，其实感觉也可以很美好。\r\n\r\n    “你做了一个美梦，精神力得到极大提升，灵魂强度+3。”\r\n\r\n    烦人的声音再度响起，杨帆有些恼羞成怒、气急败坏：“滚开！再闹我翻脸啦！”\r\n\r\n    老子好不容易睡着了，好不容易做了一个美梦，怎么却有这么多不开眼的人过来打扰，还能不能好好睡觉了？\r\n\r\n    “你生了个气，呼吸节奏加快，心脑活跃程度得到极大提升，气血强度+5。”\r\n\r\n    “尼玛！还有完没完？！有完没完？！”\r\n\r\n    杨帆哧愣一下坐起身来，肝火大动，双目圆睁看向周围：“谁？！是谁在跟我捣乱，你给我站出来，我保证打不死你！”\r\n\r\n    “……”\r\n\r\n    然后，看清了周围的环境，杨帆开始懵逼。\r\n\r\n    这特么是在哪？\r\n\r\n    我不是在合租屋里睡觉吗，谁把我扔到这荒郊野外来了？\r\n\r\n    他明明记得为了能够麻醉自己让自己好好的睡上一觉，他一连灌了三瓶二锅头下肚，吐得那叫一个稀里哗啦。',5),(11,'第一章 林轩','玄天宗，练剑峰。\r\n\r\n    空旷的山地上，数十名白衣少年在练剑，炫目的灵力包裹着长剑，剑锋划破空气，在空中震荡不止。\r\n\r\n    不远处，一群麻衣少年痴痴地望着，眼中满是羡慕之色。\r\n\r\n    “我要是能成为他们中的一员就好了，那样我也能学剑练剑，想想就激动！”一麻衣少年说道。\r\n\r\n    “做梦吧！人家是玄天宗弟子，而我们是剑奴，怎么可能和他们一样练剑！”\r\n\r\n    “想成为玄天宗弟子，简单啊，学林轩就行了！”一道阴阳怪气的声音响起。\r\n\r\n    众麻衣少年笑成一团，目光却都望向了同一个地方。\r\n\r\n    在树林间，有一个麻衣少年，大约十六七岁，脸庞清秀，身子有些单薄，他拿着一柄黑铁长剑，不断的刺出。汗水早已打湿了他的衣衫，可他却浑然不知。\r\n\r\n    “林轩？哼，就他这种废物，给他一百年他都成不了玄天宗弟子！别的不说，在我们之中，他就是垫底的，拿什么去成为玄剑宗弟子？”\r\n\r\n \r\n\r\n\r\n    “对啊，我听说前些日子他想冲击凝脉境，结果失败，吐血不止，修为更是掉到了炼体三阶，到现在还没恢复呢！”这声音之中充满了幸灾乐祸的味道。\r\n\r\n    “就他，这三个月天天都练同一招剑法，而且还是平淡无奇的那种，估计他都练傻了！”\r\n\r\n    不少人的声音都很大，林轩听到这些话，心中泛起一丝苦涩，但是握剑的手更加用力了，他绷着一张小脸，继续练剑。\r\n\r\n    武道一途，炼体是基础，而凝脉境才算是入门，只有打通体内灵脉，才有机会在武道之路上走的更远。\r\n\r\n    “王哥已经是炼体九阶了吧，要是突破到凝脉境，可不要忘了我们啊！”这些麻衣少年看到林轩不为所动，纷纷暗骂一句，然后开始讨好身边的一位少年。\r\n\r\n    “那肯定的，王哥再有两个月就能突破了，到时候也许能成为玄天宗弟子也说不定呢！”\r\n\r\n    王洋不屑的瞟了一眼林轩，这才说道：“用不了两个月，最多一个月，我就能突破！”\r\n\r\n    “真的啊？王哥威武……”身边的这些麻衣少年纷纷拍起马屁。\r\n\r\n    “王哥，你看那林轩多么嚣张，不如您教训教训他。”\r\n\r\n    王洋心中早就对林轩不满，他看了一眼练剑的白衣弟子们，估摸着离休息的时间还长，这才起身朝着林轩走去。\r\n\r\n    众麻衣少年纷纷跟上，准备看林轩的笑话。\r\n\r\n    林轩全神练剑，他身子前冲，手中长剑直刺而去，剑光一闪，树干上留下了一道剑痕。\r\n\r\n    其实他们不知道，林轩这一招已经练习三年了。从那一天起，他每天都练这一招剑法，无论什么情况，他都没有停止过。\r\n\r\n    嗖！一个石子飞向林轩的后脑，响起破空之声，力道之狠，让人心惊。\r\n\r\n    林轩身子一倾，险而又险的避过了这一击，他停下身子，有些愤怒的望去。只见王洋带着一群麻衣少年站在不远处，一副要找事的样子。\r\n\r\n    “呦，身法不错啊，这都能躲过？”那王洋笑嘻嘻的说道。\r\n\r\n    “你有什么事？”林轩握了握手中的长剑，沉声说道。刚才那一下，要是他慢一点，恐怕脑袋上就会多一个血洞，他和这些人无冤无仇，但是他们下手却如此狠毒！\r\n\r\n    “听说，你一招剑法练了三个月，想必威力不凡，拿出来让我们见识见识。”\r\n\r\n    林轩冷冷的望向他们，没有言语。\r\n\r\n    “怎么，不敢？还是说你练了三个月，一点效果都没有？”王洋十分嚣张的笑道。\r\n\r\n    “王哥，给他露一手，让他知道你的厉害！”\r\n\r\n    “小子，就让我告诉你什么是剑法！”王洋一步踏出，身上涌出一股凌厉的气息，如同沉闷的火山，随时都能爆发。\r\n\r\n    “不愧是炼体九阶，光着气息就让我难受！”不少麻衣少年心惊道。\r\n\r\n    王洋冷笑一声，他拔出精钢剑，舞了个剑花，然后一剑刺向了林轩。\r\n\r\n    众麻衣少年瞪大了眼睛，想看清林轩无力倒地的样子，他们对这个格格不入的家伙早就烦透了，大家都是剑奴，你装什么大爷！\r\n\r\n    林轩叹息一声，有些苍白的手握住了黑色的剑，下一刻，他的眼神变得异常凌厉。\r\n\r\n    拔剑，腾起，刺剑，收剑。\r\n\r\n    一切都发生在眨眼之间，当众人回过神来，发现林轩已经收起了黑铁长剑，冷冷的站着。\r\n\r\n    “不可能，这不可能！”王洋惊恐的回头，他的一缕头发被斩断，脖子上更是有一道血痕，丝丝的鲜血正往外涌。\r\n\r\n    嘶！\r\n\r\n    众人倒吸一口冷气，他们怎么也想不到王洋炼体九阶的修为，竟然会被炼体三阶的林轩打败，而且还是一招制胜。\r\n\r\n    “这林轩到底是什么人，他练得又是什么剑法？”这是所有人的疑问。\r\n\r\n    “怎么回事，都围在这里干什么，想造反了！”一道凌厉的声音响起。\r\n\r\n    “坏了，玄天宗的弟子要休息了。”众麻衣少年身子一颤，纷纷脸上堆起笑脸，迎上了那些白衣弟子。\r\n\r\n    “主人，你渴了吧，这是九夜灵茶，我连夜熬制的！”\r\n\r\n    “少爷，秘灵丹，快速恢复体力，您吃一颗。”\r\n\r\n    所有的麻衣少年都卑躬屈膝的照顾那些白衣弟子，就连那王洋也不例外，他收起了那副惊恐的表情，快速的朝着一个白衣弟子跑去。\r\n\r\n    “主人，您的丹药。”王洋恭敬的说道。\r\n\r\n    那少年接过丹药，吞入口中，目光瞥到王洋的脖子，眉头顿时皱了起来。\r\n\r\n    “怎么回事，你脖子上的伤怎么弄得？”白衣少年陈风问道。\r\n\r\n    “主，主人……”王洋的身子有些发颤，要是让主人知道他输给了一个炼体三阶的人，恐怕他的下场会很惨。\r\n\r\n    这时，其他的白衣弟子也围了过来，有的剑奴说出了事情的经过，众人都看向了林轩。\r\n<... -->>',6),(12,'第二章 你，过来！','“不孝弟子林轩，屡次触犯家规，现剥夺少府主之名，逐出剑池府！”\r\n\r\n    “哼！这种人早该被逐出去了，留着只会丢我们剑池府的脸！”\r\n\r\n    “悟性好有什么用，打不通灵脉，屁都不是！”\r\n\r\n    “对，一个打不通灵脉的废物，竟然让他当少府主，真是可笑！”\r\n\r\n    无尽的嘲讽、谩骂如同洪水猛兽，将林轩淹没……\r\n\r\n    “啊——”\r\n\r\n    林轩突然睁开眼睛，猛的坐了起来，身上冷汗连连。清晨的阳光自窗外照进屋来，带着一丝暖意，把他拉回了现实世界。\r\n\r\n    “又做这种噩梦了。”林轩苦笑一声。他在很小的时候，就展现出惊人的武学天赋，一些武功被他看一遍就能练得有模有样，所有人都以为他是武道天才，对他报了很大的期望。\r\n\r\n    但是，另所有人吃惊的是，他根本打不开灵脉。\r\n\r\n    武者只有在体内聚集修炼出的灵力，冲开体内的灵脉，才能获得更加强大的力量，但是林轩怎么做都冲不开灵脉。\r\n\r\n    所以，林轩被家族放弃了。\r\n\r\n    揉了揉脸，他翻开被子，走下床来，抓起桌上的水壶拼命的灌了两口。\r\n\r\n    这是一间简陋的小屋，屋内只有一张木床和一个发旧的桌子，林轩拿着粗布麻衣，刚穿到一半，只听房门碰的一声，被人踹开了。\r\n\r\n    首先进屋的是那白衣少年陈风，在后面还有十几个人。他神态高傲的说道：“小子，跟我们走一趟吧！”\r\n\r\n    “你们有什么事？”林轩慢慢的穿好衣服，冷漠的问道。\r\n\r\n    “大胆，你一个小小的剑奴，敢如此无礼！”陈风哐当一声拔出了宝剑，冰冷的剑锋指向林轩，隐隐发出一股杀气。\r\n\r\n    感受到长剑上传来的杀意，林轩不自觉的摸了摸他脖子上戴的一个剑形吊坠，那是他父亲临死前给他的，里面存储了一定的灵力，是留给他保命用的。\r\n\r\n    摸了一下胸口处的吊坠，林轩静下心来，对方是二阶灵士，若是真的想杀他，他拼死也要拉上一个垫背的！\r\n\r\n    见到林轩并没有像其他剑奴那样吓得颤抖，那些白衣弟子有些意外，陈风更是恼怒，连一个剑奴都不怕他，这要是传出去，他还怎么混？\r\n\r\n    “好了，陈风！别忘了我们的目的，耽误了时间你负责？”带头的那名少年拦下了暴怒中的陈风。\r\n\r\n    “小子，跟我们走吧，有事需要你做。”带头少年张彬冷声说道。\r\n\r\n    林轩望了一眼跟在他们身后的那些剑奴，心中想道：“好汉不吃眼前亏，先跟在他们，我倒要看看，他们想做什么！”\r\n\r\n    面无表情的点点头，林轩走了过去。\r\n\r\n    陈风见到林轩走入队伍，心中一阵冷笑：“待会看你怎么死！”\r\n\r\n    带头少年张彬大手一挥，说道：“所有人都跟我来！”一行人快速的向着玄天宗附近的森林走去。\r\n\r\n    玄天宗是云州三宗之一，位于太行山脉的外围，门内弟子经常去山中打猎采药，但是也只是在这外围而已。太行山脉中到处都是凶猛的野兽，越往里越危险，没有实力，在这大山之中只能送死。\r\n\r\n    林轩跟随着那些白衣弟子来到一座山洞前，周围杂草丛生，藤蔓缠绕，在那洞口处有一株火红色的灵芝，如同一团鲜红的火焰。\r\n\r\n \r\n\r\n\r\n    那些白衣弟子看向火灵芝时，眼中都是贪婪之色，都是狂吞口水。张彬压抑着心中的激动说道：“所有的剑奴听着，那山洞里有一条小蛇，你们将它引出来，引得越远越好。”\r\n\r\n    “如果失败了，或者有谁想逃跑，我会第一个杀了他！”说道这里，他突然眼神一凝，身上迸发出一股强横的气息。\r\n\r\n    林轩心中一沉，暗骂一声该死，这些家伙想利用他们引走凶兽，然后他们好摘取那株火灵芝，可是凶兽是这么好引走的？\r\n\r\n    这火灵芝散发的香气，他离着这么远都能闻到，何况是其他的野兽。但是却没有一只敢来，甚至这附近都静的可怕，可想而知那山洞的凶兽有多么强大。\r\n\r\n    林轩不是普通的剑奴，他曾是剑池府的少主，见识远超其他人，这些白衣弟子明明就是想用剑奴的生命来换取那株火灵芝。\r\n\r\n    “你，走到最前面去！”陈风一脸冷笑的指向了林轩，眼中满是戏谑之色。\r\n\r\n    “妈的！”林轩心中暗骂，极不情愿的走到了最前面，他又一次体会到了没有实力的可悲之处，连自己的命运都捏着别人手中，这种滋... -->>',6),(13,'第一章：高塔','“记录高塔……”\r\n\r\n    这里是介于存在与不存在之间，是并不具备现实地点意义上的地方，是名为记录高塔的建筑物，是真实历史这一组织的总部，也是其存放所有记录下来的历史文献的地点。\r\n\r\n    李铭小心翼翼的走在导师身后，几乎是踩着导师的脚步向前迈动，走了片刻，导师回头说道：“你不必那么小心翼翼，作为真实历史记录员，那怕只是记录员新生代，你应该也具备着行走于时间与空间之间的特殊资质，而这里的特殊性会将这种资质提高到足以影响概率的程度上，所以你根本不必担心会出什么事。”\r\n\r\n \r\n\r\n\r\n    李铭弱弱回以一笑，同时看向了周围，周围就是一片虚空，不，连虚空都算不上，是纯粹的“无”，远处的高塔直耸入不可视的莫名之地，而除了高塔以外，这里什么都没有，他也不是走在路上，而是和导师一起行走在“无”中，作为前几天还是一个极普通的太清大学大一新生来说，走在这里实在是挑战着他的神经。\r\n\r\n    无论是以他的知识储备来看，还是以他所能够获知的超前知识想象来解释，这里的“无”都会吞噬掉一切非圣人的存在，他光是走路都已经用尽了全部勇气了，压根不敢，也不可能肆意妄为什么。\r\n\r\n    导师看着李铭的模样叹了口气，他转头看向了高塔道：“按道理来说，你必须成为资深记录员之后，才可以进入记录高塔查看历史真文，不过你的情况有些特殊……所以你可以现在就开始查看，但是仅限于洪荒历的历史真文，切记了，这些历史真文本身就有着特殊性，若是你太过贪心，可能就走不出这高塔了。”\r\n\r\n    李铭点头，同时又问道：“导师，历史真文一共分为几部啊？”\r\n\r\n    “用部为单位来称呼不太准确。”导师说道：“历史的真文其实是分为无穷多的内容章节，从每一个智慧族群的诞生到终结，到一切智慧生命的互动影响，到多元宇宙本身的变动，历史的真文无始无终……不过那是历史真文，而我们只是生命，所以我们强行将其以时间划分开来，一共分为了混沌历，鸿蒙历，洪荒历，人类历，功德历，梦想历，光芒历，以及最后的升华历，当然了，这个最后，只是我们的观察只能够观察到哪里罢了。”\r\n\r\n    李铭心里暗暗思量，光是这些话语就让他受用无穷，若是从历史真文的时间节点来看，他应该是出生在人类历时代，出生在洪荒政府中，一个极为普通的人，成绩极为普通，家世极为普通，能力极为普通，以普通的幸运考上了太清大学普通的院校，成为了一个普通的大学生。\r\n\r\n    就在李铭暗暗思量什么时，导师行走的速度依然未变，带着李铭慢慢靠近了记录高塔，而这高塔进口处，除了一座大门以外，居然连一个守卫都没有，而来到这里后，导师就停下脚步对李铭道：“接下来的路就需要你自己去走了，切记，你只可看洪荒历部分，别的部分千万别看，否则那怕你有时空资质，可以成为记录员，但是你目前还只是最最最初级的记录员，一个不好，你可能会就此失落。”\r\n\r\n    李铭点头应是，他就看到导师转身向着无中而去，他立刻就喊道：“导师，您难道不和我一起进去吗？”\r\n\r\n    导师回头默默看着李铭，片刻后他摇头道：“这是你的道路……切记。”说完，头也不回的离开了。\r\n\r\n    李铭就站在高塔大门前迟疑许久，这才慢慢向着高塔内走去，而刚一走入大门，恍惚间一个失神，当他回过神来时，发现自己已经站在了一片连绵不绝的图书柜走廊之中，走廊两旁全是十多米高的图书收藏柜，而这个走廊除了他以外，居然连一个人影都没有。\r\n\r\n    空旷幽静的环境，让李铭猛的打了个寒颤，他左右看了许久，叹了口气，这才随意从一个图书柜上取了一本书下来，而拿下这本书的同时，他发现自己已经坐在了一张舒适的座椅上，在他前方有着一张桌子，桌子上还有一盏明亮的油灯。\r\n\r\n    “……要不要这么复古啊，纸张书页，加上原木桌椅，还有油灯……这是要我挑灯夜读吗？”李铭自嘲一笑，他就看向了这厚厚的图书封面，上面写着十三贤者四个字... --',8),(14,'第二章：穿越','吴明晃了晃脑袋，想要将那眩晕感给平静下来，隔了许久后他才从草地上站了起来，同时说道：“就是这个位面吗？这里有什么特殊的吗？”\r\n\r\n    脑海中，之前那平板的声响并没有出现，吴明也并不觉得奇怪，毕竟这可能疑似主神的东西啊，可不是那些什么系统流的妖艳货色，压根不会卖萌什么的，也绝不可能具现出萌妹子什么的，就是只发布任务，然后要么完成要么抹杀的高冷类型，说实话，吴明早就有了心理准备，毕竟他看过太多的无限流小说了。\r\n\r\n    吴明并不是真实的他，或者说，他并不是原本的那个吴明，他穿越了。\r\n\r\n    吴明原本是一个名为地球的行星上，二十一世纪的Z国二十七岁宅系青年，在某天清晨醒来时，他就发现自己穿越了，穿越到了一个天圆地方的广阔无边大陆世界中，成为了这个世界一名高考生……悲惨的大型灾难片，高考往事中的一员……\r\n\r\n    没错，这个世界非常不科学的有着天圆地方的世界观，巨大无比的大陆据说无边无际，虽然每天依然是二十四小时，同时有着春夏秋冬等等季节因素……\r\n\r\n \r\n\r\n\r\n    这个世界同时还有着超凡性质存在，才穿越过来的吴明亲眼看到一个老大妈跳着跳着广场舞，就直接跳起数百米的高度，他同时还亲眼看到一个上班族驾驶飞行载具，停下时，单手托起数吨重的飞行载具奔入停机坪……\r\n\r\n    这是一个科技比吴明穿越前的二十一世纪地球还要先进得多，但同时又具备着魔法，修真，诡术，念力等等超凡力量的世界，这个世界名为洪荒大陆，而统治这个世界的则是洪荒天庭政府。\r\n\r\n    穿越过来的数个月时间里，吴明大体上弄懂了一些事情，洪荒世界的科技异常发达，同时也是资讯大爆发的时代，通过网络他查找到了许多东西，比如穿越这玩意，在洪荒世界的网络上一直都有记载。\r\n\r\n    通常而言，都是从高魔世界向低魔世界穿越，就如同能级转移一样，总是从高能级向低能级进行转移平衡，而洪荒世界早就知道位面的存在，在洪荒世界的科技观中，整个宇宙并不是单一存在的，也并非只有简单的星系型宇宙存在，而是无穷无量多的位面组成了一个大型位面集合体，也就是多元宇宙的存在。\r\n\r\n    吴明穿越前的地球，就是一个星系型大型位面，而且是无魔或者超低魔标准的位面，按照洪荒世界的科技记录中，位面按照能级来分配，一共分为无魔，低魔，中魔，高魔，以及唯一一个超魔的位面，而洪荒世界的所处位面就是这个唯一的超魔位面。\r\n\r\n    在洪荒世界的科技理论中，绝对不可能有任何外来的存在夺舍穿越到洪荒世界中，这就相当于将两杯一百度的水倒在一起，变成一半两百度，一半结冰零度一样不可能，但是吴明偏偏就是从无魔世界穿越到了这个超魔世界中，他想，唯一的可能性就是他戴着的这块石头手表了。\r\n\r\n    这是一块纯粹以石头雕刻而成的手表，是吴明在一次偶然中以几十块钱购买的纪念品，当时他的朋友还调侃他，说他买了一块现代人穿越回古代时，在那个年代制造出来的模仿品，当时还不觉得什么，但是现在吴明仔细想起来，他似乎不知不觉就下意识的将手表戴在了手上，然后不知不觉的无视了这块石头手表，不管它看起来到底有多LOW，他居然都从没取下过它。\r\n\r\n    而他穿越到洪荒世界是标准的魂穿，也就是只有意识，记忆与灵魂穿越到了这具肉体中，按道理来说，地球位面的一切都不可能带过来，但是当他回过神来时，发现自己手上依然戴着这块石头手表，那一刻，他知道这东西绝对不平凡，很可能是导致他穿越的根源。\r\n\r\n    他一开始还不停的尝试解开这块石头手表之迷，比如滴血啊，滴血啊，滴血啊……什么的，还以为这东西就是他的金手指，但是谁知道几个月里这块石头手表什么动静都没有，直到他按部就班的参加了这具肉体的高考测试之一时，一个经典的声音响在了他耳边。\r\n\r\n    “三十秒内进入光柱，转移目标锁定，失落XXXXX开始传送……”\r\n\r\n    这个声音威严而低沉，毫无任何的感情波动，平铺直叙的说出了这段话，而恰好的是，吴明的这场高考测试的其中一项，就是进入到洪荒大陆附属位面中进行野外生物调查，而那进入方向正好就是一根光柱。\r\n\r\n    “……无限流？梦魇流？死亡电影流？还是别的什么？”\r\n\r\n    吴明边跟随在考生洪流中，边不停的思索着。\r\n\r\n    在未曾穿越前，他可是一个宅系青年，虽然有工作，但是工作的目的正是为了不工作啊，最喜欢的自然是游戏，动画，漫画，小说之流，而其中关于刚刚他提到的那些小说，他可是看过不知道多少，一时间他甚至开始怀疑现实，怀疑自己是不是已经被高等文明杀之取脑，他已经变成了缸中之脑了。\r\n\r\n    但越是情况危急，他反倒越是冷静，步伐丝毫不乱，表情丝毫不显，只是沉稳的向着光柱走去，而在走到光柱前时，距离刚刚那个声音提醒的时间约莫还有三四秒左右，而他故意慢了一拍，甚至还打算弯腰系一下鞋带，他想要试试熬过这三十秒到底会发生什么事情，若真是有人恶作剧，那么三十秒一过就该显出了原型。',8),(15,'第一章 灵堂','灵堂。\r\n\r\n    一口青铜棺横陈其中，棺上镌刻鸟兽虫鱼，日月星辰等苍茫而古老的图纹。\r\n\r\n    一个身穿素白缟衣，清丽绝俗的少女跪在棺前。\r\n\r\n    灵堂外，是一片净土般的秘境世界，\r\n\r\n    有诸天神佛般的恐怖身影，正在其中激烈厮杀征战。\r\n\r\n    怒吼连天。\r\n\r\n    神血滂沱。\r\n\r\n    灵堂内却一片安静。\r\n\r\n    少女自始至终叩首于地，神色不悲不喜，平静得没有一丝波澜。\r\n\r\n    “呵，原来我‘死’后是这样的……”\r\n\r\n    苏奕笑起来，眼神中却尽是冷意。\r\n\r\n    只有偶尔看向少女时，他那眼神中才会泛起一丝不易察觉的柔和。\r\n\r\n    生前，他曾遨游周虚诸天，剑压星空，独断大界。\r\n\r\n    曾征战寰宇，霸绝一个时代。\r\n\r\n    也曾被奉为大荒九州古往今来唯一的“万道之师”。\r\n\r\n    在大荒九州剑道巨擘眼中，他更是剑道之路上无可比肩的“玄钧剑主”。\r\n\r\n    而当他的死讯传出后，\r\n\r\n    一切都变了！\r\n\r\n    “哈哈哈，熔青冥，炼大道，自此以后，苏玄钧这‘熔天炉’归本座了！”\r\n\r\n    一道大笑声在灵堂外的秘境世界中响起，透着愉悦和高兴。\r\n\r\n    苏奕抬眼看去。\r\n\r\n    那是一头金翅大鹏，羽翼若若垂天之云，色泽若金灿灿的黄金汁液浇筑，弥散出璀璨无匹的光，威势之盛，压塌一方山河。\r\n\r\n    在它那一对撕天巨爪中，攥着一尊鲜红如燃的炉鼎。\r\n\r\n    “这小雀儿竟也背叛我了……”\r\n\r\n    苏奕一声感慨。\r\n\r\n    犹记得八万年前，金翅大鹏匍匐于山门之外，叩首十天十夜，只为侍奉在自己座下聆听道妙。\r\n\r\n    念其心诚，自己便将它留在身边修行。\r\n\r\n    可现在的它，却直呼自己名号，抢夺自己的熔天炉。\r\n\r\n    活脱脱一个叛徒！\r\n\r\n    “苏玄钧欠我‘羽化剑庭’八百九十三条性命，更盗走我宗至高传承‘十方剑经’，今日，我们是讨债来了，谁敢阻，便杀谁！”\r\n\r\n    天穹下，滚滚雷霆中，一个赤袍道人厉声长啸，杀意滔天。\r\n\r\n    苏奕愕然。\r\n\r\n    羽化剑庭，最初时候只是一个名不见传的小宗门，\r\n\r\n    其祖师也仅仅只是自己身边三十六个记名弟子之一罢了。\r\n\r\n    而正是依仗着他苏玄钧的威势和庇护，羽化剑庭才能一步步崛起，成为这大荒九州六大道门之一，威震寰宇。\r\n\r\n    可现在，羽化剑庭的人也来了。\r\n\r\n    什么欠下八百九十三条性命，纯粹是无妄之谈。\r\n\r\n    更别说，那“十方剑经”还是由自己赐给羽化剑庭祖师的！\r\n\r\n    显然，得知自己的死讯后，羽化剑庭随便编了个理由，打着讨债的幌子，趁机打劫来了。\r\n\r\n    “人心不古，不外如是。”\r\n\r\n    苏奕不禁摇头，心绪也不免有些低沉。\r\n\r\n    生前那些年里，自己可并不曾亏待过身边那些亲近之人啊。\r\n\r\n    “尔等听着，苏玄钧乃我等一起尊奉的‘万道之师’，今日有我等在，断不能容忍尔等趁火打劫，抢夺其遗物！”\r\n\r\n    血雨滂沱中，一众神威浩荡的身影大喝。\r\n\r\n    “扯淡，说的好听，不也是得知苏老贼的死讯后，前来抢夺宝物的？”\r\n\r\n    “真他妈虚伪！”\r\n\r\n    有人冷笑，反唇相讥。\r\n\r\n    “看看你们手中，青藤仙树、大至如意、九龙神火灯、万琉紫玉瓶……哪一样不是苏玄钧所留的‘绝世道宝’？”\r\n\r\n    “若你们真有心，为何不把那些宝物塞进苏玄钧的棺材里，随他一起陪葬？”\r\n\r\n    ……许多恐怖身影都冷笑起来。\r\n\r\n    天地动荡，战况激烈。\r\n\r\n    参战的那些身影，皆是大荒九州中最顶尖的大能，\r\n\r\n    彼此争锋厮杀，那等场景堪称是恐怖无边。\r\n\r\n    在苏奕眼中，这一切却可笑又滑稽！\r\n\r\n    这些混账，在自己生前毕恭毕敬，唯唯诺诺。\r\n\r\n    而在自己“死”后，却竟是这般嘴脸！\r\n\r\n    “生前和死后，果然是不一样的。”\r\n\r\n    苏奕收回目光，看向了跪倒在灵堂铜棺前的少女身上，神色间泛起柔色，“还好，青棠这丫头一直都在……”\r\n\r\n    青棠十三岁时，就追随在他身边修行，至今已有一万八千九百年，在大荒九州之地，她有着“青棠女皇”的封号。\r\n\r\n    在外人眼中，青棠是高高在上的皇者，统驭万邦，威镇九州，纵然是同境人物，都敬畏三分。\r\n\r\n    可在苏奕身前，她一直是个小丫头般的角色，除了修行之外，就侍奉在苏奕身边，温婉而谦卑。\r\n\r\n    “师妹，你已经为师尊守灵七天，现在再不走，我们注定撑不住！”\r\n\r\n    忽地，一道高大伟岸的身影走进灵堂，一袭白色战袍早已破损染血，他刚经历一场血腥恶战，浑身散发着可怖的威势。\r\n\r\n    毗摩！\r\n\r\n    苏奕座下九位关门弟子之首，号“毗摩战皇”，追随苏奕修行三万九千年。\r\n\r\n    一直跪倒在棺前的青棠缓缓起身，声音清冷而淡漠，道：\r\n\r\n    “师兄，师尊逝去之前，就已让我们这九位传人各自离开，为何……你却又回来了？”\r\n\r\n    毗摩微微皱眉，正义凛然道：“我怎可能眼睁睁看着那些叛徒和敌人毁掉师尊所留的一切？更何况，师妹你不愿离去，在此守灵，我身为大师兄，又怎可能离开？”\r\n\r\n    青棠转过身，一对漂亮的眸冰冷如刀锋般盯着毗摩，“都已到了这时候，师兄还不愿说实话？”\r\n\r\n    毗摩瞳孔微凝，“师妹，你这是何意？”\r\n\r\n    “何意？”\r\n\r\n    青棠唇角泛起一抹嘲弄之色，“别人不知道，我可很清楚，师兄你对师尊那一把‘九狱剑’可一直念念不忘。”\r\n\r\n    毗摩脸色微变，... -->>',9),(16,'第二章 赘婿苏奕','“你们看，那就是苏奕！”\r\n\r\n    “一年前，他还是青河剑府外门剑首，声名鹊起，可却因为一场变故，令得修为尽失，成了文家的的上门女婿，可悲可叹。”\r\n\r\n    “可惜了文灵昭这样一个大美人，何等的风华绝代，是咱们广陵城公认的第一美人，却竟嫁给这样一个废物，唉！”\r\n\r\n    ……\r\n\r\n    正值放学的时候。\r\n\r\n    从松云剑府中走出的身影，无论男女，当看到远处苏奕的身影时，神色都变得有些异样，议论声随之响起。\r\n\r\n    苏奕唇角泛起一抹无奈，又感觉有些好笑。\r\n\r\n    他已经很久没有体会过这种“待遇”。\r\n\r\n    遥想前世时，大荒九州之地，古往今来数不尽的风流人物竞争锋。\r\n\r\n    六大道门屹立，俯瞰人间。\r\n\r\n    三大魔宗盘踞，兵锋乱世。\r\n\r\n    有诸天神佛叱咤风云，掀起大世之帷，血染江山如画。\r\n\r\n    然，独尊大荒，剑压九州天下十万八千年者，唯他苏玄钧一人耳！\r\n\r\n    强如屹立青冥之巅的‘皇境’存在，也得敛眉垂眸，恭称一声“尊上”。\r\n\r\n    “这若让前世那些老家伙们见到这一幕，怕是非笑破肚子不可……\r\n\r\n    苏奕暗自摇头。\r\n\r\n    此刻的他，身影颀长瘦削，脸庞清隽，一身青色布袍，负手而立，浑身散发着淡然、闲适之气。\r\n\r\n    “不过，他们有一点说的不错，如今的我，的确不堪了一些……”\r\n\r\n    苏奕眸光微敛，陷入沉思。\r\n\r\n    他这具身体，本是大周玉京城苏家一名备受冷落的庶子。\r\n\r\n    五岁时，母亲“叶雨妃”重病不起，撒手人寰。\r\n\r\n    十四岁时，进入云河郡“青河剑府”修行。\r\n\r\n    仅用两年时间，十六岁的他便一跃成为青河剑府外门第一传人，拥有“外门剑首”的美誉。\r\n\r\n    可因为一场变故，令他修为尽失。\r\n\r\n    不久，在玉京城苏家力量的安排下，让他成了这云河郡广陵城三大宗族之一“文家”的上门女婿。\r\n\r\n    “不过，无论前世今朝，谁又知道，现在的我，早已不是以前的我了……”\r\n\r\n    苏奕心中涌起异样情绪，眼眸深处隐然有说不出的光在涌动。\r\n\r\n    锵！\r\n\r\n    似乎感应到苏奕的心思，一缕清冽幽冷的剑吟在他脑海中响起，旋即又沉寂下去。\r\n\r\n    那是一柄神秘仙剑。\r\n\r\n    剑名“九狱”！\r\n\r\n    此剑被九重“神链”禁锢。\r\n\r\n    一年前，在青河剑府“论剑试炼”的前一天晚上，\r\n\r\n    当苏奕一举将修为突破至“聚气”境时，脑海中悄然浮现出了“九狱剑”虚影。\r\n\r\n    而为此付出的，则是一身的修为。\r\n\r\n    这也是苏奕当初修为尽失的真正原因。\r\n\r\n    入赘文家的这一年里，苏奕日日夜夜都在感应脑海中的九狱剑，试图解开此剑秘密。\r\n\r\n    而就在三天前的晚上，苏奕再一次尝试与“九狱剑”沟通时，意外解开了此剑上的第一层封印。\r\n\r\n    也由此觉醒了前世那属于‘苏玄钧’的记忆。\r\n\r\n    “恍如一梦十七年，今朝方知我是我，南柯一梦，概莫如是！”\r\n\r\n    苏奕心中自语。\r\n\r\n    现在的他，也才十七岁而已，风华正茂，少年意气，恰似朝阳初升，一切充满希望。\r\n\r\n    “眼下的我，处境虽窘迫不堪，可凭借前世的经历和手段，想要改变这一切，根本谈不上多大的问题。”\r\n\r\n    苏奕负手于背，眸光转动时，偶尔给人以和年龄不相符的沧桑深邃感，那是一种历经世事浮沉后所留的一抹淡然。\r\n\r\n    “不着急，我此次转世，为的是打破前世所遇的修为壁障，以证无上剑途。”\r\n\r\n    “如今，人间尚好，青春尚早，早晚有一天，自当重返大荒九州，好好跟那些个孽障算一算前世的账！”\r\n\r\n    苏奕脑海中悄然浮现\r\n\r\n    出前世一幕幕画面。\r\n\r\n    有毗摩战皇、青棠女皇、金翅大鹏、羽化剑庭、六大道门……\r\n\r\n    嗯？\r\n\r\n    忽地，苏奕有所察觉般，抬眼朝松云剑府大门望去。\r\n\r\n    正值放学的时刻，许许多多少年少女走出，气氛热闹喧嚣，身上散发着属于少年人的青春气息。\r\n\r\n    可此时，那喧嚣的气氛却忽地陷入沉寂。\r\n\r\n    松云剑府大门处，人群悄然分开，让出一条道路。\r\n\r\n    在诸多目光注视下，一个少女从松云剑府走了出来。\r\n\r\n    少女大约十四五岁，乌亮的秀发柔顺地垂落，眉目灵秀，美丽动人，肌肤凝脂般雪白，十足一个美人胚子。\r\n\r\n    她穿着宽松得体的青裳，浑身素净，娇俏匀称的身影在一抹夕阳下泛起一层朦胧如幻似的光泽。\r\n\r\n    仿似仙子临尘！\r\n\r\n    附近许多少年眼睛发直。\r\n\r\n    他们大多都是十五岁左右的年龄，正值慕艾之年，青葱韶华，还学不会掩饰眼神中的爱慕和炽热。\r\n\r\n    一些脸皮薄的少年已经低下头，自惭形秽，不敢去直视。\r\n\r\n    那些少女们则神色各异，有嫉妒，有羡慕，有黯然。\r\n\r\n    她们之中也不乏娇俏美丽者，可是和那青裳少女一比，就显得逊色了一些。\r\n\r\n    就如萤火与明月，无以争辉。\r\n\r\n    静谧的氛围中。\r\n\r\n    青裳少女步伐不疾不徐，她五官精致白皙，一对大大的眸深邃而剔透。\r\n\r\n    只是，她的神色却很冰冷，仿似冰山般遗世独立，令人不敢接近。\r\n\r\n    文灵雪。\r\n\r\n    才刚进入松云剑府一年的她，已经成为所有教习老师眼中的“绝色奇才”，公认的冰山美人。\r\n\r\n    松云剑府府主“谢九巍”都曾感慨，其人灵秀，冰雪皎洁，当得上松云剑府一颗璀璨明珠。\r\n\r\n    而在苏奕眼中，这个无论走到哪里都必会引人注目的少女，是文灵昭的妹妹。\r\n\r\n    也是他的……小姨子。',9),(17,'第一章母狼','那年冬天的时候，我师傅在雪地里捡到了我，没错，按照现在的话来说我是一个弃婴，被爸妈扔了。\r\n\r\n    照理说，我一个婴儿在大冬天的在雪地里呆那么久不是冻死就饿死了，但是我师傅捡到我的时候还算是活蹦乱跳的，我师傅仔细的看了一下附近的环境，才发现雪地里有很多杂乱的梅花脚印，好像是什么动物的脚印。\r\n\r\n    就是这动物用它的奶养了我几天，晚上围着我睡觉才让我在那么冷的天活了下来，我师傅捡起我的时候，这动物还出来了，听我师傅说是一只母狼。\r\n\r\n    这母狼出来后，只是看了我师傅一眼就转身走进了树林。\r\n\r\n    对于这只狼的来历我师傅一直没有告诉我，至于这头狼为什么不吃我，我更是摸不着头脑，我懂事后也上山找过几次，但是找不到这只狼。\r\n\r\n    可每次上山都挺奇怪的，别人家的孩子上山不是遇到蛇就是遇到野猪之类的动物，我七岁就上山了，但每次去上山都不会出任何事，反倒下山的时候，走在路上都可以捡回来一只刚死的野兔或是野鸡。\r\n\r\n \r\n\r\n\r\n    对于这事我还奇怪的，我提着这些野味回家的时候，我师傅只是摸摸我的头，就习以为常的提着野味去厨房里忙活，好像知道我上山不会空手下来一样。\r\n\r\n    以致每年都会上山好几次，直到过了十二岁之后，我师傅突然不准我上山了，因为我要接我师傅的衣钵了。\r\n\r\n    我师傅是十里八乡有名的算命师，算命很准，所以很多人慕名而来，但我师傅有个规矩，算命要看天。\r\n\r\n    阴天不算，下雨天不算，晚上不算，早上不算，每天只算三个，所以要我师傅算命只有晴天的白天，而且还得赶早。\r\n\r\n    我也按照这个规矩学了下来，即使我不知道为什么。\r\n\r\n    今天师傅被一个有钱人开车请去算命了，我则是守在店里面玩着手机看店。\r\n\r\n    这不，我正斗着地主，村里面的张叔就推门走了进来。\r\n\r\n    张叔是村里面的老光棍了，四十多了还没结婚，他一天到晚就问我师傅他什么时候可以结婚，我师傅每次都是敷衍他几句，因为他的面相来说，这一辈子不可能结婚的。\r\n\r\n    这种人叫“孤命。”\r\n\r\n    算命，算的就是一个命，而命代表人，人活下去了才能算是命，所以算命在我们眼里也叫算人。\r\n\r\n    而算人，则是要从他的面相上来分析他的气运走向，过去与未来，因为一个人的脸可以告诉我们很多的东西，而张叔的脸正好可以告诉我，他这辈子需要一直靠自己的左右手……\r\n\r\n    “小天啊，你师傅不在吗？”\r\n\r\n    张叔走过来问我，脸上有一抹难以掩盖的愁容，我心中疑惑，难道张叔遇到了什么事？\r\n\r\n    “我师傅出去给人算命了。”我直说。\r\n\r\n    “那遭了。”张叔叹了口气。\r\n\r\n    “怎么了张叔？”我好奇起来。\r\n\r\n    “你对那些懂多少？”张叔凑过来突然这么问我。\r\n\r\n    “懂一点。”我点头，张叔说的那些，就是一些玄乎的事，我师傅也懂。\r\n\r\n    “那好，你给我看看，我这手怎么了？”\r\n\r\n    张叔说着撩起自己的衣袖，我一看后立马吓了一跳，这张叔手臂上有一个很大的伤口，好像被什么野兽咬了一样，两排血淋淋的牙印显得有点慎人。\r\n\r\n    “张叔你这是怎么了？”我急忙问道。\r\n\r\n    “唉，真她妈倒霉，前天我不是上山去打猎吗？遇到了一头狼，还挺大的，我寻思着能卖个好价钱，所以我偷偷的一枪打死了它，准备把它背下山去卖钱的时候，这狼突然活过来咬了我一口……”\r\n\r\n    “什么？你打死了一头狼？”我心中一惊！\r\n\r\n    “没打死，这畜牲咬了我一口之后就跑了，可我这伤口已经两天了，就是不见好，连血也止... -->>',10),(18,'第二章中枪的女人','她是过来让我知道她没事，我喜极而泣，提着野兔进去找我师傅，但我师傅看到这只野兔之后，脸立马的沉了下来。\r\n\r\n    “小天，以后这些送来的东西咱爷俩都不吃了，有些东西咱惹不起！”我师傅摇头说道。\r\n\r\n    我听着有些奇怪，我师傅可是最喜欢吃野味的，怎么今天会说这种话？\r\n\r\n    还有，师傅口中说的有些东西是谁？\r\n\r\n    既然我师傅都这么说了，我只能将这只野兔送给隔壁小花家，顺便去菜市场买点菜，回来的时候，我师傅一直扳着脸，我也没多想。\r\n\r\n    吃完饭之后我师傅坐在店里，今天是晴天，有人请我师傅去算命，但我师傅却说等会有事不去，我心中纳闷，今天会有什么事？\r\n\r\n    果然到了下午的时候，村长突然推门进来了，我师傅立马迎了上去，我自然也好奇的走过去。\r\n\r\n    村长叹了口气说道，“老李啊，跟我去老张家一趟吧，老张死在家里了，今天才被发现，都是一个村子里的人，安排着给他安葬一下吧。”\r\n\r\n    我听了这话吓了一跳，村长口中说的老张就是昨天来找我的张叔啊，他怎么会突然死了？\r\n\r\n    “行，村长你先过去吧，我准备点东西就过去。”我师傅没什么意外的说道。\r\n\r\n    村长走后，师傅脸色立马阴沉了下来，“至于这么狠吗？”\r\n\r\n    我不知道师傅这话是什么意思，只是听到张叔死了，毕竟怎么说也是一个村子的人，我也有些唏嘘。\r\n\r\n    主动的去里屋拿一个盒子出来，装着下葬需要的一切东西，下葬在哪里都是比较讲究的，人出生落地，死入地，讲究的是一个入土为安，所以一切都得按照程序来。\r\n\r\n    因为不是第一次跟师傅去送葬，所以我装东西的速度很快，抱着大箱子准备跟着师傅出去，但是我师傅却是自己将大箱子自己接了下来，丢下一句，“不准去！”就一个人骑电动车朝张叔家而去。\r\n\r\n    我愣了半响，基本上村里面死人了，师傅都会带上我，怎么今天不带我了？\r\n\r\n    心中有些奇怪，只能一个人看店。\r\n\r\n    到了晚上十点多的时候，我师傅才回来了，他还是冷着脸，直接走过来就对我说道，“小天，我不准你再上山了！听到没有？”\r\n\r\n    “啊？可是我妈……”\r\n\r\n    “她只是一只畜牲！不是你妈！”\r\n\r\n    我师傅冷冷说道。\r\n\r\n    我愣住了，我从来没听到师傅这么说过她，到底是怎么了？\r\n\r\n    “那我妈是谁？生我下来，就把我丢在雪地差点冻死我的那个就是我妈？”我眼睛红了。\r\n\r\n    我一直搞不明白，我又没有天生的缺陷，不是傻子也不是缺胳膊少腿的，长得也不难看，但是我爸妈为什么会丟了我？\r\n\r\n    而且还把我丢在雪地里，这跟直接掐死我有什么分别？\r\n\r\n    我师傅沉默了半响，最终只是叹了口气，“小天啊，有些事情，你以后会懂的。”\r\n\r\n    懂？我一辈子也懂不了。\r\n\r\n    第二天一早的时候，我师傅又去给张叔处理身后事，听说昨天晚上，是张叔一个侄女给守的夜，其实也怪可怜的，今天还有一天，明天就可以下葬了。\r\n\r\n    我还是一个人看店，今天是阴天，知道我师傅规矩的人都不会来，所以店里面基本上没人过来，清闲到了晚上六点钟的时候，一个女人走了进来。\r\n\r\n    这女人穿着农家人的衣服，腿似乎还受伤了，一瘸一拐的走了进来。\r\n\r\n    我急忙迎了上去，“阿姨，您是来算命的吗？我师傅出去了，而且晚上不算命的。”\r\n\r\n    “我知道。”女人望着我点头。\r\n\r\n    “那您这是？”\r\n\r\n    我有些疑惑的看了女人一眼，这女人面相很怪，为什么这么说？\r\n\r\n    因为按照人面相的十二宫来说，这女人的命宫，也就是天庭非常的饱满，而且配上她下垂的眉毛，绝对的百寿之相啊。\r\n\r\n    但怪就怪在她眉心有一道... -->>',10),(19,'第1章 夜半','夜半，残月细弯。\r\n\r\n    北洞县，平吉码头。\r\n\r\n    细密的雨丝中，孤零零泊着只半旧的商船，正满船酣睡。\r\n\r\n    船舱中的文诚被噩梦惊醒，一把握住枕边的长刀，’呼’的坐起。\r\n\r\n    刀柄绷簧弹开，低脆的撞击声把文诚从最后一丝残梦中拽脱出来。\r\n\r\n    文诚愕然的看着一身劲装，站在船舱中间的李桑柔，下意识的说了句：\r\n\r\n    “我做了噩……”\r\n\r\n    一句话没说完，就被李桑柔竖指抵着嘴唇制止。\r\n\r\n    文诚脸色变了，刚要松开刀的手，立刻又握紧刀柄。\r\n\r\n    李桑柔指了指，示意文诚穿鞋，自己悄无声息走到船舱门口，如鬼影一般紧贴在门柱后。\r\n\r\n    船舱外，雨丝细细。\r\n\r\n    船舱另一边，比常人高出半截、宽出一半的大常，正在系牛皮护甲最后一根绊带。\r\n\r\n    金毛和黑马一左一右，握刀护在大常两边。\r\n\r\n    黑马迎上文诚的目光，忙咧嘴笑着致意，黑暗中，黑脸上一双黑眼睛贼亮。\r\n\r\n    大常扣好甲，刚刚拎起那根巨大的黑铁狼牙棒，船头就响起了船工们一连串短促的惨叫。\r\n\r\n    几乎同时，李桑柔猛的拉开门，黑马和金毛一前一后，人随着刀，冲了出去。\r\n\r\n    大常却是往后两步，抡起狼牙棒，扫向船尾。\r\n\r\n    一片尖锐凄厉的木板破碎声，盖住了生铁砸在肉体上的’噗噗’声，以及几声压抑之极的死亡惨哼。\r\n\r\n    “跟上我！”\r\n\r\n    李桑柔头也不回的喊了一句，矮身窜出正在倒塌的船舱，手里托着只玩具般的钢弩，钢弩咔哒声不断，每一声后，都连着重物砸在甲板上的闷响。\r\n\r\n    文诚心神微恍，急忙握刀，背对李桑柔，紧跟而出。\r\n\r\n    李桑柔和她三个手下这份默契到如同一人的配合，让他在这样的时候，生生看愣了神。\r\n\r\n    李桑柔和她这三个手下，是他在南梁江都城遇险后，重金雇下的保镖。\r\n\r\n    从江都城到北洞县，走了一个来月，一路上平平安安。\r\n\r\n    同处一船的这一个来月，她每天切菜做饭，饮酒喝茶，和寻常女子没什么不同。\r\n\r\n    这会儿，看到她和她的弟兄们凶猛狠厉的另一面，让他在这样的时候，还是生出了几分恍惚之感。\r\n\r\n    “退！”李桑柔一声厉呵。\r\n\r\n    大常大吼一声，手里的狼牙棒猛力砸在后舱甲板上，借着这一砸之力，跃起跳到前甲板，落地时，踏的前舱板发出一连串轻脆的爆裂声。\r\n\r\n    “跟上！”\r\n\r\n    爆裂声中，李桑柔头也不回的招呼文诚，端着手弩纵身跃前，正好落在大常身后。\r\n\r\n    文诚急忙纵起跟上。\r\n\r\n    李桑柔半蹲半跪，躲在大常身后，端着手弩不停的放冷箭。\r\n\r\n    几乎同时，金毛和黑马聚拢过来，一左一右护在大常侧后。\r\n\r\n    文诚落后半步，示意金毛和黑马，他来断后。\r\n\r\n    大常的狼牙棒摧枯拉朽，几棒下去，靠近深水的那半边船舷就碎成了木屑，趴满了船舷的黑衣刺客支离破碎的飘满水面，在船周围混成了血红的碎骨烂肉汤。\r\n\r\n    扫荡了满船蝗虫般的刺客，大常急忙蹲身，放下狼牙棒，一把抓起缆绳，一声闷喝，用尽全力拉动缆绳。\r\n\r\n    船猛的向前冲去，背对着船头，正一刀刺前的文诚措不及防，连人带刀撞上迎着他扑上来的刺客。\r\n\r\n    黑马一把拽起他，推着他，跟在李桑柔后面，从已经冲上浅滩的船头跳下去。\r\n\r\n    从李桑柔一声’退’，到几个人聚到前甲板，再跳下船，不过七八息的功夫。\r\n\r\n    冲过浅水，金毛和李桑柔冲在最前，大常提着狼牙棒断后，黑马护着文诚跑在中间。\r\n\r\n    文诚扭头看了眼正奋力从水里爬出来的水鬼们。\r\n\r\n    “娘的，真有钱！个个穿着鱼皮服。在水里厉害，到岸上可就跑不动喽！”\r\n\r\n    黑马顶着满头满身血，不但有空跟文诚解释了几句，还顺便扭头冲或是一身鱼皮服就往前冲，或是停下来用力往下扒鱼皮服的众水鬼们呸了一口。\r\n\r\n    文诚没理他，紧冲两步赶到李桑柔侧后，急急提醒她：“小心埋伏！”\r\n\r\n    话音刚落，前面黝黑的树林里，几支火把亮了起来。\r\n\r\n    李桑柔和跑在她侧前的金毛没有半分停顿，略微打弯，往火把东面树林里冲过去。\r\n\r\n    “快截住后面的！”\r\n\r\n    黑马一窜老高，一声大吼，语音语调竟然和北洞县土著一般无二！\r\n\r\n    这会儿正是夜半时分，残月昏暗。\r\n\r\n    举着火把、冲在前面的兵卒根本看不清楚哪个是哪个，听到熟悉的方言，随着本能，放过李桑柔四人，挥刀往后面冲杀过去。\r\n\r\n    黑马这一声吼，让他们多了十几息的时间，这已经足够众人一头扎进小树林，在林中奔跳狂逃。\r\n\r\n    跟进树林的追兵明显是两拨人。\r\n\r\n    聚拢在火把四周，刀剑盔甲叮咣作响，喊的震天响，跑的不急不躁、明晃闪亮，腔调十足的，是一群。\r\n\r\n    散在暗处，快如鬼魅，和那些水鬼气质完全一样的黑衣人，是一群。\r\n\r\n    渐渐的，鬼魅般的黑衣人把明刀亮甲的那群官兵甩的老远，如附骨之蛆，紧缀在文诚等人身后。\r\n\r\n    树林东边和一片山峦相连。\r\n\r\n    金毛伸着脖子，连蹦带窜跑在最前，带着众人正要往那片山峦扎进去时，在他们身后，响起了几声轻微却刺耳的弓弦声。\r\n\r\n    “弓！”\r\n\r\n    “藏！”\r\n\r\n    文诚的示警，和李桑柔的命令同时发出。\r\n\r\n    金毛跃起窜到一棵巨树后，黑马一个狗啃泥，扑进侧前的灌木丛中。\r\n\r\n    大常一步冲前，连人带棒先护住李桑柔，紧跟着她的步子，两步就窜到了金毛藏身的那棵巨树后。\r\n\r\n    文诚跟着黑马，一个鱼跃扑进黑马藏身的灌木丛后。\r\n\r\n    没等大常站稳，七八支黑黝黝的长箭，就钉进了几个人刚刚跑过的地方。\r\n\r\n    李桑柔心头一阵狂跳。\r\n\r\n    靠！差一点被穿成一道透明窟窿！\r\n\r\n    长箭几乎没入地下，这样的力道，配的至少是一石的强弓。\r\n\r\n    黑夜，又是树林中，能射的这么准，这样的好弓手，千里挑一，居然一齐来了七八个！\r\n\r\n    这个文诚真的只是个王府参赞？\r\n\r\n    这十万两保镖银，果然不是那么好挣的。\r\n\r\n    “杀掉他们！”\r\n\r\n    文诚就地一滚到李桑柔旁边，曲膝半跪警戒着对面，一声建议如同将军下令。\r\n\r\n    李桑柔‘嗯’了一声，强弓在后，掉头截杀是唯一的法子。\r\n\r\n    “你藏好别动。”',11),(20,'第2章 天明','文诚在大常怀里，没颠几下，就垂头晕了过去。\r\n\r\n    等他悠悠然睁开眼时，先映入眼帘的，是李桑柔一脸的担忧和关切。\r\n\r\n    “你醒了！感觉怎么样？\r\n\r\n    你后背的伤虽说深了点，好在没有毒，也没伤着骨头，五脏六腑也都好好儿的，运气不错。”\r\n\r\n    李桑柔的解释里透着浓浓的歉意。\r\n\r\n    这趟是十万两银子的镖，头一回遇险就把货重伤了。\r\n\r\n    而且他受伤还是因为大常他们临阵失措，她这心里歉意浓厚。\r\n\r\n    这一句运气不错，其实是说她自己运气不错。\r\n\r\n    这人要是死了，十万银子也就没了，那她这一趟，这亏损就太大了。\r\n\r\n    “没事。”文诚忍着后背的剧痛，转头四看，“这是哪儿？”\r\n\r\n    “北洞县城。”\r\n\r\n    顿了顿，李桑柔带着几分尴尬道：\r\n\r\n    “大常伤的不轻，金毛和黑马也都带了伤，这样的伏击，再有一回，我们肯定撑不住。\r\n\r\n    我的意思，你得亮出身份了。”\r\n\r\n    李桑柔的话顿了顿，眼皮微垂。\r\n\r\n    “照理说，我们只管走镖，不该多管你是谁，是什么身份儿，可这会儿……”\r\n\r\n    李桑柔抬眼看向文诚，一脸苦笑。\r\n\r\n    “实在没办法了。\r\n\r\n    这北洞县紧邻建乐城，不管北洞县县令是谁的人，你亮明了身份，再怎么着，他也不敢明刀明枪的对付你。\r\n\r\n    再说，亮出身份，你的人找你也方便。”\r\n\r\n    “好！就交给你了。”文诚答的极其干脆。\r\n\r\n    “亮哪个身份？”\r\n\r\n    李桑柔一句话问的文诚一怔。\r\n\r\n    “当初接镖时，你说你要防的那个永平侯，再蠢，也不会为了杀一个王府幕僚，在建乐城边上动用那么多重弓手，闹出这么大的动静。”\r\n\r\n    “你猜到我的身份了？”\r\n\r\n    沉默片刻，文诚直视着李桑柔问道。\r\n\r\n    “你是睿亲王世子，不是他的幕僚。”李桑柔看着他。\r\n\r\n    “嗯，我姓顾，单名晞，字悦道。”\r\n\r\n    “就亮这个身份？”李桑柔眉梢微挑。\r\n\r\n    她还真猜对了！\r\n\r\n    “好。”\r\n\r\n    李桑柔刚要站起来，远处传来一片尖利的呼呵声。\r\n\r\n    “闲杂人等闪开！快闪开！官府捉拿人犯！都是杀人不眨眼的亡命徒！快闪开！”\r\n\r\n    李桑柔脸色变了，抄起手弩，一边往手腕上扣，一边冲到窗前，透过窗户缝往外看。\r\n\r\n    她这是二楼拐角，一面窗下是客栈正门所在的热闹街道，另一面则对着客栈后面的一条深巷。\r\n\r\n    这会儿，那条热闹街道两头，都有望不到头的衙役和厢兵，叮叮咣咣的奔跑过来。\r\n\r\n    “黑马，你背上文爷，金毛跟着我，大常跟在黑马后面，你别往前冲了。”\r\n\r\n    李桑柔一边吩咐，一边抄起油灯，将灯油洒在被子上。\r\n\r\n    金毛几个都是跟她跟惯了的，见她抄油灯，金毛急忙摸火镰打火，火星迸到灯油上，火苗立刻窜起来。\r\n\r\n    李桑柔抓起已经烧起来的被子，一脚踹开房门，将被子扔到门外木栏杆上\r\n\r\n    火立刻沿着木柱往上舔，李桑柔看着火起来了，猛一脚将雄雄燃烧的栏杆踢到楼下，转身进屋，关上门，纵身跳到客栈侧边的深巷子里。\r\n\r\n    黑马先用绳子将顾晞顺下去，跟着跳下，背起顾晞，几步跟上李桑柔，往巷子外狂奔。\r\n\r\n    几个人从巷子里冲出来，迎面撞上了几个厢兵，李桑柔眼疾手快，扬手射杀了一个，大常迎着另几个厢兵直冲上去，抡圆胳膊打的几个人飞了出去。\r\n\r\n    “黑马，问他们是什么人，竟敢劫杀朝廷命官！”李桑柔叫道。\r\n\r\n    “呔！尔等何人！竟敢惊动我家大官爷！”\r\n\r\n    黑马猛一声暴呵，惊的顾晞一个愣神，随即忍不住想大笑出声。\r\n\r\n    他这是唱戏呢！\r\n\r\n    “我是睿亲王世子，同中书门下平章事顾晞，赵丰年呢？让他来见我！”',11),(21,'第1章 身如泥蚓 仰望天空','叶枫做了一个十分离奇的梦。\r\n\r\n    在梦里，他似乎回到了几十年前的【天云宗】，见到了许多宗门师长年轻时候的模样。\r\n\r\n    更莫名其妙的是，他在一个神秘的声音的指引下跑到了宗门后山，在一棵老树的树洞里种下了一株【灵元草】。\r\n\r\n    随后，叶枫醒了。\r\n\r\n    他原本以为这就是一个再平常不过的幻梦，但很快他就发现了两件很诡异的事情。\r\n\r\n    一般来说，人在清醒之后的几分钟时间里就会将之前的梦境忘掉个八九分，只留下一些朦胧的片段，但叶枫竟能够完完整整的将整个梦境清楚的回忆起来。\r\n\r\n    而且，极其真实。\r\n\r\n    真实到叶枫连一路在后山奔跑时路过的花花草草都有着清晰的画面。\r\n\r\n    第二件事，就更加难以解释。\r\n\r\n    叶枫起身之后，竟是在自己的双脚脚底板上看到了清楚的泥土痕迹。\r\n\r\n    他记得，自己在梦里就是没有穿鞋袜，一路光着脚跑去了后山，虽然他的肉身早已经不会被石子划伤，但一路奔袭的泥尘还是沾满了脚底。\r\n\r\n    现在，这些泥尘竟然真的还留在脚上。\r\n\r\n    这到底是怎么回事？\r\n\r\n    难道自己竟然患上了传说中的‘夜游症’，大晚上的跑出去游荡了一圈？\r\n\r\n    叶枫看着脚底的泥印，愣了好几秒种，随后摇晃着脑袋苦笑了一下，将这个奇怪的梦境从脑海中甩了出去。\r\n\r\n    “看来，最近真的是压力太大了啊！！”\r\n\r\n    叶枫抬头，看了看窗外的夜色，月光如洗，皎洁的月盘距离叶枫刚刚躺下之时不过挪动了丈许。\r\n\r\n    “这十几天每天都睡不到一个时辰，也难怪会做这奇怪的梦。”\r\n\r\n    叶枫自嘲的笑了一下，顾不得全身上下袭来的困倦与眼中红肿的血丝，直接盘直了身子，继续开始修炼。\r\n\r\n    他从旁边一只小布袋子里掏出了一株散发着淡淡绿色灵光的草药，双目之中泛起了浓浓的希望。\r\n\r\n    “这是最后一株灵元草了，能不能突破【玄境】，就看你的了！”\r\n\r\n    说着，叶枫一口将这株灵草吞下，闭目调息起来。\r\n\r\n    唰。\r\n\r\n    晶莹的灵草入口即化，顷刻间变成了一股精纯的玄气没入到了他的丹田之内。\r\n\r\n    玄气，乃是齐武大陆武者修武超凡的根本。\r\n\r\n    夫武者，以武通玄，炼肉体，开玄脉，生灵海，化万法，成就无上神通，乃是每一个武者梦寐以求的巅峰之路。\r\n\r\n    此刻，叶枫便是要借用这灵元草中蕴藏的玄气迈出从【体境】到【玄境】的关键一步。\r\n\r\n    叶枫的丹田中，早已经是玄气如潮，浩瀚不尽，若是此刻能有武道前辈来观察，一定会为里面储存的海量玄能感到惊讶。\r\n\r\n    那简直就像是一片玄气的海洋，远远超越了一个【体境】武者应有的玄气存量，换做常人，如此庞大数量的玄气绝对能够将丹田撑爆几十次，但叶枫的丹田便似一座铁壁铜墙的堡垒一般，死死的将这些海量玄气禁锢在里面，只入不出，无法突破。\r\n\r\n \r\n\r\n\r\n    更令人称奇的是，一般武者修炼出的玄气都是乳白色，但叶枫丹田中的玄气却是绽放着无限金光，将整个丹田映照成了一片金色海洋，里面神光大作，隐隐更有雷声浮现，任谁见了这般异像都要啧啧称奇，但偏偏叶枫身体的表面没有任何动静，安稳如常。\r\n\r\n    “给我破！”\r\n\r\n    叶枫发出一声低喝，努力的想要将这些海量的金色玄能从丹田中引出，流入自己的经脉之中，但尽管丹田中的玄能已经汹涌澎湃到了极致，如滔天洪水般的怒吼拍打着丹田壁与周身经脉之间的那一道薄薄的壁障，但却始终无法突破这最后的一道天堑。\r\n\r\n    一炷香的时间之后，随着【灵元草】最后一丝玄气的消耗殆尽，原本激荡起来的丹田遗憾的再次恢复了平静。\r\n\r\n    “还是不行啊……”\r\n\r\n    叶枫缓缓的睁开了眼睛，嘴角泛起了一抹苦涩：\r\n\r\n    “明明已经到了突破玄境的边缘，可惜灵元草却用光了……我说我的丹田兄m你究竟是个什么怪物啊，八年了我都喂不饱你吗？”\r\n\r\n    叶枫的苦笑终究化成了一句自嘲的叹息。\r\n\r\n    是的，八年了。\r\n\r\n    八年的苦修，数百颗的灵元草，远远超过了普通体境武者极限的海量玄能，这一切都没有能够帮助叶枫突破玄境的门槛。\r\n\r\n    没有人知道叶枫这八年来是如何艰难的度过，在以武论英雄的天云宗，他要承载怎样的奚落与嘲笑，才能一步步的坚持到今天。\r\n\r\n \r\n\r\n\r\n    曾经与他一同进入宗门的弟子一个个都已经振翅高飞的时候，他就好像一条在地上艰难蠕动的蚯蚓，用尽了一切办法，却只能无奈的仰望天空。\r\n\r\n    八年，足以让当年的光彩夺目的天才弟子变成了无人问津的平凡杂役，更是让叶枫那曾经锋芒毕露的性子被磨成了一片沉寂淡然。\r\n\r\n    面对一次又一次的失败，叶枫早已经习以为常，唯有那心中永不熄灭的执着火焰支撑着他努力，努力，再努力，但尽管如此……命运似乎终于还是给了他一个绝望的结局。\r\n\r\n    因为，三天之后，天云宗的内门弟子考核将是叶枫的最后的机会。\r\n\r\n    已经... -->',12),(22,'第2章 跋扈嚣张','叶哥……他们来取药，结果库存没有就动手打人……啊！！”\r\n\r\n    那地上的杂役原本正在向叶枫说明，冷不防旁边飞来一只脚掌，竟是被纪繁尘一脚直直的踢飞了十几米，狠狠的砸到了旁边的墙上，直接昏死了过去。\r\n\r\n    纪繁尘，你！\r\n\r\n    大伙根本想不到这位新人弟子竟是跋扈至此，在场的人虽然是杂役，但从年纪上来说都算是他的师兄，可这人竟是一言不合就下如此重手！\r\n\r\n    更让所有人噤声的是，在一脚逞凶之后，那纪繁尘竟是背着双手一步步的走向了叶枫等人，可怕的脚步声像重重的鼓点一般砸在了所有人的心上。\r\n\r\n    哗啦啦。\r\n\r\n    一群人连忙向后退去，像一堆被狂风吹弯了的稻草，只剩下叶枫与李翔还敢站在原地，迎着这位嚣张的煞星。\r\n\r\n    纪繁尘走了过来，距离叶枫还有三米站定。\r\n\r\n    他看着叶枫，就像君王看着地上匍匐的乞丐，高傲，冷酷，不容许有半点侵犯。\r\n\r\n    “方才你说什么？”\r\n\r\n    纪繁尘淡淡开口，声音没有一丝温度，而不等叶枫回答他便自顾自的说了下去：“李华宇师兄是我天云宗的青杰天骄，也是我必将要超越的目标，只是……”\r\n\r\n    话说到这儿，纪繁尘的眸光猛地一寒，一股毫无征兆的煞气便猛地释放出来直冲叶枫：“不论是我还是李华宇，岂是你一个卑贱的杂役可以随便评论的？”\r\n\r\n    唰。\r\n\r\n    话音未落，纪繁尘直接挥出了一记狠辣迅捷的耳光，直扇叶枫的面庞。\r\n\r\n    “叶哥，小心！！”\r\n\r\n    李翔站在叶枫旁边瞬间感到了这一巴掌上的凛冽气势，速度之快，让人防不胜防。\r\n\r\n    可是，下一秒，一只拳头却直直的迎上了那狠辣的巴掌。\r\n\r\n    嘭。\r\n\r\n    一声闷响。\r\n\r\n    叶枫踉跄的向后退去，硬生生的挡下了纪繁尘羞辱的手掌。\r\n\r\n    挡下了？\r\n\r\n    李翔等人都是一愣。\r\n\r\n    他们一直以为叶枫的实力与他们这些人都在伯仲之间，可是方才纪繁尘那可怕的一掌换做李翔绝对会被无情打飞，但叶枫却硬生生挡了下来。\r\n\r\n    叶哥的实力，绝对超过一般的【体境】武者。\r\n\r\n    “哦？”纪繁尘看着自己的手掌，似乎有些吃惊：“你竟能接我一掌？”\r\n\r\n    叶枫，缓缓站直了身子，右拳隐隐有些颤抖，但一双黑白分明的眼睛里面没有半点畏缩。\r\n\r\n    八年的隐忍磨砺，或许可以让叶枫隐去了当年锐利的锋芒，但他与生俱来的一身傲骨，却不会为任何人弯折。\r\n\r\n    他看着纪繁尘那冷酷霸道的眼神，却是傲然一笑道：\r\n\r\n    “我方才只是猜测罢了，但你这一掌却是真的很普通……八年前的李华宇，比现在的你强了不止一倍！”\r\n\r\n    “放肆，你还敢说！”纪繁尘的瞳孔猛地一缩，像被刺痛了的野兽一般，脸上浮现了一抹狰狞：“你觉得我这一掌一般是么，好，那就让你见识一下什么才是真正的玄境力量。”\r\n\r\n    “这里是天云宗的药庐，容不得你如此放肆！”\r\n\r\n    “我便要放肆，你奈我何！给我跪下！”\r\n\r\n    纪繁尘的嚣张来自十几年的狂放自傲，在凤翔郡城便是无人敢惹，在天云宗的外门自以为无敌的他哪里会将一个杂役放在眼中。\r\n\r\n    叶枫就是蝼蚁，抬脚可以踩死。\r\n\r\n    一声长啸，纪繁尘终究催动了玄境真正的力量。\r\n\r\n    只见他的手掌上凝出了淡淡的白色灵光，一股完全超越了肉身蛮力的玄妙能量将他的身形化成了一阵肉眼难辨疾风，单手一挥，便是带起了阵阵风鸣，以压倒性的力量抽向了叶枫的脸庞。\r\n\r\n    可恶！\r\n\r\n    玄气！！\r\n\r\n    叶枫太熟悉这股他梦寐以求的强大力量。\r\n\r\n    他抬起胳膊想要阻拦，奈何他炼体再强与玄境之间也有难以逾越的鸿沟，他的胳膊迎上纪繁尘的手掌，竟是硬生生的被砸到了脸上，随后整个人被抽得倒飞起来，好似一个破布沙袋一般狠狠的摔在了地上。\r\n\r\n    “叶哥！”旁边李翔双眼通红的要冲过来。\r\n\r\n    “聒噪！”纪繁尘随手挥出一掌，便将李翔同样打飞。\r\n\r\n    面对玄境，体境武者当真如蝼蚁一般，任人揉捏。\r\n\r\n    叶枫一连在地上滚了好几圈，方才停了下来，他的左臂整个失去了知觉，半张脸也随之肿了起来，但还没等他回过神来，纪繁尘那残酷的身影便来到了他的面前，一只脚掌无情的踩在了他的脸上：\r\n\r\n    “来，告诉我……我现在比起那李华宇如何？”\r\n\r\n    “差……差得远！”叶枫咬碎了牙，从喉咙里面崩出不屈的字眼。\r\n\r\n    “嗯？还嘴硬？”纪繁尘狞笑，脚上更加使力，几乎要将叶枫的颧骨踩碎：“你再说一句，我便让你今生都开不了口！”\r\n\r\n    “叶哥，够了，你认输吧！！”',12),(23,'第1章  乔绫香','“这里是两百斤大米的米券，你大女儿归我了。”\r\n\r\n    装修中档的客厅中，一个四十岁的男人，正在给侯曼容下着聘金。\r\n\r\n    形容憔悴的侯曼容，坐在男人的对面，两人中间隔着一张餐桌，她为难的垂目，看着桌面上的米券，沉默的抿了抿干燥的唇。\r\n\r\n    客厅里没有开灯，现在能源很紧张，只要家中还有一点能见度，能不开灯，就不要开灯了。\r\n\r\n    晕暗的光线中，给米券的男人见侯曼容不说话，他伸出大手来，弯腰，将手掌放在米券上，眸光向上抬，颇有那么一丝得意与漫不经心的看着她，说道：\r\n\r\n    “你也知道，现在已经是末世了，这些物资都很难得，两百斤大米，我在外头能买十七八个女人了，给你这么多，还是看你大女儿的面子。”\r\n\r\n    他似乎很笃定，对于这个拮据的家庭来说，两百斤的米券，是无法拒绝的诱惑。\r\n\r\n    年纪看起来跟这男人差不多的侯曼容，干裂的唇微微颤抖，她宛若强调一般，低声说道：\r\n\r\n    “我大女儿才18岁，她还在读书。”\r\n\r\n    瞧她的神情，还是不甘愿居多。\r\n\r\n    “不小了，你小女儿要不是太胖，也该有人上门来下聘了。”\r\n\r\n    男人说着，眼底有着一股讥讽，乔家的那两个女儿，一个18岁，长得跟天仙儿似的，真是人见人爱，花见花开，一个16岁，却是长得就像一头母猪，要多胖有多胖，要多丑有多丑。\r\n\r\n    这两姐妹，若不是自己说她们是两姐妹，还真没人信。\r\n\r\n    侯曼容又沉默了很长一段时间，她稀疏的睫毛颤了几颤，才是艰难的说道：\r\n\r\n    “波哥，让我再考虑考虑，孩子她爸去外面做任务了还没回来，我很难办。”\r\n\r\n    被称作波哥的男人，脸上浮现出一抹冷笑，大掌拍了拍桌面上的米券，\r\n\r\n    “乔嫂，我是看乔哥的面子，今日才带着聘礼上门的，你也知道现在外头什么环境，大家的日子都不好过，有些时候，做人不要太不识时务了。”\r\n\r\n    这话说得有些硬气，还带着一股浓浓的威胁，让侯曼容拢起了眉。\r\n\r\n    许是这个叫做波哥的，逼得她太紧，侯曼容瘦削的脸，在暗淡的光线中显得特别愁苦，她压低了声音，神情有些激动的说道：\r\n\r\n    “你也叫我一声嫂子，你也叫我丈夫一声哥......”\r\n\r\n    明明都是年纪差不多，跟她一个辈份的人，现在却能恬不知耻的跑来，说要娶她的大女儿，侯曼容心里胀着一股气，但碍于面前这个男人实在是不好得罪。\r\n\r\n    于是她的话说得遮掩，不敢讲得太明白，怕撕破了最后的斯文，这个波哥会趁着乔鹏飞不在，对她们母女三人做些什么。\r\n\r\n \r\n\r\n\r\n    波哥的脸透出一股凶象，他坐在原地，静静的看着侯曼容，然后又是冷笑一声，正要说话，玄关处响起了钥匙开门的声音。\r\n\r\n    乔绫香的声音在敞开了的门缝外头响起，\r\n\r\n    “妈，我回来了。”\r\n\r\n    这是乔家那个肥壮无比的二女儿，乔绫香。\r\n\r\n    听得乔绫香回来的声音，侯曼容正好找着了借口，冲波哥气道：\r\n\r\n   ... -->>',13),(24,'第2章  不是不在意','“你还犟嘴？！”\r\n\r\n    侯曼容越说越气，指着自己的小女儿破口大骂，她已经快要被波哥气疯了，还不敢当着波哥的面发脾气，这个小女儿却还在这种时候跑出来问问问。\r\n\r\n    有那么多问题，她怎么回答？烦都被烦死了。\r\n\r\n    在侯曼容的骂声中，老实的乔绫香渐渐弄明白了一件事，其实并不是她说错了话、做错了事，又或者问了什么不该问的问题。\r\n\r\n    只是刚巧了在母亲心情不好的时候，她出现在了这里，于是顺理成章的成为了侯曼容的出气筒。\r\n\r\n    意识到这一点，乔绫香内心恍若破了一个大洞，不断的往她心里灌着凉风，她不再回嘴。\r\n\r\n    面对侯曼容的任何指责，她都不回嘴。\r\n\r\n    因为以往的经验告诉她，她一旦回嘴，迎接她的将是更厉害的****，那就还不如忍下了，至少在她没有任何独立能力之前，忍了侯曼容的谩骂，就生活无忧，没有别的事了。\r\n\r\n    于是，乔绫香默默的低头垂目，看着自己破了个洞的超大号球鞋，一言不发的湿润了眼眶。\r\n\r\n    虽然她一向将“忍”这个字做得很好，但内心还是会感觉到痛。\r\n\r\n    人们总是会在不经意间，对她的身材评头论足，觉得她不会在意那般，肆意嘲笑她，讥讽她，她甚至不知道自己做错了什么，刚刚回家，只叫了两声妈妈，就被妈妈一顿臭骂。\r\n\r\n    母猪、恐龙、猪饲料......他们脱口而出这些话，说得如此驾轻就熟，并且习以为常，并不觉得有任何问题，却从来都没有想过，这些话听在她的耳朵里，她也是有心的，也会在意，也能感受到来自他们的嫌弃、嘲弄与取笑。\r\n\r\n    不是不在意，而是即便在意，也没有用。\r\n\r\n    乔绫香眼中的泪滴落，但她圆滚滚的身材，肥大多油的面容，站在那里哭，都哭得特别丑，特别让人讨厌。\r\n\r\n    “你回来干什么？我问你回来干什么？”\r\n\r\n    侯曼容越骂越生气，她直接冲到了乔绫香的面前，怒火冲天的问道：\r\n\r\n    “家里半点忙你都帮不上，你姐姐都快火烧眉毛了，你还回来干什么？家里没东西供你吃了，没有了！”\r\n\r\n    “我不是要吃的。”\r\n\r\n    乔绫香忍着饥肠辘辘，低声解释了这么一句，很多人都以为肥胖的人是因为吃得多，但他们不明白，有一种人的体质，叫做易胖体质。\r\n\r\n    她其实已经很久都没有吃饱过了，拥有的却是喝水都胖的体质，就算是几天不吃一粒米，光喝水，她还能胖几斤，这也算是个奇迹。\r\n\r\n \r\n\r\n\r\n    这一点，其实侯曼容自己也知道，现在的生存环境这么差，家里其实也供不起乔绫香大吃大喝，她只是被那个波哥气得，气得都不知道该怎么发泄内心的郁气，就只能故意这样说。\r\n\r\n    反正人都说心宽体胖，乔绫香虽然胖归胖，长得也很丑，肥头大耳的不招人喜爱，但好在她的脾气很好，被侯曼容骂得再凶，乔绫香也不会放到心里去。\r\n\r\n    至少，侯曼容是这样认为的。\r\n\r\n    果然，被她狠狠骂了一顿的乔绫香，... -->>',13),(25,'第1章 逼婚','“家主，就让苏寒娶了萧家的二小姐吧！”\r\n\r\n    “是啊，家主，这是如今唯一能够挽回家族局势的机会了啊！”\r\n\r\n    “萧家大小姐如今已经是寒云宗外门弟子，天赋极强，听说已经修成八条龙脉，很快就要晋升内门弟子了。”\r\n\r\n    “我等都知道，武者龙脉境顶尖，也只不过拥有十条而已，那萧雨慧年纪轻轻，便已修成八条，其成就指日可待，而今的萧家，也正借助萧雨慧的威势，步步高升，若能攀上萧家这根高枝儿，我苏家必然会渡过此次困境！”\r\n\r\n    “苏寒若能迎娶萧家二小姐，便是我苏家救星！”\r\n\r\n    ……\r\n\r\n    龙武大陆，东陵王国，远山县，苏家。\r\n\r\n    偌大的厅堂当中，阵阵争辩此起彼伏。\r\n\r\n    有数十人站在厅堂里，刚才开口的，都是一些年过半百的老者，从他们的穿着来看，全部都是长老。\r\n\r\n    主位上，一名身材魁梧的中年男子正皱着眉头坐在那里，他的目光不时瞥向下方位置的一名青年，眼神当中充满无奈与叹息。\r\n\r\n    那青年，名为苏寒。\r\n\r\n    确切的说，此‘苏寒’，非彼‘苏寒’。\r\n\r\n    苏家的苏寒，只是一名刚满十八岁的青年而已。\r\n\r\n    而此刻的苏寒，却是已经活了近亿年年之久，坐镇圣域，指掌天下的妖龙古帝！\r\n\r\n    以上一世苏寒的修为，说天下无敌都不为过，可惜的是，苏寒为突破天道枷锁，同天地比肩，与星空同寿，最终走火入魔。\r\n\r\n    原本他以为，自己会神魂俱灭，没想到，竟然重生在了苏家的苏寒身上！\r\n\r\n    察觉到浑身修为尽失，苏寒在短暂的失落之后，便再次振奋起来。\r\n\r\n    修为算什么？\r\n\r\n    只要拥有生命，加上他前世的记忆，他相信总有一天，自己可以再次达到那种高度，甚至真正的突破！\r\n\r\n    而此刻，苏寒正坐在那里，眼眸微闭，像是没有听到那些长老的争辩。\r\n\r\n    在他背后，正有一群青年男女幸灾乐祸的看着他，嘴角儿不时掀起讥讽的笑容。\r\n\r\n    “哼，现在不说话了？”\r\n\r\n    “之前以天才的身份看我们之时，眼睛都要高到天上去了，而今成为了废物，屁都不敢放一个了？”\r\n\r\n    “活该他变成这样，以往我等跟他讨论一下修炼之事，他都爱搭不理，现在好了，看到我们都要绕道走。”\r\n\r\n    这些话语虽说声音很小，却依旧传进了苏寒的耳朵里，更传进了大厅里面，所有人的心中。\r\n\r\n    “家主！”\r\n\r\n    二家主苏云琛又站了起来，抱拳道：“我等所言，都是为家族考虑，还请家主能够同意！”\r\n\r\n    “我赞成二家主所言！”\r\n\r\n    三家主苏云鹏也起身，道：“实际上，以我苏家的地位，那萧家是根本不会放在眼中的，只是不知为何，那萧家二小姐萧雨然就非苏寒不嫁。不过这对我苏家来说，是一次千载难逢的机会。”\r\n\r\n    “苏寒，既然人家这么喜欢你，你就娶了人家得了。”\r\n\r\n    一名身着白衣的青年瞥了眼苏寒，讥笑道：“其实以你现在的情况，日后能不能找到妻子都不一定，还不如借助这次机会，也让我苏家有翻身的契机。”\r\n\r\n    这青年名为苏明轩，是二家主苏云琛的儿子。\r\n\r\n ...',14),(26,'第2章 我要是不娶呢？','苏寒此话一出，大厅当中立刻寂静了下来。\r\n\r\n    显然谁都没有想到，以苏寒此刻的情况，还敢这般对苏云琛说话。\r\n\r\n    只有坐在主位上的苏云明，嘴角儿露出了一抹笑容。\r\n\r\n    他知道，自己的儿子从小就有这种傲气，天才时有，废物时……依旧有！\r\n\r\n    苏云琛的脸色挂不住了，冷哼道：“我不是你的师，也不是你的道，但我是你的长……”\r\n\r\n    “那就对了。”\r\n\r\n    没等苏云琛说完，苏寒便双手一摊，淡淡道：“你不是我的师，那我就没必要尊敬你。你也不是我的道，我更没必要重视你！”\r\n\r\n    “你！”\r\n\r\n    苏云琛差点一口血喷出来，苏寒从修为跌落之后，便沉默寡言，无论别人怎么嘲讽，都不带反驳一句的。\r\n\r\n    没想到，此刻当着这么多人的面，苏寒竟然会一反常态，如此顶撞自己，这让本来打算装老虎的苏云琛，怎么下的来台？\r\n\r\n    “大哥，此事你怎么觉得？”\r\n\r\n    见苏云琛还要找麻烦，苏云明轻咳一声，将目光转向了一直都坐在那里，从未开口的苏云烈身上。\r\n\r\n    苏云烈作为苏家大家主，掌握苏家经济命脉，大家还是很忌惮他的。\r\n\r\n    而他在苏家当中，一直都是出于中立状态，不偏向苏云明，也不偏向苏云琛和苏云鹏。\r\n\r\n    此刻听到苏云明的问话，所有人的视线，自然是都转移到了苏云烈的身上。\r\n\r\n    只要苏云烈也开口同意，那萧家的二小姐，苏寒就非娶不可！\r\n\r\n    几乎所有人都在等着苏云烈的回答，只有苏寒依旧闭着眼睛，好像结果如何，跟他都没什么关系一样。\r\n\r\n    苏云烈抿了抿嘴，扫视了下方众人一眼，叹息道：“云明，苏家如今的状况你也知道，那陈家和林家如同两头老虎，一直都在虎视眈眈的盯着我们，我苏家没有什么背景，若真能找到一个靠山，未必不是坏事。”\r\n\r\n    闻言，苏云明脸色一变，沉默下来。\r\n\r\n    苏云烈的意思，已经很明显了啊！\r\n\r\n    而苏云琛和苏云鹏两人，竟然不顾旁人看法，直接就哈哈大笑起来。\r\n\r\n    实际上，此刻的苏家，也没人敢对他们有什么看法，苏寒如今已经成了废物，在这实力为尊的龙武大陆，苏云明相当于绝后，这家主之位，早晚被苏云琛和苏云鹏两人给拉下来。\r\n\r\n    “连大家主都同意了，苏寒，你还有什么话说？”苏明轩又是冷笑道。\r\n\r\n    “是啊，大家主威望极高，哪怕家主都要听他的，他既然已经下达了命令，你还敢不遵从？”苏明辉更是冷嘲热讽。\r\n\r\n    苏寒看都没看他们一眼，淡淡道：“我要娶谁，那是我的事情，用不着别人来同意，也用不着别人来替我做主。”\r\n\r\n    “事到如今，你还敢放肆？真以为你还是之前那个两年时间就开出四条龙脉，三年时间就开出八条龙脉的天才？”苏明轩脸色阴冷。\r\n\r\n    他跟苏明辉的天资，在苏家也算是很不错的，只是苏寒如同一座大山，一直都狠狠的压在他的头顶，让他们喘不过气来。\r\n\r\n    他们等这一天，已经等了很久了！\r\n\r\n    “苏云明，你还不管管你的儿子！”\r\n\r\n    苏云鹏借机发挥道：“连大哥都不放在眼中了，成... -->>',14),(27,'第1章 万界淘宝系统','“我人生最大的错误就是创立了这家公司！”\r\n\r\n    “你信不信？我创业到现在，从1999年到现在为止，我没有一个月拿过工资。”\r\n\r\n    “我对钱没有兴趣。”\r\n\r\n    “我从来没碰过钱！”\r\n\r\n    “我最幸福的时候，是一个月拿九十块钱当老师……”\r\n\r\n    轰隆！\r\n\r\n    在十大杰出企业家的颁奖典礼上。\r\n\r\n    苏尘正滔滔不绝地吹逼，万里晴空，突然劈下一道雷霆，他当场魂归天外。\r\n\r\n    “装逼，原来真的会遭雷劈啊……”\r\n\r\n    重生后的苏尘，望着熟悉的高三教室，陷入了沉思：\r\n\r\n    “但星爷曾经说过！”\r\n\r\n    “人活着，如果不装逼，那和咸鱼有什么区别呢？”\r\n\r\n    “叮！”\r\n\r\n    突然，一个机械合成音，在苏尘脑海响起。\r\n\r\n    “恭喜宿主，以生命为代价装逼，觉醒万界淘宝系统！”\r\n\r\n    系统！\r\n\r\n    苏尘虎躯一震。\r\n\r\n    他看过N本网络小说，怎么会不知道系统！\r\n\r\n    不过，别的小说主角都是什么大魔王系统、至尊皇帝系统、狂暴升级系统、无敌神豪系统……\r\n\r\n    这万界淘宝系统，听起来有点low啊……\r\n\r\n    “系统，请开始你的自我介绍。”\r\n\r\n    苏尘递出一只话筒。\r\n\r\n    “叮！”\r\n\r\n    “万界淘宝店，是一款连接诸天万界位面的强大系统！电影，小说，动漫，历史，天庭，地府，甚至仙界和神界！”\r\n\r\n    “系统将会帮助宿主，把地球上各种家居日用，电子数码，风味美食，酒水饮料，成人用品，甚至汽车飞机大炮航空母舰，卖到万界顾客的手上！”\r\n\r\n    “只要宿主获得五星好评，作为报酬，你将会得到一个个超级红包！”\r\n\r\n    “强大的武魂、修真功法、漫威神器、火影忍术、海贼果实、LOL英雄技能、王者荣耀皮肤，QQ农场、QQ牧场经营权，QQ飞车的S级车……”\r\n\r\n    “甚至，龙女仆，都可以从红包里拆出！”\r\n\r\n    ……\r\n\r\n    “龙女仆！”\r\n\r\n    想象那爆炸身材，苏尘要流鼻血了。\r\n\r\n    这个万界淘宝店，好像很流弊的样子啊！\r\n\r\n    自己要走上人生巅峰的节奏？\r\n\r\n    “苏尘同学，那个……”\r\n\r\n    这时，教室里。\r\n\r\n    一个长相甜美的女生，手持一封情书，站在苏尘面前。\r\n\r\n    女孩一张娇嫩瓜子脸，五官精致，气质清纯，标准的网红长相。\r\n\r\n    “苏尘，我喜欢你很久了，请和我交往吧！”\r\n\r\n    女孩俏脸绯红，羞涩地把情书塞给苏尘。\r\n\r\n    “卧槽，我眼瞎了吗？”\r\n\r\n    “马菲菲竟然向苏尘告白！”\r\n\r\n    “苏尘可是出了名的穷鬼，学渣，草包啊！”\r\n\r\n    “啊啊啊啊菲菲我的女神！”\r\n\r\n    三班教室炸开了锅，男生们嫉妒得眼睛都红了。\r\n\r\n    苏尘却火冒三丈！\r\n\r\n    这件事，他前世记得很清楚。\r\n\r\n    马菲菲这个贱女人！\r\n\r\n    和几个朋友打赌，故意跑来追他，结果第二节课就把他甩了。为此，他还受伤了好久……\r\n\r\n    “滚！”\r\n\r\n    “滚泥玛的，烂菜叶子！”\r\n\r\n    苏尘几下就把情书撕得稀巴烂，狠狠扔在马菲菲的脸上。\r\n\r\n    嘎？！\r\n\r\n    三班学生都大跌眼镜。\r\n\r\n    “苏尘，你小子给脸不要脸是吧……”\r\n\r\n    马菲菲清纯的脸蛋，...',15),(28,'第2章 我真的没开挂！','此时。\r\n\r\n    东海市，某套高档公寓中。\r\n\r\n    “难受啊，马飞！”\r\n\r\n    斗渔TV顶级主播‘武武开’，摘下耳机，双手撕扯头发，表情十分的痛苦！\r\n\r\n    “明明是我自己打出来的操作，他们为什么要说我开挂！呜呜呜……”\r\n\r\n    直播间里，立马一顿狂喷：\r\n\r\n    “我信你个鬼！”\r\n\r\n    “他要是没开挂，老子倒立拉稀！”\r\n\r\n    “挂怎么了？不爱看滚啊，我先滚为敬！”\r\n\r\n    “我赌一包辣条，绝对开了自瞄！他就是个挂逼！”\r\n\r\n    “楼上，竟敢乱喷开哥，跪下！看来你不懂生命的可贵！”\r\n\r\n    “开哥，咱们今天敞开大雕说直话，你到底开没开挂？”\r\n\r\n    “相信开哥没开挂的扣波9999，我倒要看看，这个直播间有多少傻逼！”\r\n\r\n    ……\r\n\r\n    看见这些弹幕，武武开端起一杯卡布奇诺，喝了几口。\r\n\r\n    调整了一下心态，他把摄像头对准自己，用很深沉很无奈的语气道：\r\n\r\n    “观众朋友们，我芦本苇，不可能开挂！”\r\n\r\n    “我不知道有多痛恨外挂，我也经常被外挂打死，身为职业选手，我有自己的职业操守，我不可能让自己瞧不起自己！”\r\n\r\n    弹幕立马又是一波嘲讽！\r\n\r\n    “开哥！”\r\n\r\n    “毒圈刷新了，你还在安全区！”\r\n\r\n    突然，马屁飞的声音传来。\r\n\r\n    武武开摇摇头，无奈地回到游戏中。\r\n\r\n    嗯？\r\n\r\n    存活玩家数，怎么多了一个，本来是45个，现在变成46个了！\r\n\r\n    “我眼花了？”\r\n\r\n    武武开揉了揉眼睛。\r\n\r\n    此时。\r\n\r\n    对面山坡的一棵树后，躲着两个人。\r\n\r\n    一个肥宅男子，和一个漂亮女孩。\r\n\r\n    “呆妹儿，你还有多少药？”\r\n\r\n    残血的韦神问道。\r\n\r\n    “没了，就一瓶能量饮料。”\r\n\r\n    呆妹儿哭着脸：“前面那个开挂的一直堵着我们，太恶心了，我被连爆三次头，头盔都打烂了！”\r\n\r\n    “狗日的！”\r\n\r\n    韦神用手捶地，恼火地骂道。\r\n\r\n    突然间，耳后传来一道轻微的脚步声！\r\n\r\n    “后面有人！”\r\n\r\n    韦神大惊，赶紧转过身！\r\n\r\n    果然，有一个青年爬上山坡，朝他们走过来：\r\n\r\n    “韦神，你好！”\r\n\r\n    “我叫苏尘，特地来给你送药的！”\r\n\r\n    见对方手无寸铁，韦神稍稍放下了警惕，“送药？你是我粉丝？”\r\n\r\n    “呃，算是吧。”\r\n\r\n    苏尘笑了笑，把刚捡的一堆药放在地上。\r\n\r\n    “五个急救包，十瓶能量饮料，三瓶止疼药，两个医疗箱……”\r\n\r\n    “天呐！”\r\n\r\n    “这么多药？！”\r\n\r\n    呆妹儿惊呆了，“小哥哥，能分我一点吗？”\r\n\r\n    “当然可以！”\r\n\r\n    苏尘微微一笑。\r\n\r\n    他认识这个女主播，呆妹儿小霸王。\r\n\r\n    斗渔最新火起来的一个吃鸡主播，人美声甜，腰细腿长，还会撒娇卖萌。\r\n\r\n    “兄弟！”\r\n\r\n    “多谢！”\r\n\r\n    “有了这些药，我一定干死那个开挂的孤儿！”\r\n\r\n    韦神信誓旦旦地说道。\r\n\r\n    八秒后。\r\n\r\n    他被SKS三枪撂倒在地！\r\n\r\n    武武开：“菜逼！”\r\n\r\n    “呆……呆妹儿，我六倒，快扶我一下！”\r\n\r\n    韦神躲在树后，掉血贼快。\r\n\r\n    呆妹儿及时按住F键救援，幽幽一叹：\r\n\r\n    “算了吧，韦神，人家可能开了外挂，我们这局不可能吃鸡的。”\r\n\r\n    “那可未必！”\r\n\r\n    苏尘突然开口，声音带着绝对的自信！\r\n\r\n    然后一步跨出树后！\r\n\r\n    “喂，你干什么，快回来！”\r\n\r\n    呆妹儿急呼。\r\n\r\n    “嗯？”\r\n\r\n    这时，对面山坡上的武武开，从八倍镜里看见了苏尘。\r\n\r\n    “没头没甲，也敢露头？”\r\n\r\n    武武开冷冷一笑！',15);
+/*!40000 ALTER TABLE `ranks_chapter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_novel`
+--
+
+DROP TABLE IF EXISTS `ranks_novel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_novel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `number` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_novel`
+--
+
+LOCK TABLES `ranks_novel` WRITE;
+/*!40000 ALTER TABLE `ranks_novel` DISABLE KEYS */;
+INSERT INTO `ranks_novel` VALUES (1,'贱道长存',92675),(2,'仙帝独尊',51964),(3,'寒门仕子',83343),(4,'赘婿出山',41765),(5,'法学院的新生',15143),(6,'剑道第一仙',25499),(7,'雪中悍刀行',12782),(8,'无限列车',41132),(9,'剑来',22659),(10,'不让江山',63898),(11,'元尊',89580),(12,'大道南行',18131),(13,'混沌神陵',36356),(14,'绝世好人',60347),(15,'星辰之主',80271);
+/*!40000 ALTER TABLE `ranks_novel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_novelmessage`
+--
+
+DROP TABLE IF EXISTS `ranks_novelmessage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_novelmessage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author` varchar(30) NOT NULL,
+  `introduce` varchar(999) NOT NULL,
+  `up` int(11) NOT NULL,
+  `serialize` tinyint(1) NOT NULL,
+  `vip_type` tinyint(1) NOT NULL,
+  `cover` varchar(100) DEFAULT NULL,
+  `novel_num_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `novel_num_id` (`novel_num_id`),
+  CONSTRAINT `ranks_novelmessage_novel_num_id_1e53d869_fk_ranks_novel_id` FOREIGN KEY (`novel_num_id`) REFERENCES `ranks_novel` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_novelmessage`
+--
+
+LOCK TABLES `ranks_novelmessage` WRITE;
+/*!40000 ALTER TABLE `ranks_novelmessage` DISABLE KEYS */;
+INSERT INTO `ranks_novelmessage` VALUES (1,'熊大吉','【尊贵书友群：655745458】 远看软柿子，近看软柿子，啃上一口……草！大理石的！ 我叫柳江！江湖人送外号贱圣，凭自己编的破系统坑遍天下，偶尔还坑坑自己。',9965,1,0,'cover/92675.jpeg',1),(2,'故一成','开局签到个最强器灵，请挖矿领取，坑遍仙、神界,组团吊打复活天才。 羽风与复活天才的最强对决，从大千世界战至仙界，从神界杀入位面星空。 仙路相逢勇者胜，正能量护体，信者无敌。',2339,0,0,'cover/51964.jpeg',2),(3,'佯忘','穿越成屡试不中的书生，家徒四壁不说，还有一个瞎了眼的老娘和一个刚成亲半年的妻子。肩不能扛，手又不能提，科技发明也不会。齐誉想了想：好像只剩下读书科举这一条路了！',6215,1,0,'cover/83343.jpeg',3),(4,'李闲鱼','山村赘婿李子安偶得西周方士传承，大惰随身炉傍身，医、卜、星、相样样精通，要风得龙卷，要雨发大水。软饭也是饭，但得讲究个吃法。李子安吃软饭，那姿势讲究可就大了。',6235,0,0,'cover/41765.jpeg',4),(5,'熊老师喵喵喵','原本是贵族才能就读的法学院，今年向平民开放招生。 三个弱鸡学生，阴差阳错的被安排进了学院。 可万万没想到……',1485,0,0,'cover/15143.jpeg',5),(6,'萧瑾瑜','我是万古人间一剑修，诸天之上第一仙。 已有完本作品《符皇》《天骄战纪》 公众号：xiaojinyu233',4691,1,0,'cover/25499.jpeg',6),(7,'烽火戏诸侯','江湖是一张珠帘。 大人物小人物，是珠子，大故事小故事，是串线。 情义二字，则是那些珠子的精气神。',3786,0,0,'cover/12782.jpeg',7),(8,'丁白','一场席卷全人类的无限游戏，死亡与杀戮在这里进行，或是生存下去，或者跌入无尽深渊。  尊贵书友群【1076746004】',3043,1,0,'cover/41132.jpeg',8),(9,'烽火戏诸侯','大千世界，无奇不有。 我陈平安，唯有一剑，可搬山，倒海，降妖，镇魔，敕神，摘星，断江，摧城，开天！ 我叫陈平安，平平安安的平安。我是一名剑客。',8246,1,0,'cover/22659.jpeg',9),(10,'知白','我本观天下，满是英雄豪杰。 我再观天下，皆为乌合之众。 这江山万民与其交给你们，还不如我自取之！',8213,1,0,'cover/63898.jpeg',10),(11,'天蚕土豆','天地为炉，万物为铜，阴阳为炭，造化为工。 气运之争，蟒雀吞龙。 究竟是蟒雀为尊，还是圣龙崛起，凌驾众生？',1266,1,0,'cover/89580.jpeg',11),(12,'南城四顾','“你为何如此？” “天地不公，那自然要将天地葬下，再从废墟中生根发芽！要后世不再受什么因果轮回，要让新天地，一切皆有可能！哪怕是，等她！”',9847,1,0,'cover/18131.jpeg',12),(13,'左右轮回','浩瀚星宇，异族入侵！战乱四起，星域破碎！ 姜雨穿梭至远古混沌星，识窈窕仙女，战洪荒圣体，杀远古神兽，走上了一条热血艰辛的踏仙之路！',8355,0,0,'cover/36356.jpeg',13),(14,'覆手','虽有娇妻相伴，却是绝版渣男。 一朝浪子回头，造就绝世好人！ 咦！',9913,0,0,'cover/60347.jpeg',14),(15,'减肥专家','世纪之交，人类懵懂着踏入星空，就此暴露在诸神的视线之下。少年罗南背负着祖父的罪孽，走出实验室，且看他： 高举燃烧的笔记，脚踏诸神的尸骨；',5997,1,0,'cover/80271.jpg',15);
+/*!40000 ALTER TABLE `ranks_novelmessage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_noveltag`
+--
+
+DROP TABLE IF EXISTS `ranks_noveltag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_noveltag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_noveltag`
+--
+
+LOCK TABLES `ranks_noveltag` WRITE;
+/*!40000 ALTER TABLE `ranks_noveltag` DISABLE KEYS */;
+INSERT INTO `ranks_noveltag` VALUES (1,'都市娱乐'),(2,'搞笑'),(3,'爽文'),(4,'奇幻玄幻'),(5,'玄幻仙侠'),(6,'历史军事'),(7,'重生'),(8,'生活'),(9,'魔法'),(10,'修真'),(11,'科幻游戏'),(12,'未来'),(13,'古典仙侠'),(14,'争霸'),(15,'武侠仙侠');
+/*!40000 ALTER TABLE `ranks_noveltag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_numtotag`
+--
+
+DROP TABLE IF EXISTS `ranks_numtotag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_numtotag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `num_id` int(11) NOT NULL,
+  `tags_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ranks_numtotag_num_id_9342316f_fk_ranks_novel_id` (`num_id`),
+  KEY `ranks_numtotag_tags_id_d7be2c53_fk_ranks_noveltag_id` (`tags_id`),
+  CONSTRAINT `ranks_numtotag_num_id_9342316f_fk_ranks_novel_id` FOREIGN KEY (`num_id`) REFERENCES `ranks_novel` (`id`),
+  CONSTRAINT `ranks_numtotag_tags_id_d7be2c53_fk_ranks_noveltag_id` FOREIGN KEY (`tags_id`) REFERENCES `ranks_noveltag` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_numtotag`
+--
+
+LOCK TABLES `ranks_numtotag` WRITE;
+/*!40000 ALTER TABLE `ranks_numtotag` DISABLE KEYS */;
+INSERT INTO `ranks_numtotag` VALUES (1,1,1),(2,1,2),(3,1,3),(4,2,5),(5,2,4),(6,3,6),(7,3,6),(8,4,1),(9,4,3),(10,4,8),(11,5,9),(12,5,4),(13,5,2),(14,6,4),(15,6,3),(16,6,7),(17,7,4),(18,7,10),(19,8,11),(20,8,12),(21,9,13),(22,10,6),(23,10,14),(24,10,2),(25,11,4),(26,11,3),(27,12,4),(28,13,15),(29,13,3),(30,13,2),(31,14,1),(32,14,8),(33,15,11);
+/*!40000 ALTER TABLE `ranks_numtotag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_user`
+--
+
+DROP TABLE IF EXISTS `ranks_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mail` varchar(50) NOT NULL,
+  `password` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_user`
+--
+
+LOCK TABLES `ranks_user` WRITE;
+/*!40000 ALTER TABLE `ranks_user` DISABLE KEYS */;
+INSERT INTO `ranks_user` VALUES (3,'123@163.com','123'),(4,'456@163.com','456'),(5,'789@163.com','789');
+/*!40000 ALTER TABLE `ranks_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ranks_usertosc`
+--
+
+DROP TABLE IF EXISTS `ranks_usertosc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ranks_usertosc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `number_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ranks_usertosc_user_id_a550e014_fk_ranks_user_id` (`user_id`),
+  KEY `ranks_usertosc_number_id_7b8d2ee6_fk_ranks_novel_id` (`number_id`),
+  CONSTRAINT `ranks_usertosc_number_id_7b8d2ee6_fk_ranks_novel_id` FOREIGN KEY (`number_id`) REFERENCES `ranks_novel` (`id`),
+  CONSTRAINT `ranks_usertosc_user_id_a550e014_fk_ranks_user_id` FOREIGN KEY (`user_id`) REFERENCES `ranks_user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ranks_usertosc`
+--
+
+LOCK TABLES `ranks_usertosc` WRITE;
+/*!40000 ALTER TABLE `ranks_usertosc` DISABLE KEYS */;
+INSERT INTO `ranks_usertosc` VALUES (5,1,3),(6,2,3),(7,1,5),(8,1,4),(9,2,4),(10,4,4),(11,3,5),(12,5,5);
+/*!40000 ALTER TABLE `ranks_usertosc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic_chapter`
+--
+
+DROP TABLE IF EXISTS `topic_chapter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_chapter` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `chapter` varchar(100) NOT NULL,
+  `content` longtext NOT NULL,
+  `topic_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `topic_chapter_topic_id_85d8473d_fk_topic_novel_id` (`topic_id`),
+  CONSTRAINT `topic_chapter_topic_id_85d8473d_fk_topic_novel_id` FOREIGN KEY (`topic_id`) REFERENCES `topic_novel` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_chapter`
+--
+
+LOCK TABLES `topic_chapter` WRITE;
+/*!40000 ALTER TABLE `topic_chapter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic_chapter` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic_novel`
+--
+
+DROP TABLE IF EXISTS `topic_novel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_novel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `number` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_novel`
+--
+
+LOCK TABLES `topic_novel` WRITE;
+/*!40000 ALTER TABLE `topic_novel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic_novel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic_novelmessage`
+--
+
+DROP TABLE IF EXISTS `topic_novelmessage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_novelmessage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `author` varchar(30) NOT NULL,
+  `introduce` varchar(999) NOT NULL,
+  `up` int(11) NOT NULL,
+  `serialize` tinyint(1) NOT NULL,
+  `vip_type` tinyint(1) NOT NULL,
+  `cover` varchar(100) DEFAULT NULL,
+  `novel_num_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `novel_num_id` (`novel_num_id`),
+  CONSTRAINT `topic_novelmessage_novel_num_id_653f5ae1_fk_topic_novel_id` FOREIGN KEY (`novel_num_id`) REFERENCES `topic_novel` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_novelmessage`
+--
+
+LOCK TABLES `topic_novelmessage` WRITE;
+/*!40000 ALTER TABLE `topic_novelmessage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic_novelmessage` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic_noveltag`
+--
+
+DROP TABLE IF EXISTS `topic_noveltag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_noveltag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tag` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_noveltag`
+--
+
+LOCK TABLES `topic_noveltag` WRITE;
+/*!40000 ALTER TABLE `topic_noveltag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic_noveltag` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `topic_numtotag`
+--
+
+DROP TABLE IF EXISTS `topic_numtotag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `topic_numtotag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `num_id` int(11) NOT NULL,
+  `tags_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `topic_numtotag_num_id_d89a8d63_fk_topic_novel_id` (`num_id`),
+  KEY `topic_numtotag_tags_id_76047d99_fk_topic_noveltag_id` (`tags_id`),
+  CONSTRAINT `topic_numtotag_num_id_d89a8d63_fk_topic_novel_id` FOREIGN KEY (`num_id`) REFERENCES `topic_novel` (`id`),
+  CONSTRAINT `topic_numtotag_tags_id_76047d99_fk_topic_noveltag_id` FOREIGN KEY (`tags_id`) REFERENCES `topic_noveltag` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `topic_numtotag`
+--
+
+LOCK TABLES `topic_numtotag` WRITE;
+/*!40000 ALTER TABLE `topic_numtotag` DISABLE KEYS */;
+/*!40000 ALTER TABLE `topic_numtotag` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-02-25 16:40:34

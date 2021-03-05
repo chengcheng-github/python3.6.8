@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小说目录页</title>
+</head>
+
+<body>
+    <a href="/v1/index">点击回到首页</a><br>
+    <div id="novel_index">
+    </div>
+    <script>
+        var novel_index = document.getElementById("novel_index");
+        var novel_index_code1 = ``;
+        // 小说id
+        var novel_id = window.location.href.split("novel/")[1];
+        // console.log("小说id", novel_id);
+        var data1 = {}
+        data1["novel_id"] = novel_id;
+        data1 = JSON.stringify(data1);
+
+
+        function createXhr() {
+            //判断是否有XMLHttpRequest
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+                console.log(xhr);
+            } else {
+                var xhr = new ActiveXObjecxt("Microsoft.XMLHTTP");
+                console.log(xhr);
+            }
+            return xhr;
+        }
+        xhr_b_1 = createXhr();
+        xhr_b_1.open("POST", "http://176.215.22.95:8001/v2/novel/novel_index", true);
+        // console.log("准备开始从后端获取书的数据");
+        xhr_b_1.onreadystatechange = function() {
+            // 代表xhr对象响应成功,并且服务器端响应正常
+            if (xhr_b_1.readyState === 4 && xhr_b_1.status === 200) {
+                // 直接显示返回的字符串
+                // console.log(xhr_b_1.responseText);
+                // 将返回的字符串作成json格式显示
+                console.log(JSON.parse(xhr_b_1.responseText));
+                var book_index = JSON.parse(xhr_b_1.responseText)["data"];
+                novel_index_code1 = "小说:" + JSON.parse(xhr_b_1.responseText).book + `<br>`;
+                novel_index_code1 = novel_index_code1 + `<img style="width:100px;height:100px;" src="http://176.215.22.95:8001/media/` + JSON.parse(xhr_b_1.responseText).cover + `"><br>`;
+                novel_index_code1 = novel_index_code1 + `作者:` + JSON.parse(xhr_b_1.responseText).author + `<br>`;
+                novel_index_code1 = novel_index_code1 + `点赞数:` + JSON.parse(xhr_b_1.responseText).up + `<br>`;
+                // console.log(JSON.parse(xhr_b_1.responseText).serialize, typeof(JSON.parse(xhr_b_1.responseText).serialize));
+                if (JSON.parse(xhr_b_1.responseText).serialize === false) {
+                    novel_index_code1 = novel_index_code1 + `连载状态:` + `已完结<br>`;
+
+                } else if (JSON.parse(xhr_b_1.responseText).serialize === true) {
+                    novel_index_code1 = novel_index_code1 + `连载状态:` + `连载中<br>`;
+                }
+                if (JSON.parse(xhr_b_1.responseText).vip_type === false) {
+                    novel_index_code1 = novel_index_code1 + `是否需要充值vip:` + `否<br>`;
+
+                } else if (JSON.parse(xhr_b_1.responseText).serialize === true) {
+                    novel_index_code1 = novel_index_code1 + `是否需要充值vip:` + `是<br>`;
+                }
+
+                novel_index_code1 = novel_index_code1 + `介绍:` + JSON.parse(xhr_b_1.responseText).introduce + `<br>`;
+                // console.log(book_index)
+                for (var item in book_index) {
+                    novel_index_code1 = novel_index_code1 + `<a href="/v1/novel/` + novel_id + `/` + item + `">` + item + `&nbsp;` + book_index[item] + `</a><br>`;
+                }
+                novel_index.innerHTML = novel_index_code1;
+            }
+        };
+        // 发送之前设置请求头等..设置发送json格式的内容
+        xhr_b_1.setRequestHeader('content-type', 'application/json');
+        // 4 发送请求
+        xhr_b_1.send(data1);
+    </script>
+</body>
+
+</html>

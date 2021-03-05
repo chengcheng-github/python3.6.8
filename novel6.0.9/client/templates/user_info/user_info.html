@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查看用户信息页</title>
+</head>
+
+<body>
+    <div id="div1">这里是查看用户信息页</div>
+
+    <script>
+        var usermail = window.location.href.split("user_info/")[1];
+        // console.log(usermail);
+        var div1 = document.getElementById("div1");
+        // 放在div1里的代码
+        var code1 = "";
+        // 提交到后端服务端的数据
+        var data1 = {};
+        var res = null;
+
+        function createXhr() {
+            //判断是否有XMLHttpRequest
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+                console.log(xhr);
+            } else {
+                var xhr = new ActiveXObjecxt("Microsoft.XMLHTTP");
+                console.log(xhr);
+            }
+            return xhr;
+        }
+
+        function goback() {
+            window.history.back();
+        }
+        // 获取浏览器内存储的当前登录账号的邮箱
+        var my_site_1_user_mail = window.localStorage.getItem("my_site_1_user_mail");
+        // 如果邮箱和url里查询的用户邮箱相同
+        if (my_site_1_user_mail === usermail) {
+            // 跳转到修改当前登录用户的个人信息界面
+            window.location.href = "http://127.0.0.1:5000/" + "user_infoc/" + usermail + "/change";
+        }
+
+        // 用ajax提交请求p,根据返回的json内容前端判断登录是否正规,如果不正规前端路径跳转到登录界面
+        // 创建xhr对象
+        var xhr = createXhr();
+        // 每次都得改ip,引起不适,用批量替换试试
+        // 有点作用,记得把注释里的ip去掉
+        xhr.open("POST", "http://127.0.0.1:8000/v2/user_info/" + usermail, true);
+        // 3.设置回调函数
+        xhr.onreadystatechange = function() {
+            // 代表xhr对象响应成功,并且服务器端响应正常
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // // 如果没通过登陆验证,跳转到登录页面
+                // if (JSON.parse(xhr.responseText)["error"] != "没有异常") {
+                //     window.location.href = "/v1/register_and_login/login";
+                // }
+                // // 直接显示返回的字符串
+                console.log(xhr.responseText);
+                // 将返回的字符串作成json格式显示
+                console.log(JSON.parse(xhr.responseText));
+                res = JSON.parse(xhr.responseText);
+                // // 如果通过了登陆验证,把浏览器window.localStorage存储的邮箱和用户名改成与token配对的邮箱和用户名
+                // window.localStorage.setItem("my_site_1_user", JSON.parse(xhr.responseText)["my_site_1_user"]);
+                // window.localStorage.setItem("my_site_1_user_mail", JSON.parse(xhr.responseText)["user_mail"]);
+                if (res["code"] === "2000") {
+                    code1 = code1 + "这里是用户" + usermail + "的查看信息页<br>";
+                    code1 = code1 + `用户名:` +
+                        res["data"]["nickname"] + `<br>`;
+                    if (res["data"]["avatar"] === "") {
+                        res["data"]["avatar"] = "avatar/默认头像.jpg";
+                    }
+                    if (res["data"]["collection"] === "") {
+                        res["data"]["collection"] = "暂无收藏";
+                    }
+                    if (res["data"]["user_type"] === "2") {
+                        res["data"]["user_type"] = "普通用户";
+                    }
+                    if (res["data"]["phone"] === "") {
+                        res["data"]["phone"] = "未填写";
+                    }
+                    if (res["data"]["user_vip"] === "") {
+                        res["data"]["user_vip"] = "非vip用户";
+                    }
+                    else if (res["data"]["user_vip"] != "") {
+                        res["data"]["user_vip"] = "vip用户";
+                    }
+                    if (res["data"]["user_vip_time"] === null) {
+                        res["data"]["user_vip_time"] = "无";
+                    }
+                    code1 = code1 + `用户头像:<br>
+                                <img id="img1" style="width:100px;height:100px;"src="http://127.0.0.1:8000/media/` + res["data"]["avatar"] + `"><br>`;
+                    code1 = code1 + `
+                        收藏: ` + res["data"]["collection"] + ` <br> ` +
+                        `
+                        用户类型: ` + res["data"]["user_type"] + ` <br> `;
+                    code1 = code1 + ` 电话:` + res["data"]["phone"] + `<br>`;
+                    code1 = code1 + `vip状态:` + res["data"]["user_vip"] + `<br>`;
+                    code1 = code1 + `vip过期时间:` + res["data"]["user_vip_time"] + `<br>`;
+                    code1 = code1 + `注册时间:` + res["data"]["created_time"] + `<br>`;
+                    code1 = code1 + `修改个人信息时间:` + res["data"]["updated_time"] + `<br>`;
+                    code1 = code1 + `<a href="#" onclick="goback()"">点击返回上一页</a><br>`;
+                    code1 = code1 + `<a href="/index">点击返回首页</a><br>`;
+                    div1.innerHTML = code1;
+                } else {
+                    div1.innerHTML = "查找的用户邮箱异常";
+                }
+
+
+            }
+        };
+        // 发送之前设置请求头等..设置发送json格式的内容
+        xhr.setRequestHeader('content-type', 'application/json');
+        // 4 发送请求
+        xhr.send(data1);
+    </script>
+</body>
+
+</html>

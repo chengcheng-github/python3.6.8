@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修改当前登录用户信息页</title>
+</head>
+
+<body>
+    <div id="div1">这里是修改当前登录用户信息页</div>
+
+    <script>
+        // 除了管理员,所有人只能修改自己的信息
+        // 如果浏览器里储存的用户邮箱和地址栏里输入查询的邮箱相同,跳转到修改信息界面(这种情况代表初步判断是修自己的个人信息)
+        // 这种情况时,url是   /v1/user_info/浏览器里储存的用户邮箱/change
+
+        // 如果有人在登录状态或者没有登录的状态在地址栏输入/v1/user_info/其他用户的邮箱/change,移除浏览器里储存的用户名,邮箱和token,返回登录页面
+        var urlmail = window.location.href.split("user_info/")[1];
+        urlmail = urlmail.split("/")[0];
+        var usermail = window.localStorage.getItem("my_site_1_user_mail");
+        if (urlmail != usermail) {
+            // 用户信息表->用户名
+            window.localStorage.removeItem("my_site_1_user");
+            // 后端制作的token
+            window.localStorage.removeItem("my_site_1_token");
+            // 用户表,用户的邮箱
+            window.localStorage.removeItem("my_site_1_user_mail");
+            window.location.href = "/register_and_login/login";
+        }
+        // console.log(usermail);
+        var div1 = document.getElementById("div1");
+        // 放在div1里的代码
+        var code1 = "";
+        // 提交到后端服务端的数据
+        var data1 = {};
+        data1["token"] = window.localStorage.getItem("my_site_1_token");
+        data1["usermail"] = usermail;
+        data1 = JSON.stringify(data1);
+        // 下一行还真是个函数,打印启动打印网页的功能
+        // print(data1);
+        console.log(data1);
+        var res = null;
+        // // 用户信息表->用户名
+        // window.localStorage.removeItem("my_site_1_user");
+        // // 后端制作的token
+        // window.localStorage.removeItem("my_site_1_token");
+        // // 用户表,用户的邮箱
+        // window.localStorage.removeItem("my_site_1_user_mail");
+        // window.location.href = "/register_and_login/login";
+
+        // window.localStorage.removeItem("my_site_1_user_mail");
+
+        function createXhr() {
+            //判断是否有XMLHttpRequest
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+                console.log(xhr);
+            } else {
+                var xhr = new ActiveXObjecxt("Microsoft.XMLHTTP");
+                console.log(xhr);
+            }
+            return xhr;
+        }
+
+        function goback() {
+            window.history.back();
+        }
+
+        function upload() {
+            var avatar = document.getElementById("avatar");
+            var img1 = document.getElementById("img1");
+            formdata = new FormData();
+            formdata.append("avatar", avatar.files[0]);
+            xhr2 = createXhr();
+            xhr2.open("POST", "http://127.0.0.1:8000/v2/user_info/" + usermail + "/change/avatar", true);
+            xhr2.onreadystatechange = function() {
+                    // 代表xhr对象响应成功,并且服务器端响应正常
+                    if (xhr2.readyState === 4 && xhr2.status === 200) {
+                        // // 如果没通过登陆验证,跳转到登录页面
+                        // if (JSON.parse(xhr.responseText)["error"] != "没有异常") {
+                        //     window.location.href = "/register_and_login/login";
+                        // }
+                        // // 直接显示返回的字符串
+                        console.log(xhr2.responseText);
+                        // 
+                        // // 将返回的字符串作成json格式显示
+                        console.log(JSON.parse(xhr2.responseText));
+                        // 刷新一下整个页面显示新的头像(其实也可以作成局部刷新改图片的url..)
+                        // res = JSON.parse(xhr.responseText);
+                        // console.log(JSON.parse(xhr2.responseText).useravatar);
+                        // 局部刷新user_info的avatar
+                        // 后端用user_info的avatar时一定要用str()转化成字符串
+                        img1.src = "http://127.0.0.1:8000/media/" + JSON.parse(xhr2.responseText).useravatar;
+
+                    }
+                }
+                // 发送之前设置请求头等..设置发送json格式的内容
+                // 用FormData对象(FormData()), 直接提交就行了, 什么请求头都不需要
+                // 下一行这个是不好把文件和token一起发送才把token放到请求头里手动添加的一个请求头键值对(...确实有点像键值对)
+            xhr2.setRequestHeader('Authorization', window.localStorage.getItem("my_site_1_token"));
+
+
+            // 4 发送请求
+            xhr2.send(formdata);
+        }
+
+        function change_user_info() {
+            // console.log("点了这个按钮");
+            var xhr3 = createXhr();
+            var data2 = {};
+            var phone = document.getElementById("phone");
+            var nickname = document.getElementById("nickname");
+            data2["phone"] = phone.value;
+            data2["nickname"] = nickname.value;
+            data2 = JSON.stringify(data2);
+            xhr3.open("POST", "http://127.0.0.1:8000/v2/user_info/" + usermail + "/change/user_info", true);
+            xhr3.onreadystatechange = function() {
+                    // 代表xhr对象响应成功,并且服务器端响应正常
+                    if (xhr3.readyState === 4 && xhr3.status === 200) {
+                        // // 如果没通过登陆验证,跳转到登录页面
+                        // if (JSON.parse(xhr.responseText)["error"] != "没有异常") {
+                        //     window.location.href = "/register_and_login/login";
+                        // }
+                        // // 直接显示返回的字符串
+                        // console.log(xhr3.responseText);
+                        // 
+                        // // 将返回的字符串作成json格式显示
+                        console.log(JSON.parse(xhr3.responseText));
+                        // 刷新一下整个页面显示新的头像(其实也可以作成局部刷新改图片的url..)
+                        // res = JSON.parse(xhr.responseText);
+                        // console.log(JSON.parse(xhr2.responseText).useravatar);
+                        // 局部刷新user_info的avatar
+                        // 后端用user_info的avatar时一定要用str()转化成字符串
+                        // img1.src = "http://127.0.0.1:8000/media/" + JSON.parse(xhr2.responseText).useravatar;
+                        window.localStorage.setItem("my_site_1_user", JSON.parse(xhr3.responseText)["nickname"]);
+                    }
+                }
+                // 发送之前设置请求头等..设置发送json格式的内容
+                // 用FormData对象(FormData()), 直接提交就行了, 什么请求头都不需要
+                // 下一行这个是不好把文件和token一起发送才把token放到请求头里手动添加的一个请求头键值对(...确实有点像键值对)
+            xhr3.setRequestHeader('Authorization', window.localStorage.getItem("my_site_1_token"));
+            // 发送之前设置请求头等..设置发送json格式的内容
+            xhr3.setRequestHeader('content-type', 'application/json');
+
+            // 4 发送请求
+            xhr3.send(data2);
+
+        }
+
+        // console.log(urlmail)
+
+
+        // 用ajax提交token和浏览器里储存的用户邮箱,如果通过token校验,并且浏览器里储存的用户邮箱和token解码得到的用户邮箱相同,则加载修改个人信息页面,如果不同,前端浏览器移除浏览器里储存的用户名,邮箱,token,然后跳转到登陆之前的首页(虽然我知道在线解一下token,就可以得到token里的邮箱...然后自己修改浏览器里储存的邮箱)
+        // 创建xhr对象
+        var xhr = createXhr();
+        // 每次都得改ip,引起不适,用批量替换试试
+        // 有点作用,记得把注释里的ip去掉
+        xhr.open("POST", "http://127.0.0.1:8000/v2/user_info/" + usermail + "/change", true);
+        // 3.设置回调函数
+        xhr.onreadystatechange = function() {
+            // 代表xhr对象响应成功,并且服务器端响应正常
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // // 如果没通过登陆验证,跳转到登录页面
+                // if (JSON.parse(xhr.responseText)["error"] != "没有异常") {
+                //     window.location.href = "/v1/register_and_login/login";
+                // }
+                // // 直接显示返回的字符串
+                // console.log(xhr.responseText);
+                // // 将返回的字符串作成json格式显示
+                console.log(JSON.parse(xhr.responseText));
+                res = JSON.parse(xhr.responseText);
+                // // // 如果通过了登陆验证,把浏览器window.localStorage存储的邮箱和用户名改成与token配对的邮箱和用户名
+                // // window.localStorage.setItem("my_site_1_user", JSON.parse(xhr.responseText)["my_site_1_user"]);
+                // // window.localStorage.setItem("my_site_1_user_mail", JSON.parse(xhr.responseText)["user_mail"]);
+                if (res["code"] === "2000") {
+                    code1 = code1 + "这里是用户" + usermail + "的修改信息页<br>";
+                    code1 = code1 + `<form action=""  method="post" enctype="multipart/form-data">`;
+                    if (res["data"]["avatar"] === "") {
+                        res["data"]["avatar"] = "avatar/默认头像.jpg";
+                    }
+
+                    code1 = code1 + `用户头像:<br>
+                                <img id="img1" style="width:100px;height:100px;"src="http://127.0.0.1:8000/media/` + res["data"]["avatar"] + `"><br>`;
+                    code1 = code1 + `<label for="avatar">上传头像</label><br>`;
+                    code1 = code1 + `<input type="file" name="avatar" id="avatar"><br>`;
+                    code1 = code1 + `<input id="submit-btn" type="button" value="上传" onclick="upload()"><br>`;
+                    code1 = code1 + `</form>`;
+                    code1 = code1 + `用户名:` + `<input id=nickname type="text" value="` +
+                        res["data"]["nickname"] + `"><br>`;
+                    if (res["data"]["collection"] === "") {
+                        res["data"]["collection"] = "暂无收藏";
+                    }
+                    if (res["data"]["user_type"] === "2") {
+                        res["data"]["user_type"] = "普通用户";
+                    }
+                    if (res["data"]["phone"] === "") {
+                        res["data"]["phone"] = "未填写";
+                    }
+                    if (res["data"]["user_vip"] === "") {
+                        res["data"]["user_vip"] = "非vip用户";
+                    } else if (res["data"]["user_vip"] != "") {
+                        res["data"]["user_vip"] = "vip用户";
+                    }
+                    // 修改页面收到的vip过期时间会是一个"None",因为我设置views.py里把所有输出全弄成字符串了
+                    if (res["data"]["user_vip_time"] === "None") {
+                        res["data"]["user_vip_time"] = "无";
+                    }
+                    code1 = code1 + `
+                        收藏: ` + res["data"]["collection"] + ` <br> ` +
+                        `
+                        用户类型: ` + res["data"]["user_type"] + ` <br> `;
+                    code1 = code1 + `电话:` + `<input id=phone type="text" value="` +
+                        res["data"]["phone"] + `"><br>`;
+                    code1 = code1 + `vip状态:` + res["data"]["user_vip"] + `<br>`;
+                    code1 = code1 + `vip过期时间:` + res["data"]["user_vip_time"] + `<br>`;
+                    code1 = code1 + `注册时间:` + res["data"]["created_time"] + `<br>`;
+                    code1 = code1 + `修改个人信息时间:` + res["data"]["updated_time"] + `<br>`;
+                    code1 = code1 + `<button id="btn1" onclick="change_user_info()">点击修改用户信息</button><br>`;
+                    code1 = code1 + `<a href="#" onclick="goback()"">点击返回上一页</a><br>`;
+                    code1 = code1 + `<a href="/index">点击返回首页</a><br>`;
+                    div1.innerHTML = code1;
+
+
+
+                    //     }
+                    //     if (res["data"]["collection"] === "") {
+                    //         res["data"]["collection"] = "暂无收藏";
+                    //     }
+                    //     if (res["data"]["user_type"] === "2") {
+                    //         res["data"]["user_type"] = "普通用户";
+                    //     }
+                    //     if (res["data"]["phone"] === "") {
+                    //         res["data"]["phone"] = "未填写";
+                    //     }
+                    //     if (res["data"]["user_vip"] === "") {
+                    //         res["data"]["user_vip"] = "非vip";
+                    //     }
+                    //     if (res["data"]["user_vip_time"] === null) {
+                    //         res["data"]["user_vip_time"] = "无";
+                    //     }
+
+
+                    //     code1 = code1 + `
+                    //         收藏: ` + res["data"]["collection"] + ` <br> ` +
+                    //         `
+                    //         用户类型: ` + res["data"]["user_type"] + ` <br> `;
+                    //     code1 = code1 + ` 电话:` + res["data"]["phone"] + `<br>`;
+                    //     code1 = code1 + `vip状态:` + res["data"]["user_vip"] + `<br>`;
+                    //     code1 = code1 + `vip过期时间:` + res["data"]["user_vip_time"] + `<br>`;
+                    //     code1 = code1 + `注册时间:` + res["data"]["created_time"] + `<br>`;
+                    //     code1 = code1 + `修改个人信息时间:` + res["data"]["updated_time"] + `<br>`;
+                    //    
+                    // } else {
+                    //     div1.innerHTML = "查找的用户邮箱异常";
+                    // }
+
+
+                }
+            };
+        };
+        // 发送之前设置请求头等..设置发送json格式的内容
+        xhr.setRequestHeader('content-type', 'application/json');
+        // 4 发送请求
+        xhr.send(data1);
+    </script>
+</body>
+
+</html>

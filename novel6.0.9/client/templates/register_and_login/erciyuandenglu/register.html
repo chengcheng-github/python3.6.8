@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>注册</title>
+    <link href="/static/css/bootstrap.min-3.4.0.css" rel="stylesheet">
+    <link href="/static/css/font-awesome-4.3.0.css" rel="stylesheet">
+    <link href="/static/css/custom.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style-2.2.0.css" rel="stylesheet">
+    <link href="/static/css/index.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div class="form-signin">
+            <div id="stage">
+                <div id="inner">
+                    <div id="cover">
+                        <div id="text">
+                        </div>
+                        <div id="detail"></div>
+                        <div id="handle"></div>
+                    </div>
+                    <canvas class="mb-4" id="live2d" width="800" height="800"></canvas>
+                </div>
+                <a id="info" href="javascript:info()"><i class="fa fa-lg fa-info"></i></a>
+                <a id="refresh" href="javascript:refresh()"><i class="fa fa-lg fa-refresh"></i></a>
+            </div>
+            <h3>欢迎</h3>
+            <p>创建一个新账户</p>
+            <!-- 8001后端 -->
+            <!-- 8002前端 -->
+            <form class="m-t" id="zc" role="form" method="post">
+                <!-- {% csrf_token %} -->
+                <div class="form-group">
+                    <input id="mail1" name="mail1" type="text" class="form-control" placeholder="请输入电子邮箱" required="">
+                </div>
+                <div class="form-group">
+                    <input id="pwd1" name="pwd1" type="password" class="form-control" placeholder="请输入密码" required="">
+                </div>
+                <div class="form-group">
+                    <!--一个标签写了好多个id时,先写的第一个id是有效的-->
+                    <input id="confirm1" name="confirm1" type="password" class="form-control" placeholder="请再次输入密码" required="">
+                </div>
+
+                <div class="form-group">
+                    <input id="confirm2" name="confirm2" type="text" class="form-control" placeholder="请输入验证码" required="">
+
+                </div>
+
+                <p class="text-muted text-center"><small>已经有账户了？</small><a href="/v1/register_and_login/login">点此登录</a>
+                </p>
+                <img src="/static/picture/1.gif" style="width: 100%;">
+            </form>
+            <button id="sendmail" style="margin-top: 10px;">点击从电子邮箱接收验证码</button><br><br>
+            <button id="reg1">注 册</button><br>
+
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min-3.4.0.js"></script>
+    <!-- iCheck -->
+    <script src="/static/js/icheck.min.js"></script>
+    <!-- Jquery Validate -->
+    <script src="/static/js/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+            $("#zc").validate({
+                rules: {
+                    confirm1: {
+                        equalTo: "#pwd1"
+                    }
+                },
+                messages: {
+                    mail1: {
+                        required: "请输入您的用户名"
+                    },
+                    pwd1: {
+                        required: "请输入您的密码"
+                    },
+                    confirm1: {
+                        required: "请再次输入您的密码",
+                        equalTo: "两次输入的密码不一致",
+                    },
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function stop() {
+            return false;
+        }
+
+        function createXhr() {
+            //判断是否有XMLHttpRequest
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+                console.log(xhr);
+            } else {
+                var xhr = new ActiveXObjecxt("Microsoft.XMLHTTP");
+                console.log(xhr);
+            }
+            return xhr;
+        }
+        // 创建xhr对象
+        var xhr = createXhr();
+        // 电子邮箱输入栏
+        var mail1 = document.getElementById("mail1");
+        // 密码1输入栏
+        var pwd1 = document.getElementById("pwd1");
+        // 密码2输入栏
+        var pwd2 = document.getElementById("confirm1");
+        // 验证码输入栏
+        var confirm2 = document.getElementById("confirm2");
+        // 注册按钮
+        var reg1 = document.getElementById("reg1");
+        // 发送验证码按钮
+        var sendmail = document.getElementById("sendmail");
+        // 存放电子邮箱,密码1和密码2,还有验证码的json
+        var data1 = {};
+        // 存放电子邮箱的json
+        var data2 = {}
+
+        document.oncontextmenu = stop;
+
+        reg1.onclick = function() {
+            // 重置json对象,小细节,不然多次点击得到的json键会有变化
+            data1 = null;
+            data1 = {};
+            console.log("点击注册按钮");
+            data1["mail1"] = mail1.value;
+            data1["pwd1"] = pwd1.value;
+            data1["pwd2"] = pwd2.value;
+            data1["confirm2"] = confirm2.value;
+            data1 = JSON.stringify(data1);
+            console.log(data1);
+            // true代表异步
+            // 本地用下一行
+            xhr.open("POST", "http://127.0.0.1:8000/v2/register_and_login/register", true);
+            // 学校联机用下一行
+            // xhr.open("POST", "http://176.215.22.95:端口/v2/register_and_login/register", true);
+            // 家里用下一行
+            // 其实每次都得查看ip然后改..
+            // xhr.open("POST", "http://176.215.22.95:8001/v2/register_and_login/register", true);
+            // 3.设置回调函数
+            xhr.onreadystatechange = function() {
+                // 代表xhr对象响应成功,并且服务器端响应正常
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 将返回对象转换为json格式显示
+                    console.log(JSON.parse(xhr.responseText));
+                    // 直接显示返回的字符串
+                    console.log(xhr.responseText);
+                    window.localStorage.setItem("my_site_1_token", JSON.parse(xhr.responseText).data.token);
+                    window.localStorage.setItem("my_site_1_user",
+                        JSON.parse(xhr.responseText).mail);
+                    window.localStorage.setItem("my_site_1_user_mail",
+                        JSON.parse(xhr.responseText).user_mail);
+                    // "/"会从从地址:端口/开始
+                    // "/" + "v1/index"
+                    // 代表127.0.0.1:8002/v1/index
+                    // 待修改,目前是注册以后跳转到登陆之前的首页
+                    // 需要的是注册以后保留登录状态(token)跳转到登陆之后的首页
+                    window.location.href = "/" + "democopy24";
+                }
+            };
+            // 发送之前设置请求头等..设置发送json格式的内容
+            xhr.setRequestHeader('content-type', 'application/json');
+            // 4 发送请求
+            xhr.send(data1);
+        };
+        // 发邮件按钮点击事件
+        sendmail.onclick = function() {
+            data2 = null;
+            data2 = {};
+            data2["mail1"] = mail1.value;
+            console.log("点击获取邮件验证码按钮");
+            console.log(data2);
+            data2 = JSON.stringify(data2);
+            // 本地用下一行
+            xhr.open("POST", "http://127.0.0.1:8000/v2/register_and_login/sendmail", true);
+            // 学校联机用下一行
+            // xhr.open("POST", "http://176.215.22.95:端口/v2/register_and_login/sendmail", true);
+            // 家里用下一行
+            // 原来每次都要改...尴尬了
+            // xhr.open("POST", "http://176.215.22.95:8001/v2/register_and_login/sendmail", true);
+
+            xhr.onreadystatechange = function() {
+                // 代表xhr对象响应成功,并且服务器端响应正常
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 将返回对象转换为json格式显示
+                    // 不过这里用下一行会报错,还是直接用返回字符串吧
+                    // console.log(JSON.parse(xhr.responseText));
+                    // 直接显示返回的字符串
+                    console.log(xhr.responseText);
+                }
+            };
+            // 发送之前设置请求头等..设置发送json格式的内容
+            xhr.setRequestHeader('content-type', 'application/json');
+            // 4 发送请求
+            xhr.send(data2);
+        };
+    </script>
+    <!-- 家里电脑加载l2d以后风扇转的好响啊，算了把l2d作成注释了 -->
+    <script src="/static/js/live2d.min.js"></script>
+    <script src="/static/js/index.js"></script>
+</body>
+
+</html>

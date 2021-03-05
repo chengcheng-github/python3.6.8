@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>充值页面!!</title>
+</head>
+
+<body>
+    <!-- 在这个money页面里用存储在浏览器里的token,用户nickname和mail来写一个给当前用户充值的界面,然后前端页面带着这些数据请求后端支付宝接口给当前登录的用户充值一个月vip,后端充值完成以后把vip状态改为1,vip过期时间获取今天日期,加一个月!<br><br><br> -->
+    <div id="div1"></div>
+    <script>
+        function createXhr() {
+            //判断是否有XMLHttpRequest
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+                console.log(xhr);
+            } else {
+                var xhr = new ActiveXObjecxt("Microsoft.XMLHTTP");
+                console.log(xhr);
+            }
+            return xhr;
+        }
+        var token = window.localStorage.getItem("my_site_1_token");
+        var nickname = window.localStorage.getItem("my_site_1_user");
+        var mail = window.localStorage.getItem("my_site_1_user_mail");
+        var div1 = document.getElementById("div1");
+        var now = new Date();
+        // console.log(now.getFullYear, typeof());
+        var month = now.getMonth() + "";
+        if (month.length < 2) {
+            month = "0" + month;
+        }
+        var date = now.getDate() + "";
+        if (date.length < 2) {
+            date = "0" + date;
+        }
+        var hour = now.getHours() + "";
+        if (hour.length < 2) {
+            hour = "0" + hour;
+        }
+        var minute = now.getMinutes() + "";
+        if (minute.length < 2) {
+            minute = "0" + minute;
+        }
+        var second = now.getSeconds() + "";
+        if (second.length < 2) {
+            second = "0" + second;
+        }
+        // 订单编号
+        var order_no = mail + "_" + now.getFullYear() + "_" + month + "_" + date + "_" + hour + "_" + minute + "_" + second;
+        // console.log(order_no);
+        // 订单金额
+        var amount = "1";
+        // 订单标题
+        var subject1 = "my_site_1_一个月vip会员";
+        var data1 = {}
+        var code1 = "";
+        code1 = code1 + `欢迎` + nickname + `进入充值页面!!<br>正在为` + nickname + `生成充值订单!!<br><br>` + `订单编号:` + order_no + `<br>` + `订单金额:` + amount + `<br>` + `订单标题:` + subject1 + `<br>`;
+
+        div1.innerHTML = code1;
+        data1["order_no"] = order_no;
+        data1["amount"] = amount;
+        data1["subject1"] = subject1;
+        data1 = JSON.stringify(data1);
+
+
+        // 用ajax提交请求p,根据返回的json内容前端判断登录是否正规,如果不正规前端路径跳转到登录界面
+        // 创建xhr对象
+        var xhr = createXhr();
+        // 每次都得改ip,引起不适,用批量替换试试
+        // 有点作用,记得把注释里的ip去掉
+        xhr.open("POST", "http://127.0.0.1:8000/v2/money/money", true);
+        // 3.设置回调函数
+        xhr.onreadystatechange = function() {
+            // 代表xhr对象响应成功,并且服务器端响应正常
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // // 如果没通过登陆验证,移除浏览器里所有可能已经保存的数据,然后跳转到登录页面
+                // if (JSON.parse(xhr.responseText)["error"] != "没有异常") {
+                //     // 用户信息表->用户名
+                //     window.localStorage.removeItem("my_site_1_user");
+                //     // 后端制作的token
+                //     window.localStorage.removeItem("my_site_1_token");
+                //     // 用户表,用户的邮箱
+                //     window.localStorage.removeItem("my_site_1_user_mail");
+                //     window.location.href = "/register_and_login/login";
+                // }
+                // // 直接显示返回的字符串
+                console.log(xhr.responseText);
+                // // 将返回的字符串作成json格式显示
+                console.log(JSON.parse(xhr.responseText));
+                window.location.href = JSON.parse(xhr.responseText).pay_url;
+                // // 如果通过了登陆验证,把浏览器window.localStorage存储的邮箱和用户名改成与token配对的邮箱和用户名
+                // window.localStorage.setItem("my_site_1_user", JSON.parse(xhr.responseText)["my_site_1_user"]);
+                // window.localStorage.setItem("my_site_1_user_mail", JSON.parse(xhr.responseText)["user_mail"]);
+
+            }
+        };
+        // 发送之前设置请求头等..设置发送json格式的内容
+        xhr.setRequestHeader('content-type', 'application/json');
+        // 4 发送请求
+        xhr.send(data1);
+    </script>
+
+</body>
+
+</html>

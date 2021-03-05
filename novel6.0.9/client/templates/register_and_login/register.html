@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+</head>
+<body>
+<form method="post" action="/register_and_login/register">
+    <!--    django模板语法,防止csrf跨站操作-->
+    {% csrf_token %}
+    电子邮箱正则,后期在前端添加<br>
+    输入电子邮箱:<input type="text" name="mail1" placeholder="请输入电子邮箱" id="mail1"><br>
+    密码长度为6位..<br>
+    输入密码:<input type="password" name="pwd1" id="pwd1"><br>
+    <input type="submit" value="注册">
+
+</form>
+</body>
+</html>

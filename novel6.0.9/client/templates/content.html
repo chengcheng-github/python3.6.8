@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>内容</title>
+    <script src="../static/js/jquery-1.11.3.js"></script>
+    <style>
+        body{
+            background-color: rgb(175, 206, 161);
+        }
+        .p{
+            ox-shadow: 0 2px 0 rgba(0, 0, 0, .05);
+            padding: 0 100px;
+            margin: 0 auto;
+            width: 960px;
+        }
+    </style>
+</head>
+<body>
+<h3 class="h4" style="text-align: center; line-heiget:10px;"></h3>
+
+<p class="p"><!--<h3 class="h3"></h3>--></p>
+</body>
+<script>
+    //http://127.0.0.1:5000/content/result.data.chapters[0]
+    var url = document.location.toString();
+    console.log(url);
+    var arrurl = url.split("content/");
+    var con_id = arrurl[1];
+    console.log(con_id);
+    //var con_id = 1;
+    var html_body = '';
+    var html_body1 = '';
+    $(function(){
+        $.ajax({
+            url:'http://127.0.0.1:8000/content/con_id',
+            type:'GET',
+            // 将json对象序列化为json串
+            data: {'cid':con_id},
+            // 前端给后端的数据类型
+            contentType:'application/json',
+            // 后端给前端响应的数据类型
+            dataType:'json',
+            // 响应成功的回调函数,res是响应的数据，jquery会自动的将收到的json串
+            // 转换为json对象
+            success:function(result){
+                if(200==result.code){
+                    //alert('成功接受');
+                    //console.log(result.data.content);
+                    console.log(result.data.chapter);
+                    html_body1+=result.data.chapter;
+                    $('.h4').html(html_body1);
+                    html_body+='<h3 class="h3">'+result.data.content+'</h3>';
+                    $('.p').html(html_body);
+                }else{
+                    alert(result.error);
+                }
+            }
+        })
+    })
+
+
+</script>
+</html>

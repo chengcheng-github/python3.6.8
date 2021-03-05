@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的图书</title>
+
+    <link rel="stylesheet" href="../static/css/bookrack.css">
+
+
+    <script src="../static/js/jquery-1.11.3.js"></script>
+    <!-- <script src="../static/js/bookrack.data.js"></script> -->
+    <script src="../static/js/fader.data.js"></script>
+    <!-- 自定义 JS文件 -->
+    <script src="../static/js/bookrack.js"></script>
+    <script src="../static/js/group.js"></script>
+    <!-- <script src="../static/js/shoe.js"></script>-->
+
+
+</head>
+
+<body>
+<header>
+    <!-- 导航栏 -->
+    <nav>
+        <!-- logo -->
+        <h1 class="logo">
+            <a href="#">HOT小说网</a>
+        </h1>
+        <!-- 导航菜单 -->
+        <!-- u>li*6>a -->
+        <ul id="homepage">
+            <li><a href="/index">网站首页</a></li>
+            <li><a href="/fenlei/">全部分类</a></li>
+            <li><a href="/novel_rank">排行榜</a></li>
+            <li><a href="/money">充值中心</a></li>
+
+        </ul>
+        <!-- 登录注册 -->
+        <div>
+            <a href="#" id="register">书友3935</a>
+            <a href="#" id="login">首页</a>
+        </div>
+
+        <div id="account">
+            <ul>
+                <li class="account1"><a href="/money">充值</a></li>
+                <li><a href="/index">HOT小说网</a></li>
+                <li><a href="/index">网站首页</a></li>
+                <li><a href="/fenlei/">全部分类</a></li>
+                <li><a href="/novel_rank">排行榜</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <!--    -->
+    <!--    <ul class="group">-->
+    <!--     <li><div><a href="#">最近阅读</a></div></li>-->
+    <!--      <li><div class="group1"><a href="#">默认分组&nbsp&nbsp&nbsp&nbsp</a><a href="#">+</a></div>-->
+    <!--     </li>-->
+    <!--     -->
+    <!--      <li><div><a href="#">自动订阅</a></div></li>-->
+    <!--    </ul>-->
+
+    <div id="group">
+        <div id="group1">最近阅读</div>
+        <div id="auto">自动订阅</div>
+        <div id="group2"><a href="#">默认分组&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+            <button id="add" onclick="booklogin()">+</button>
+        </div>
+        <div id="group3"></div>
+
+    </div>
+    <div id="main">
+        <div id="text">
+            <form action="/" method="post">
+                <input class="file" type="text" name="name" placeholder="输入作品名或作家名">
+                <input class="submit" type="submit" name="vlues" value="搜索书架">
+            </form>
+        </div>
+        <div id="content">
+            <div id="recommend">
+                <span class="recommdend">编辑推荐</span><span>编辑游戏</span>
+            </div>
+            <div id="image">
+                <div class="pop">
+                    <div class="image5"><a href="http://127.0.0.1:5000/topic/6"><img src="../static/images/cover/25499.jpeg" width="144" alt=""></a></div>
+                    <div class="image4"><a href="http://127.0.0.1:5000/topic/12"><img src="../static/images/cover/18131.jpeg" width="144" alt=""></a></div>
+                    <div class="image1"><a href="http://127.0.0.1:5000/topic/10"><img src="../static/images/cover/63898.jpeg" width="144" alt=""></a></div>
+                    <div class="image2"><a href="http://127.0.0.1:5000/topic/8"><img src="../static/images/cover/41132.jpeg" width="144" height="192" alt=""></a>
+                    </div>
+                    <div class="image3"><a href="http://127.0.0.1:5000/topic/5"><img src="../static/images/cover/15143.jpeg" width="144" height="192" alt=""></a>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <!-- 下一个盒子 -->
+
+            <div id="books">
+                <div class="books1">
+                    <span class="books2">默认分组</span><span class="books3">小说<span></span>列表</span>
+                </div>
+
+                　　
+                <div id="time">
+                    <div class="po">
+                        <input type="checkbox" id="sex" value="sex" name="sex">
+                        <span class="time1"></span>
+                    </div>
+                    <span class="time2">书名／最新更新章节</span>
+                    <span class="time3">更新时间</span>
+                    <span class="time4">作者</span>
+                    <span class="time5">点赞数</span>
+                </div>
+                <div id="trolley">
+                    <!-- <div id="record">-->
+                    <!--    <span class="time1">-->
+                    <!--   <input type="checkbox" id="sex1" value="sex1" name="sex1">-->
+                    <!--    </span>-->
+                    <!--<span class="time2"><span><a href="#">历史</a></span>殿下因何造反<span></span><span><a href="">第121章：我这就抓你去领赏</a></span><span>vip</span></span>-->
+                    <!--<span class="time3">5小时前</span>-->
+                    <!--<span class="time4">一笑民而</span>-->
+                    <!--<span class="time5">有更新</span >-->
+                    <!--  <span class="time6">...</span>-->
+                    <!--    </div>-->
+
+
+                </div>
+                <div id="icon">
+                    <div class="arrows">...</div>
+                    <ul id="arr">
+                        <li>取消置顶</li>
+                        <li>移动至</li>
+                        <li>自动订阅</li>
+                        <li>删除</li>
+                    </ul>
+                </div>
+            </div>
+            <div id="flush">
+    <span class="flush1">
+        <input type="checkbox" id="sex1" value="sex1" name="sex1">
+    </span>
+                <span class="flush2">全选</span>
+                <span class="flush">置顶</span>
+                <span class="flush">移动至</span>
+                <span class="flush" ><button onclick="abc()">删除</button></span>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div id="foot">
+        <span><a href="#">阅文集团旗下网站:</a></span>
+        <span><a href="#">起点中文网</a></span>
+        <span><a href="#">起点女生网</a></span>
+        <span><a href="#">创世中文网</a></span>
+        <span><a href="#">云起书院</a></span>
+        <span><a href="#">红袖添香</a></span>
+        <span><a href="#">小说阅读网</a></span>
+        <span><a href="#">言情小说吧</a></span>
+        <span><a href="#">潇湘书院</a></span>
+        <span><a href="#">天方听书网</a></span>
+        <span><a href="#">懒人听书</a></span>
+        <span><a href="#">阅文悦读</a></span>
+        <span><a href="#">QQ阅读</a></span>
+        <span><a href="#">作家助手</a></span>
+    </div>
+    订阅
+    <div>
+        <span>关于我们</span>
+        <span>联系我们</span>
+        <span>加入我们</span>
+        <span>帮助中心</span>
+        <span>提交建议</span>
+    </div>
+    　　<p>Copyright © 2020-2050 www.xiaoshuo.com All Rights Reserved版权所有 武汉信息科技有限公司
+</p>
+    <p>网站备案/许可证号：鄂B2-8888846-1 出版经营许可证：新出发鄂批字第U52018号 网络文化经营许可证：鄂网文[2020]00０-031 新出网证（鄂）字010
+
+    </p>
+    <p>请所有作者发布作品时务必遵守国家互联网信息管理办法规定，我们拒绝任何色情小说，一经发现，即作删除！
+
+    </p>
+    <p>本站所收录作品、社区话题、书库评论及本站所做之广告均属其个人行为，与本站立场无关，如有雷同谅解，最终解释权归属本网站</p>
+    <p>在此特别感谢以下人员对本网站的大力贡献：＠韩尚丙＠邓道城＠蔡禹＠刘飞＠倪煜程＠杨瑞祺＠夏瑞＠朗哥＠陪陪姐</p>
+
+
+</footer>
+
+</body>
+<script>
+     $('#group').css({width:'220px',
+                      display:'inline-block',
+                      position:'absolute',left:'-60px',
+                       top:'45px',
+                                       })
+      $('#group1').css({width:'220px',height:'55px',border:'1px solid #a5a4a4',
+                          display:'inline-block',lineHeight:'55px',textAlign:'center'})
+
+      $('#auto').css({width:'220px',height:'55px',border:'1px solid #a5a4a4',
+                          display:'inline-block',marginTop:'20px',
+                           lineHeight:'55px',textAlign:'center'   })
+      $('#group2').css({width:'220px',height:'55px',border:'1px solid #a5a4a4',
+                          display:'inline-block',marginTop:'20px',lineHeight:'55px',textAlign:'center'
+                          ,overflow:'hidden'                     })
+
+　　　　　　　　
+     function booklogin(){
+
+        var html = '<div id="group5"></div>'
+        var  a = prompt('请输入创建数组名字')
+        $('#group3').append(html)
+        $('#group5').after('<div id="group6"></div>')
+        $('#group6').css({width:'220px',height:'55px',border:'1px solid #a5a4a4',
+                           lineHeight:'55px',textAlign:'center'   })
+
+        $('#group6').text(a)
+
+    }
+
+</script>
+<script>
+//添加书籍
+<!--    token = window.localStorage.getItem('token');-->
+<!--    email = window.localStorage.getItem('mail');-->
+    var url = document.location.toString();
+    console.log(url)
+<!--    var quest_split=url.split('?');-->
+<!--    var quest_set='';-->
+<!--    if(quest_split.length>1){-->
+<!--        quest_set=quest_split[1]-->
+<!--    }-->
+    //拼接地址
+    var arrUrl = url.split("//");
+    var email = arrUrl[1].split('/')[1]
+    console.log(email)
+    var get_url="http://127.0.0.1:8000/v1/books/" + email +'/books' ;
+    console.log(get_url)
+
+     $.ajax({
+        // 请求方式
+        type:"get",
+        // url
+        url: get_url,
+        beforeSend: function(request) {
+           request.setRequestHeader("Authorization");
+        },
+        success:function (result) {
+           if (200 == result.code){
+        var data = result.data
+
+
+        //var html = '';
+       for(i=0;i<result.data.length;i++){
+            var html = '';
+            html += '<div id="record">'
+            html += '<span class="time1">'
+            html += '<input type="checkbox" id="sex1" >'
+            html += '</span>'
+            html += '<span class="time2"><span><a href="#"></a></span>' + data[i]['name'] + '<span></span>'
+            html += '<span><a href=""></a></span><span></span></span>'
+            html += '<span class="time3">' + data[i]['serialize'] +'</span>'
+            html += '<span class="time4">' + data[i]['author'] + '</span>'
+            html += '<span class="time5">' + data[i]['up'] + '</span >'
+            html += '<span class="time6">...</span>'
+            html += '</div>'
+
+        // 将拼接好的字符串添加到页面上
+        $('#trolley').append(html);
+            }
+
+<!--            else{-->
+<!--                 alert(result.error)-->
+<!--             }-->
+                                  }
+
+                                     }
+
+
+           })
+
+
+</script>
+
+
+</html>

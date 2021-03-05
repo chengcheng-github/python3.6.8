@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登陆后的首页</title>
+    <link rel="stylesheet" href="/static/index_css/index1.css">
+</head>
+
+<body>
+    <script>
+        var data1 = {};
+        var token = window.localStorage.getItem("my_site_1_token");
+        var user = window.localStorage.getItem("my_site_1_user");
+        // console.log(token, user);
+        data1["token"] = token;
+        // ajax传输的是字符串...
+        data1 = JSON.stringify(data1)
+
+        function createXhr() {
+            //判断是否有XMLHttpRequest
+            if (window.XMLHttpRequest) {
+                var xhr = new XMLHttpRequest();
+                console.log(xhr);
+            } else {
+                var xhr = new ActiveXObjecxt("Microsoft.XMLHTTP");
+                console.log(xhr);
+            }
+            return xhr;
+        }
+        // 用ajax提交请求p,根据返回的json内容前端判断登录是否正规,如果不正规前端路径跳转到登录界面
+        // 创建xhr对象
+        var xhr = createXhr();
+        // 每次都得改ip,引起不适,用批量替换试试
+        // 有点作用,记得把注释里的ip去掉
+        xhr.open("POST", "http://127.0.0.1:8000/v2/show_index_after_login/show_index_after_login", true);
+        // 3.设置回调函数
+        xhr.onreadystatechange = function() {
+            // 代表xhr对象响应成功,并且服务器端响应正常
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // 如果没通过登陆验证,移除浏览器里所有可能已经保存的数据,然后跳转到登录页面
+                if (JSON.parse(xhr.responseText)["error"] != "没有异常") {
+                    // 用户信息表->用户名
+                    window.localStorage.removeItem("my_site_1_user");
+                    // 后端制作的token
+                    window.localStorage.removeItem("my_site_1_token");
+                    // 用户表,用户的邮箱
+                    window.localStorage.removeItem("my_site_1_user_mail");
+                    window.location.href = "/v1/register_and_login/login";
+                }
+                // 直接显示返回的字符串
+                // console.log(xhr.responseText);
+                // 将返回的字符串作成json格式显示
+                console.log(JSON.parse(xhr.responseText));
+                // 如果通过了登陆验证,把浏览器window.localStorage存储的邮箱和用户名改成与token配对的邮箱和用户名
+                window.localStorage.setItem("my_site_1_user", JSON.parse(xhr.responseText)["my_site_1_user"]);
+                window.localStorage.setItem("my_site_1_user_mail", JSON.parse(xhr.responseText)["user_mail"]);
+
+            }
+        };
+        // 发送之前设置请求头等..设置发送json格式的内容
+        xhr.setRequestHeader('content-type', 'application/json');
+        // 4 发送请求
+        xhr.send(data1);
+    </script>
+    <!-- 排版一定要按顺序来,千万不要乱用定位瞎拼形状和布局 -->
+    <!-- 按顺序来,不要乱写定位 -->
+    <!-- 尽量用相对定位,需要空行的地方用div占高度,不要直接用top什么的 -->
+    <!-- 左右浮动也是,记住浮动之后要清除浮动 -->
+    <!-- 头部 -->
+    <div class="head">
+        <!-- 导航栏 -->
+        <!-- logo -->
+        <div class="neirong">
+            <h1 class="logo">
+                <a href="#">HOT小说网站</a>
+            </h1>
+            <!-- 导航菜单 -->
+            <ul>
+                <li>
+                    <a href="/democopy24">网站首页</a>
+                </li>
+                <li>
+                    <a href="/fenlei/">全部分类</a>
+                </li>
+                <li>
+                    <a href="/novel_rank">排行榜</a>
+                </li>
+                <li>
+                    <a href="http://127.0.0.1:5000/123@163.com/books">我的书架</a>
+                </li>
+                <li>
+                    <h1>
+                        <a href="/money">充值!!</a>
+                    </h1>
+                </li>
+                <li>
+                    <a href="#">发表博客</a>
+                </li>
+            </ul>
+            <!-- 搜索栏 -->
+            <div class="head_search">
+                <input type="text" placeholder="搜索" value="" id="search1">
+                <div id="btn1"></div>
+            </div>
+            <!-- 退出和个人信息 -->
+            <!-- 退出:删除本地存储的token和user,然后改变url到登陆之前的首页 -->
+            <a href="#" id="exit">退出</a>
+            <a href="#" id="userinfo">个人信息</a>
+        </div>
+    </div>
+    <div style="height:11%;"></div>
+    <script>
+        var userinfo = document.getElementById("userinfo");
+        var exit = document.getElementById("exit")
+        var btn1 = document.getElementById("btn1");
+        var search1 = document.getElementById("search1");
+        var user_mail = "";
+        var keyword = "";
+        var search_text1 = `https://www.baidu.com/s?wd=`;
+        var search_text2 =
+            `&rsv_spt=1&rsv_iqid=0x994326210002d73b&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_dl=tb&rsv_sug3=3&rsv_sug1=2&rsv_sug7=100&rsv_sug2=0&rsv_btype=i&inputT=1017&rsv_sug4=1017`;
+
+        function search() {
+            keyword = null;
+            keyword = "";
+            keyword = search1.value;
+            search_text1 = search_text1 + keyword + search_text2;
+            window.location.href = search_text1;
+        };
+        // 显示当前登录用户,不能直接用本地存储的键值对里的值(待修改)
+        // 应该是用ajax把本地的token和user发到服务端进行验证,通过才返回用户信息正常的登录后主页)
+        // 如果没有通过验证或者本地没有键值对,直接跳转到登录页面(登录页面还没做)
+
+        userinfo.innerHTML = window.localStorage.getItem("my_site_1_user");
+        btn1.onclick = search;
+        search1.onkeydown = function() {
+            if (event.keyCode == 13) {
+                search();
+            }
+        };
+        exit.onclick = function() {
+            // 用户信息表->用户名
+            window.localStorage.removeItem("my_site_1_user");
+            // 后端制作的token
+            window.localStorage.removeItem("my_site_1_token");
+            // 用户表,用户的邮箱
+            window.localStorage.removeItem("my_site_1_user_mail");
+            // 跳转到登录前首页
+            window.location.href = "/index";
+        };
+        userinfo.onclick = function() {
+            usermail = window.localStorage.getItem("my_site_1_user_mail");
+            window.location.href = "/user_info/" + usermail+"/change";
+        };
+    </script>
+    <!-- 主体部分 -->
+    <div class="main">
+        <!-- 轮播图 -->
+        <div class="imgwheel" id="imgwheel">
+            <!-- 轮播图_中间 -->
+            <div class="img1">
+                <div class="img1_1" id="img1_1">
+                    <img src="/static/index_img/7.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/1.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/2.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/3.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/4.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/5.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/6.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/7.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/1.jpg" alt="加载图片异常" class="img1_img">
+                </div>
+            </div>
+            <!-- 轮播图_左边 -->
+            <div class="img2">
+                <div class="img2_2" id="img2_2">
+                    <img src="/static/index_img/7.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/1.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/2.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/3.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/4.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/5.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/6.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/7.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/1.jpg" alt="加载图片异常" class="img1_img">
+                </div>
+            </div>
+            <!-- 轮播图_右边 -->
+            <div class="img3">
+                <div class="img3_3" id="img3_3">
+                    <img src="/static/index_img/7.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/1.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/2.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/3.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/4.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/5.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/6.jpg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/7.jpeg" alt="加载图片异常" class="img1_img">
+                    <img src="/static/index_img/1.jpg" alt="加载图片异常" class="img1_img">
+                </div>
+            </div>
+            <!-- 轮播图,点击滑动 -->
+            <div class="left" id="img_left">&lt;</div>
+            <div class="right" id="img_right">&gt;</div>
+        </div>
+<!--        &lt;!&ndash;测试,书 &ndash;&gt;-->
+<!--        <div id="book">-->
+<!--        </div>-->
+        <!-- 从后端获取书的数据 -->
+        <script>
+            var book_1 = document.getElementById("book");
+            var code_book1 = `测试的书放在这里<br>`;
+            // 创建xhr对象
+            var xhr_b_1 = createXhr();
+            xhr_b_1.open("POST", "http://127.0.0.1:8000/v2/novel1/show_novels", true);
+            console.log("准备开始从后端获取书的数据");
+            xhr_b_1.onreadystatechange = function() {
+                // 代表xhr对象响应成功,并且服务器端响应正常
+                if (xhr_b_1.readyState === 4 && xhr_b_1.status === 200) {
+                    // 直接显示返回的字符串
+                    // console.log(xhr_b_1.responseText);
+                    // 将返回的字符串作成json格式显示
+                    console.log(JSON.parse(xhr_b_1.responseText));
+                    var book_json = JSON.parse(xhr_b_1.responseText);
+                    for (var item_book_1 in book_json) {
+                        code_book1 = code_book1 + `<a href="/v1/novel/` + book_json[item_book_1] + `">` + item_book_1 + `</a>` + `<br>`;
+                    }
+                    book_1.innerHTML = code_book1;
+                }
+            };
+            // 发送之前设置请求头等..设置发送json格式的内容
+            xhr_b_1.setRequestHeader('content-type', 'application/json');
+            // 4 发送请求
+            xhr_b_1.send();
+        </script>
+
+        <!-- 分类链接 -->
+        <div class="index1">
+            <div class="neirong">
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+                <a href="#">自定义</a>
+            </div>
+        </div>
+        <!-- 321<br> -->
+        <div class="more_show">
+            <!-- 左侧,小说推荐 -->
+            <div class="xiaoshuotuijian">
+                <!-- logo -->
+                <div class="logo">
+                    推荐列表
+                </div>
+                <!-- 推荐列表 -->
+                <div class="likelist">
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="likeitem">
+                        <div class="itemimg">
+                            <a href="#">
+                                <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                                <div class="itemname">自定义</div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cls"></div>
+                </div>
+                <div class="cls"></div>
+            </div>
+            <!-- 确实不能清除这里的浮动,不然右边的排行榜会在左边小说推荐下面.. -->
+            <!-- <div class="cls"></div> -->
+            <!-- 987<br>
+            996<br>
+            996<br>
+            996<br>
+            996<br> -->
+            <!-- 右侧,排行榜-->
+            <div class="right_index">
+                <div class="logo">
+                    排行榜
+                </div>
+                <div class="right_tuijian">
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                上海贼王
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                博士则卷千兵卫做出了机器娃娃-阿拉蕾。故事围绕着这个机器娃娃发生。因为这个可爱，活泼的机器人的到来，从此世界便无宁日了。她既有机器人的特性，但她同时也拥有人的思想和感情，她以饱满的精神和无穷的力量创造了一个又一个的开心故事……
+                            </div>
+                        </div>
+                        <!-- 这个浮动在js函数添加以后好像可以去掉..不过我不知道会不会有什么效果 -->
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        海贼王
+                    </div>
+
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                7龙珠
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                很久很久以前，地球上散落着七颗神奇的龙珠，传说只要聚齐它们，神龙就会出现，并可以为人实现一个愿望。为了寻找龙珠，布尔玛和孙悟空踏上了奇妙的寻珠之旅……
+                            </div>
+                        </div>
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        七龙珠
+                    </div>
+
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                游戏王
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                很久很久以前，地球上散落着七颗神奇的龙珠，传说只要聚齐它们，神龙就会出现，并可以为人实现一个愿望。为了寻找龙珠，布尔玛和孙悟空踏上了奇妙的寻珠之旅……
+                            </div>
+                        </div>
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        游戏王
+                    </div>
+
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                游戏王
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                很久很久以前，地球上散落着七颗神奇的龙珠，传说只要聚齐它们，神龙就会出现，并可以为人实现一个愿望。为了寻找龙珠，布尔玛和孙悟空踏上了奇妙的寻珠之旅……
+                            </div>
+                        </div>
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        游戏王
+                    </div>
+
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                游戏王
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                很久很久以前，地球上散落着七颗神奇的龙珠，传说只要聚齐它们，神龙就会出现，并可以为人实现一个愿望。为了寻找龙珠，布尔玛和孙悟空踏上了奇妙的寻珠之旅……
+                            </div>
+                        </div>
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        游戏王
+                    </div>
+
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                游戏王
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                很久很久以前，地球上散落着七颗神奇的龙珠，传说只要聚齐它们，神龙就会出现，并可以为人实现一个愿望。为了寻找龙珠，布尔玛和孙悟空踏上了奇妙的寻珠之旅……
+                            </div>
+                        </div>
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        游戏王
+                    </div>
+
+                    <div class="right_item">
+                        <div class="right_img">
+                            <img src="/static/index_img/2.jpg" alt="加载图片异常">
+                        </div>
+                        <div class="right_text">
+                            <div class="title">
+                                游戏王
+                            </div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="more_text"> 自定义</div>
+                            <div class="long_text">
+                                很久很久以前，地球上散落着七颗神奇的龙珠，传说只要聚齐它们，神龙就会出现，并可以为人实现一个愿望。为了寻找龙珠，布尔玛和孙悟空踏上了奇妙的寻珠之旅……
+                            </div>
+                        </div>
+                        <!-- <div class="cls"></div> -->
+                    </div>
+                    <div class="suolue">
+                        游戏王
+                    </div>
+                    <div class="cls"></div>
+                </div>
+                <div class="cls"></div>
+            </div>
+            <!-- 987<br>
+            999<br> -->
+            <!-- 到这里可以清除浮动了,让接下来的内容在左边推荐和右边排行下面 -->
+            <div class="cls"></div>
+            <div class="meirigengxin">
+                <div class="logo">每日更新</div>
+                <div class="week">
+                    <ul>
+                        <li><a href="#" class="day">周7</a></li>
+                        <li><a href="#" class="day">周1</a></li>
+                        <li><a href="#" class="day">周2</a></li>
+                        <li><a href="#" class="day">周3</a></li>
+                        <li><a href="#" class="day">周4</a></li>
+                        <li><a href="#" class="day">周5</a></li>
+                        <li><a href="#" class="day">周6</a></li>
+
+                    </ul>
+                </div>
+                <!-- 每日更新列表 -->
+                <div class="meirilist">
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                    <div class="meiriitem">
+                        <a href="#">
+                            <div class="rongqi">
+                                <img src="/static/index_img/2.jpg" alt="图片加载异常">
+                            </div>
+                            网球王子
+                            <span>校园</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="cls"></div>
+            </div>
+            <div class="cls"></div>
+            <!-- 下面的每一行字这么宽是因为more_show这个div里的line-height:44px,不能改,不然影响右边排行榜的显示,所以就这样了 -->
+            <!-- 99<br> -->
+            <!-- 9929<br> -->
+        </div>
+        <!-- 999<br> -->
+    </div>
+    <div class="cls"></div>
+    <script>
+        var img_left = document.getElementById("img_left");
+        var img_right = document.getElementById("img_right");
+        var img1_1 = document.getElementById("img1_1");
+        var img2_2 = document.getElementById("img2_2");
+        var img3_3 = document.getElementById("img3_3");
+        var imgwheel = document.getElementById("imgwheel");
+        img1_1.style.left = "-744px";
+        img2_2.style.left = "-5208px";
+        img3_3.style.left = "-1488px";
+        var try1 = 1;
+        var time1 = null;
+
+        function left_move() {
+            if (try1 === 1) {
+                try1 = 0;
+                if (img1_1.style.left.slice(0, img1_1.style.left.length - 2) > -5208) {
+                    img1_1.style.left = (img1_1.style.left.slice(0, img1_1.style.left.length - 2) - 744) + "px";
+                    setTimeout(function() {
+                        try1 = 1;
+                    }, 1000);
+                } else if (img1_1.style.left === "-5208px") {
+                    img1_1.style.left = (img1_1.style.left.slice(0, img1_1.style.left.length - 2) - 744) + "px";
+                    setTimeout(function() {
+                        img1_1.style.transition = "all 0s";
+                        img1_1.style.left = "-744px";
+                        setTimeout(function() {
+                            img1_1.style.transition = "all 1s";
+                            try1 = 1;
+                        }, 100);
+                    }, 1000);
+                }
+                if (img2_2.style.left.slice(0, img2_2.style.left.length - 2) > -5208) {
+                    img2_2.style.left = (img2_2.style.left.slice(0, img2_2.style.left.length - 2) - 744) + "px";
+                } else if (img2_2.style.left === "-5208px") {
+                    img2_2.style.left = (img2_2.style.left.slice(0, img2_2.style.left.length - 2) - 744) + "px";
+                    setTimeout(function() {
+                        img2_2.style.transition = "all 0s";
+                        img2_2.style.left = "-744px";
+                        setTimeout(function() {
+                            img2_2.style.transition = "all 1s";
+                        }, 100);
+                    }, 1000);
+                }
+                if (img3_3.style.left.slice(0, img3_3.style.left.length - 2) > -5208) {
+                    img3_3.style.left = (img3_3.style.left.slice(0, img3_3.style.left.length - 2) - 744) + "px";
+                } else if (img3_3.style.left === "-5208px") {
+                    img3_3.style.left = (img3_3.style.left.slice(0, img3_3.style.left.length - 2) - 744) + "px";
+                    setTimeout(function() {
+                        img3_3.style.transition = "all 0s";
+                        img3_3.style.left = "-744px";
+                        setTimeout(function() {
+                            img3_3.style.transition = "all 1s";
+                        }, 100);
+                    }, 1000);
+                }
+            }
+        };
+        img_left.onclick = left_move;
+        img_right.onclick = function() {
+            if (try1 === 1) {
+                try1 = 0;
+                if (img1_1.style.left === "-744px") {
+                    img1_1.style.left = (Number(img1_1.style.left.slice(0, img1_1.style.left.length - 2)) + 744) +
+                        "px";
+                    setTimeout(function() {
+                        img1_1.style.transition = "all 0s";
+                        img1_1.style.left = "-5208px";
+                        setTimeout(function() {
+                            img1_1.style.transition = "all 1s";
+                            try1 = 1;
+                        }, 100);
+                    }, 1000);
+                } else if (img1_1.style.left.slice(0, img1_1.style.left.length - 2) < -744) {
+                    img1_1.style.left = (Number(img1_1.style.left.slice(0, img1_1.style.left.length - 2)) + 744) +
+                        "px";
+                    setTimeout(function() {
+                        try1 = 1;
+                    }, 1000);
+                }
+                if (img2_2.style.left === "-744px") {
+                    img2_2.style.left = (Number(img2_2.style.left.slice(0, img2_2.style.left.length - 2)) + 744) +
+                        "px";
+                    setTimeout(function() {
+                        img2_2.style.transition = "all 0s";
+                        img2_2.style.left = "-5208px";
+                        setTimeout(function() {
+                            img2_2.style.transition = "all 1s";
+                        }, 100);
+                    }, 1000);
+                } else if (img2_2.style.left.slice(0, img2_2.style.left.length - 2) < -744) {
+                    img2_2.style.left = (Number(img2_2.style.left.slice(0, img2_2.style.left.length - 2)) + 744) +
+                        "px";
+                }
+                if (img3_3.style.left === "-744px") {
+                    img3_3.style.left = (Number(img3_3.style.left.slice(0, img3_3.style.left.length - 2)) + 744) +
+                        "px";
+                    setTimeout(function() {
+                        img3_3.style.transition = "all 0s";
+                        img3_3.style.left = "-5208px";
+                        setTimeout(function() {
+                            img3_3.style.transition = "all 1s";
+                        }, 100);
+                    }, 1000);
+                } else if (img3_3.style.left.slice(0, img3_3.style.left.length - 2) < -744) {
+                    img3_3.style.left = (Number(img3_3.style.left.slice(0, img3_3.style.left.length - 2)) + 744) +
+                        "px";
+                }
+            }
+        };
+        if (time1 === null) {
+            time1 = setInterval(left_move, 3000);
+        }
+        imgwheel.onmouseover = function() {
+            clearInterval(time1);
+            time1 = null;
+        };
+        imgwheel.onmouseout = function() {
+            if (time1 === null) {
+                time1 = setInterval(left_move, 3000);
+            }
+        };
+    </script>
+    <script>
+        var right_item = document.getElementsByClassName("right_item");
+        var suolue = document.getElementsByClassName("suolue");
+        var i1 = 1;
+        var right_tuijian = document.getElementsByClassName("right_tuijian");
+        suolue[0].style.display = "none";
+        for (;;) {
+            if (i1 === right_item.length) {
+                break;
+            }
+            right_item[i1].style.display = "none";
+            i1 = i1 + 1;
+        }
+        i1 = 0;
+        for (;;) {
+            if (i1 === suolue.length) {
+                break;
+            }
+            suolue[i1].onmouseover = function(i1) {
+                function yirusuolue() {
+                    var i2 = 0;
+                    right_item[i1].style.display = "block";
+                    for (;;) {
+                        if (i2 === right_item.length) {
+                            break;
+                        }
+                        if (i2 != i1) {
+                            right_item[i2].style.display = "none";
+                        }
+                        i2 = i2 + 1;
+                    }
+                    i2 = 0;
+                    for (;;) {
+                        if (i2 === right_item.length) {
+                            break;
+                        }
+                        if (i2 != i1) {
+                            suolue[i2].style.display = "block";
+                        } else if (i2 === i1) {
+                            suolue[i2].style.display = "none";
+                        }
+                        i2 = i2 + 1;
+                    }
+                }
+                return yirusuolue;
+            }(i1);
+            i1 = i1 + 1;
+        }
+        // 移出用.onmouseleave属性
+        right_tuijian[0].onmouseleave = function() {
+            suolue[0].style.display = "none";
+            right_item[0].style.display = " block";
+            i1 = 1;
+            for (;;) {
+                if (i1 === right_item.length) {
+                    break;
+                }
+                right_item[i1].style.display = "none";
+                i1 = i1 + 1;
+            }
+            i1 = 1;
+            for (;;) {
+                if (i1 === suolue.length) {
+                    break;
+                }
+                suolue[i1].style.display = "block";
+                i1 = i1 + 1;
+            }
+            i1 = 0;
+        };
+    </script>
+    <script>
+        var day = document.getElementsByClassName("day");
+        var date1 = new Date();
+        day[date1.getDay()].style.color = "brown";
+    </script>
+    <!-- 尾部 -->
+    <!-- 456<br> -->
+    <div class="foot">
+        <div class="neirong">
+            Design by
+            <a href="#">个人博客</a>
+            <a href="#">备XXXXXXXXXXXX号-1</a>
+        </div>
+    </div>
+    <!-- 13232<br> -->
+</body>
+<script src="../../static/js/jquery.min.js"></script>
+    <script>
+        $.ajax({
+            type : 'get',
+            url : 'http://127.0.0.1:8000/index',
+            beforeSend: function (res) {
+            res.setRequestHeader("Authorization");
+            },
+            success : function (res) {
+                var data = res.data;
+                if (res.code == 200) {
+                    console.log(data);
+                    var list_bk1 = data[0];
+                    var list_bk2 = data[1];
+                    var box1 = '';
+                    var box2 = '';
+                    var box3 = '';
+                    for(i=0;i<8;i++){
+                        box1 += '<div class="likeitem">';
+                        box1 += '<div class="itemimg">';
+                        box1 += '<a href="#">';
+                        box1 += `<img src="../../static/images/${list_bk1[i]['cover']}" alt="加载图片异常">`;
+                        box1 += `<div class="itemname">${list_bk1[i]['bname']}</div>`;
+                        box1 += '</a></div></div>';
+                    }
+                    $('.likelist').html(box1);
+
+                    for(i=0;i<10;i++){
+                        box2 += '<div class="meiriitem">';
+                        box2 += '<a href="#">';
+                        box2 += '<div class="rongqi">';
+                        box2 += `<img src="../../static/images/${list_bk1[i]['cover']}" alt="图片加载异常">`;
+                        box2 += `</div>${list_bk1[i]['bname']}<span>${list_bk1[i]['author']}</span>`;
+                        box2 += '</a></div></div>';
+                    }
+                    $('.meirilist').html(box2);
+
+                    // for(i=0;i<7;i++){
+                    //     box3 += '<div class="right_item">';
+                    //     box3 += '<div class="right_img">';
+                    //     box3 += `<img src="../../static/images/${list_bk2[i]['cover']}" alt="加载图片异常">`;
+                    //     box3 += `</div><div class="right_text">`;
+                    //     box3 += `<div class="title">${list_bk2[i]['bname']}</div>`;
+                    //     box3 += `<div class="more_text">${list_bk2[i]['author']}</div>`;
+                    //     box3 += `<div class="more_text"></div>`;
+                    //     box3 += `<div class="more_text"></div>`;
+                    //     box3 += `<div class="long_text">${list_bk2[i]['introduce']}</div>`;
+                    //     box3 += `</div></div><div class="suolue">${list_bk2[i]['bname']}</div>`;
+                    // }
+                    // $('.right_tuijian').html(box3);
+
+
+                }
+            }
+        })
+
+    </script>
+</html>

@@ -1,0 +1,334 @@
+/* 清除样式 */
+h1,h2,h3,p,body,ul,li{
+  padding: 0;
+  margin: 0;
+}
+ul{
+  list-style: none;
+}
+
+a{
+  text-decoration: none;
+}
+
+img{
+  display: block;
+}
+
+body{
+  font: 16px 'Courier New';
+}
+/* ***************************** */
+.TagFilterNav{
+  width: 1140px;
+  height: 350px;
+  /* border: 5px solid black; */
+  margin: 33px auto;
+}
+.tagS{
+  float: left;
+  line-height: 20px;
+  margin: 0px 4px 5px 4px;
+  padding: 5px 8px 5px 8px;
+}
+.tagA,.tagB,.tagC,.tagD,.sl1,.sl2,.sl3{
+  float: left;
+  line-height: 20px;
+  margin: 0px 6px 5px 6px;
+  padding: 5px 8px 5px 8px;
+}
+.selectTag{
+  margin: 10px 0 0 0;
+  padding: 0 0 0 10px;
+  height: 30px;
+}
+.selectTag p{
+  float: left;
+  line-height: 20px;
+  margin: 0px 4px 5px 4px;
+  padding: 5px 8px 5px 8px;
+}
+.tag1,.tag2,.tag3,.tag4{
+  float: left;
+  height: 30px;
+  list-style-type: none;
+  width: 100%;
+  margin: 10px 0 5px 0;
+  padding: 0 0 0 10px;
+}
+.selectTag img,.tag1 img,.tag2 img,.tag3 img,.tag4 img{
+  float: left;
+  width: 15px;
+  height: 15px;
+  margin: 7px 0 8px 7px;
+}
+.tagContent{
+  margin: 0 auto;
+  width: 1140px;
+  /* border: 5px solid black; */
+}
+.bookBox{
+  width: 360px;
+  height: 200px;
+  /* border: 5px solid red; */
+  float: left;
+  margin: 5px 5px 5px 5px;
+}
+.bookImg{
+  width: 150px;
+  height: 210px;
+  float: left;
+  /* border: 5px solid black; */
+}
+.bookImg img{
+  width: 110px;
+  height: 150px;
+  margin: 20px 240px 20px 20px;
+  transition: all 0.5s;
+}
+.bookImg img:hover{
+  transform: scale(1.2);
+}
+.bookInfo{
+  width: 200px;
+  height: 210px;
+  float: left;
+  /* border: 5px solid black; */
+  padding-top: 20px;
+}
+.stateBox img{
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin: 3px 5px 5px 0;
+}
+.info{
+  margin-top: 15px;
+}
+.stateBox{
+  margin-top: 15px;
+  line-height: 24px;
+}
+.stateBox i{
+  width: 54px;
+  height: 22px;
+  float:right;
+  margin-right: 5px;
+  font-size: 10px;
+  border: 1px solid #555;
+  text-align: center;
+}
+.pageSelect {
+  margin: 50px auto;
+  width: 1140px;
+  height: 40px;
+}
+.pageSelect ul{
+  width: 365px;
+  line-height: 40px;
+  margin: 0 380px;
+  overflow: hidden;
+}
+.pageSelect li{
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  float: left;
+  margin-left: 10px;
+}
+.pageSelect a{
+  font-size: 30px;
+  margin-left: 12px;
+}
+.pageSelect a:hover{
+  color: yellow;
+}
+
+
+/******** 头部 ********/
+/**************** 头部导航栏 **************/
+.head-nav{
+    border-bottom: 2px solid #ededed;
+    height: 40px;
+}
+.head-nav a{
+    display: inline-block;
+    font-size: 16px;
+    color: #333;
+    font-weight: 700;
+    line-height: 31px;
+    text-decoration: none;
+}
+/*********** 导航栏左边5块功能 ****************/
+.menu-left{
+    position: relative;
+}
+.menu-left>:nth-child(-n+5){
+    margin-left: 83px;
+}
+/************ 导航栏右边2块功能 **************/
+.menu-right a{
+    margin-right: 40px;
+}
+.menu-right .func1{
+    padding-left: 27px;
+}
+.menu-right .func2{
+    margin-right: 0;
+    padding-left: 27px;
+}
+/************ 未登录注册块 *******************/
+.wrap-login{
+    /* border: 1px solid red; */
+    position: absolute;
+    right: 60px;
+    /* margin-top: 12px; */
+}
+.wrap-login .unlogin{
+    margin-top: 12px;
+}
+.wrap-login .unlogin div{
+    margin-left: 20px;
+}
+.pay .user_pay .wrap-login div a{
+    color: #333;
+    letter-spacing: 1px;
+}
+.fr{
+    float: right;
+}
+.pay{
+    /* border: 1px solid red; */
+    background: url(../images/pay.png) no-repeat left center;
+    padding-left: 18px;
+    letter-spacing: 1px;
+    margin-top: 12px;
+}
+.head{
+    padding: 30px 0 15px;
+    position: relative;
+    /* border: 1px solid red; */
+    height: 105px;
+}
+/**************** 头部顶部 ******************/
+.head .head-top{
+    padding-bottom: 36px;
+    height: 37px;
+}
+.head-top{
+    position: relative;
+    font-size: 12px;
+}
+.imgbox{
+    float: left;
+}
+/************** logo图 ************/
+.logo{
+    border: 1px solid red;
+    display: block;
+    height: 32px;
+    width: 180px;
+    line-height: 0;
+    font-size: 0;
+
+}
+/**************** 搜索框 *****************/
+.search-box{
+    background: #fafafa;
+    border-radius: 2px;
+    margin-left: 227px;
+    width: 338px;
+    height: 34px;
+}
+.search-box .search-text{
+    width: 283px;
+    height: 32px;
+    padding-left: 14px;
+    line-height: 32px;
+    font-size: 14px;
+    border: 1px solid #e0e0e0;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border-right: 0;
+    letter-spacing: 1px;
+    color: #333;
+}
+/* .search-box .search-btn：hover{
+    background: url(../images/sousuo.png)
+} */
+.search-box .search-btn{
+    width: 40px;
+    height: 34px;
+    background: url(../images/sousuo.png) no-repeat center center #d32f2f;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    outline: 0;
+    cursor: pointer;
+}
+.search-box .search-btn{
+    width: 40px;
+    height: 34px;
+    background: url(../images/sousuo.png) no-repeat center center #d32f2f;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    border: 0;
+    cursor: pointer;
+    text-indent: -9999px;
+}
+.fl{
+    float: left;
+}
+
+blockquote,body,button,dd,dl,dt,embed,fieldset,form,h1,h2,h3,h4,h5,h6,input,li,object,ol,pre,table,td,th,ul{
+    margin: 0;
+    padding: 0;
+    color:#333;
+    font-size:15px;
+    word-wrap:break-word;
+}
+.head-simple .menu .active a, .head-simple .menu .cate ul li a:hover, .head-simple .menu a:hover,.nav a.active, .nav a:hover{
+    color: #d32f2f;
+}
+ul{
+    list-style: none;
+}
+a, a:active, a:hover, a:link{
+    text-decoration: none;
+}
+a{
+    color: #333;
+}
+a:hover{
+    color: #d32f2f;
+}
+.head-nav a:hover,.rank_menu a:hover,.rank_i_lists a:hover{
+    color: #d32f2f;
+}
+p{
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+img{
+    display: block;
+}
+abbr,fieldset,img{
+    border: 0;
+}
+.clearfix::before{
+    display: table;
+    content: '';
+}
+.clearfix::after{
+    display: table;
+    content: '';
+}
+.clearfix{
+    zoom: 1;
+}
+.wrap-main{
+    width: 1200px;
+    margin: 0 auto;
+}

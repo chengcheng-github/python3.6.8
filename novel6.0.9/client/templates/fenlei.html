@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fenlei</title>
+    <link rel="stylesheet" href="../static/css/fenlei.css">
+    <!-- <script src="../js/fenlei.js"></script> -->
+    <style>
+    .body{
+      background-color: red;
+    }
+
+    </style>
+</head>
+<body>
+<!--  头部  -->
+<div class="wrap-main">
+    <div class="head">
+        <div class="head-top clearfix">
+<!--            <div class="logo fl">-->
+<!--                <a href="#"><img src="">HOT小说网</a>-->
+<!--            </div>-->
+            <form method="GET" action="" target="_blank" id="comSearch">
+                <div class="search-box fl">
+                    <input type="text" placeholder="渡劫之王"
+                           class="search-text fl" autocomplete="off">
+                    <input type="submit" class="search-btn fr">
+                </div>
+            </form>
+            <div class="pay fr">
+                <a href="" class="user_pay">充值</a>
+            </div>
+            <div class="wrap-login">
+                <div class="unlogin ud_unlogin clearfix">
+                    <div class="login fr">
+                        <a href="/login" class="user_login">登录
+                        </a>
+                    </div>
+                    <div class="regist fr">
+                        <a href="/register" class="user_register">注册</a>
+                    </div>
+                </div>
+                <div class="logon ud_loged clearfix" style="display: none;">
+                    <div class="user tabA imgbox" style="height: 100%;">
+                        <img src="../static/images/headerimg.png" alt="" class="ud_avatar ud_goUserCenter">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="head-nav clearfix">
+            <div class="menu-left fl">
+                <a href="/index">首页</a>
+                <a href="/fenlei/">全部分类</a>
+                <a href="/novel_rank">排行榜</a>
+                <a href="http://127.0.0.1:5000/123@163.com/books">我的书库</a>
+                <a href="">完本</a>
+            </div>
+            <div class="menu-right fr">
+                <a href="" class="func1">作者专区</a>
+                <a href="" class="func2">游戏中心</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="TagFilterNav">
+    <ul class="selectTag">
+        <img src="../static/images/yixuan.jpeg" alt="">
+        <p>已选</p>
+        <a class='sl1' id="0" href="#"></a>
+        <a class='sl2' id="0" href="#"></a>
+        <a class='sl3' id="0" href="#"></a>
+    </ul>
+    <hr>
+    <ul class="tag1" style="font-size:15px;">
+        <img src="../static/images/ticai.jpeg" alt="">
+        <p class="tagS">题材</p>
+        <a class="tagA" id="0" href="" style="font-size:15px;">全部</a>
+        <a class="tagA" id="1" href="" style="font-size:15px;">都市</a>
+        <a class="tagA" id="2" href="" style="font-size:15px;">搞笑</a>
+        <a class="tagA" id="3" href="" style="font-size:15px;">爽文</a>
+        <a class="tagA" id="4" href="" style="font-size:15px;">奇幻</a>
+        <a class="tagA" id="5" href="" style="font-size:15px;">玄幻</a>
+        <a class="tagA" id="6" href="" style="font-size:15px;">历史</a>
+        <a class="tagA" id="7" href="" style="font-size:15px;">重生</a>
+        <a class="tagA" id="8" href="" style="font-size:15px;">生活</a>
+        <a class="tagA" id="9" href="" style="font-size:15px;">魔法</a>
+        <a class="tagA" id="10" href="" style="font-size:15px;">修真</a>
+        <a class="tagA" id="11" href="" style="font-size:15px;">科幻</a>
+        <a class="tagA" id="12" href="" style="font-size:15px;">未来</a>
+        <a class="tagA" id="13" href="" style="font-size:15px;">仙侠</a>
+        <a class="tagA" id="14" href="" style="font-size:15px;">争霸</a>
+    </ul>
+    <ul class="tag2">
+        <img src="../static/images/zishu.jpeg" alt="">
+        <p class="tagS">字数</p>
+        <a class="tagB" id="0" href="">全部</a>
+        <a class="tagB" id="1" href="">30万以下</a>
+        <a class="tagB" id="2" href="">30-50万</a>
+        <a class="tagB" id="3" href="">50-100万</a>
+        <a class="tagB" id="4" href="">100-200万</a>
+        <a class="tagB" id="5" href="">200万以上</a>
+    </ul>
+    <ul class="tag3">
+        <img src="../static/images/jindu.jpeg" alt="">
+        <p class="tagS">进度</p>
+        <a class="tagC" id="0" href="">全部</a>
+        <a class="tagC" id="1" href="">连载中</a>
+        <a class="tagC" id="2" href="">已完本</a>
+    </ul>
+    <ul class="tag4">
+        <img src="../static/images/paixu.jpeg" alt="">
+        <p class="tagS">排序</p>
+        <a class="tagD" id="0" href="">全部</a>
+        <a class="tagD" id="1" href="">热度</a>
+        <a class="tagD" id="2" href="">最新</a>
+    </ul>
+</div>
+<div class="tagContent" style="font-size:16px;">
+    <!-- <div class="bookBox"></div>
+    <div class="bookBox">
+        <div class="bookImg">
+            <a href=""><img src="../static/images/book1.jpeg" alt=""></a>
+        </div>
+        <div class="bookInfo">
+            <p class="bookName">猎狐计划</p>
+            <p class="info">十四年前的泄密案再度上演，绝密级别的“天剑”计划卷入其中，...
+            </p>
+            <div class="stateBox">
+                <a href="">
+                    <img src="../static/images/user.png" alt="">
+                    林和平
+                </a>
+                <i>已完结</i>
+                <i>日更千字</i>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both;"></div> -->
+</div>
+<!-- <div class="pageSelect">
+    <ul>
+        <li><a href="">&lt;</a></li>
+        <li><a href="">1</a></li>
+        <li><a href="">2</a></li>
+        <li><a href="">3</a></li>
+        <li><a href="">4</a></li>
+        <li><a href="">5</a></li>
+        <li><a href="">&gt;</a></li>
+    </ul>
+</div> -->
+
+</body>
+<script src="../static/js/jquery.min.js"></script>
+<script>
+    
+
+
+
+
+    var url = document.location.toString();
+    
+
+    $.ajax({
+        type : 'get',
+        url : 'http://127.0.0.1:8000/v1/fenlei/'+url.split('fenlei/')[1],
+        beforeSend: function (res) {
+        res.setRequestHeader("Authorization")
+        },
+        success : function (res) {
+            var data = res.data;
+            if (res.code == 200) {
+                //console.log("请求成功");
+                console.log(data);
+                //console.log(data.length);
+
+
+                // var book;
+                var bookbox = '';
+                for(i=0;i<data.length;i++){
+                    var numxxx=data[i]['book_id']
+                    console.log(numxxx)
+                    // var bookbox = '';
+                    bookbox += '<div class="bookBox">';
+                    bookbox += '<div class="bookImg">';
+                    bookbox += `<a href=""><img src="../static/images/${data[i]['cover']}" alt=""></a>`;
+                    bookbox += '</div>';
+                    bookbox += '<div class="bookInfo">';
+                    bookbox += `<a href='http://127.0.0.1:5000/topic/${data[i]['book_id']}'>${data[i]['bname']}</a>`;
+                    bookbox += `<p class="info">${data[i]['introduce'].substring(0,20)}</p>`;
+                    bookbox += '<div class="stateBox">';
+                    bookbox += `<a href="">
+                        <img src="../static/images/user.png" alt="">${data[i]['author']}</a>`;
+                    bookbox += '<i>已完结</i>';
+                    bookbox += '<i>日更千字</i>';
+                    bookbox += '</div>';
+                    bookbox += '</div>';
+                    bookbox += '</div>';  
+                    // $('.tagContent').html(bookbox);
+                }
+                bookbox += '<div style="clear: both;"></div>'; 
+                $('.tagContent').html(bookbox);
+            }
+        }
+    })
+
+</script>
+<script>
+    var selectTag1 = document.getElementsByClassName('sl1')
+    var selectTag2 = document.getElementsByClassName('sl2')
+    var selectTag3 = document.getElementsByClassName('sl3')
+    var myhref1 = document.getElementsByClassName('tagA');
+    var myhref2 = document.getElementsByClassName('tagB');
+    var myhref3 = document.getElementsByClassName('tagC');
+    
+
+    for(var i in myhref1){
+        myhref1[i].onclick = function(event){    
+            event.preventDefault();
+            // selectTag1[0].text = event.target.text;
+            selectTag1[0].id = event.target.id 
+            var get_url = `http://127.0.0.1:5000/fenlei/tag1=${selectTag1[0].id}&tag2=${selectTag2[0].id}&tag3=${selectTag3[0].id}`;
+            console.log(get_url);
+            window.location.href=get_url     
+        }
+    }
+    for(var i in myhref2){
+        myhref2[i].onclick = function(event){    
+            event.preventDefault();
+            // selectTag2[0].text = event.target.text 
+            selectTag2[0].id = event.target.id
+            var get_url = `http://127.0.0.1:5000/fenlei/tag1=${selectTag1[0].id}&tag2=${selectTag2[0].id}&tag3=${selectTag3[0].id}`;
+            console.log(get_url);
+            window.location.href=get_url   
+        }
+    }
+    for(var i in myhref3){
+        myhref3[i].onclick = function(event){    
+            event.preventDefault();
+            // selectTag3[0].text = event.target.text 
+            selectTag3[0].id = event.target.id  
+            var get_url = `http://127.0.0.1:5000/fenlei/tag1=${selectTag1[0].id}&tag2=${selectTag2[0].id}&tag3=${selectTag3[0].id}`;
+            console.log(get_url);  
+            window.location.href=get_url
+        }
+    }
+
+    var url = document.location.toString();
+    
+    var tag1 = url.split('tag1=')[1].split('&')[0];
+    var tag2 = url.split('tag2=')[1].split('&')[0];  
+    var tag3 = url.split('tag3=')[1].split('&')[0];
+    
+    for(var i in myhref1){
+        if(myhref1[i].id==tag1){
+            if(tag1!=0){
+                selectTag1[0].id=myhref1[i].id
+                selectTag1[0].text=myhref1[i].text;
+            }  
+        }
+    }
+
+    for(var i in myhref2){
+        if(myhref2[i].id==tag2){
+            if(tag2!=0){
+                selectTag2[0].id=myhref2[i].id;
+                selectTag2[0].text=myhref2[i].text;
+            }  
+        }
+    }
+
+    for(var i in myhref3){
+        if(myhref3[i].id==tag3){
+            if(tag3!=0){
+                selectTag3[0].id=myhref3[i].id;
+                selectTag3[0].text=myhref3[i].text;
+            }  
+        }
+    }
+
+</script>
+</html>
